@@ -219,16 +219,24 @@ button{
   margin-bottom:12px;
 }
 
-.answer-slot{
-  width:48px;
-  height:48px;
+.answer-word{
   display:flex;
   justify-content:center;
   align-items:center;
-  border-radius:14px;
+  gap:5px;
+  min-height:48px;
+}
+
+.answer-slot{
+  width:36px;
+  height:42px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:10px;
   background:rgba(255,255,255,.10);
   border:1px solid rgba(255,255,255,.14);
-  font-size:18px;
+  font-size:20px;
   font-weight:900;
 }
 
@@ -259,7 +267,6 @@ button{
   grid-template-columns:repeat(5,1fr);
   gap:10px;
 
-  /* مهم برای لمس گوشی */
   touch-action:none;
   user-select:none;
   -webkit-user-select:none;
@@ -287,7 +294,6 @@ button{
   border:1px solid rgba(255,255,255,.22);
   box-shadow:0 8px 18px rgba(0,0,0,.2);
 
-  /* مهم */
   touch-action:none;
   user-select:none;
   -webkit-user-select:none;
@@ -431,6 +437,12 @@ button{
   .letter{
     font-size:21px;
     border-radius:17px;
+  }
+
+  .answer-slot{
+    width:32px;
+    height:39px;
+    font-size:18px;
   }
 }
 </style>
@@ -774,7 +786,6 @@ let gameOver = false;
 
 let modalActionType = "";
 
-
 if(unlockedStage < 1)
   unlockedStage = 1;
 
@@ -921,18 +932,12 @@ function setMode(newMode){
 
 }
 
-
 latinBtn.onclick = function(){
-
   setMode("latin");
-
 };
 
-
 arabicBtn.onclick = function(){
-
   setMode("arabic");
-
 };
 
 
@@ -1117,7 +1122,7 @@ function getAnswers(){
 
 
 /* =====================================================
-   HIDDEN ANSWERS
+   ANSWER SLOTS
    ===================================================== */
 
 function renderSlots(){
@@ -1129,29 +1134,49 @@ function renderSlots(){
 
   answers.forEach(answer=>{
 
-    const slot =
+    const word =
       document.createElement("div");
 
-    slot.className =
-      "answer-slot";
+    word.className =
+      "answer-word";
 
     if(foundWords.includes(answer)){
 
-      slot.classList.add("found");
+      [...answer].forEach(letter=>{
 
-      slot.textContent =
-        answer;
+        const slot =
+          document.createElement("div");
+
+        slot.className =
+          "answer-slot found";
+
+        slot.textContent =
+          letter;
+
+        word.appendChild(slot);
+
+      });
 
     }else{
 
-      /* عمداً خالی است */
+      [...answer].forEach(()=>{
 
-      slot.textContent =
-        "";
+        const slot =
+          document.createElement("div");
+
+        slot.className =
+          "answer-slot";
+
+        slot.textContent =
+          "";
+
+        word.appendChild(slot);
+
+      });
 
     }
 
-    wordSlots.appendChild(slot);
+    wordSlots.appendChild(word);
 
   });
 
@@ -1192,17 +1217,6 @@ function renderLetters(){
 /* =====================================================
    TOUCH SYSTEM
    ===================================================== */
-
-/*
-  مهم‌ترین قسمت نسخه جدید:
-
-  لمس و کشیدن روی کل lettersArea مدیریت می‌شود،
-  نه روی تک‌تک حروف.
-
-  این باعث می‌شود روی گوشی هنگام کشیدن انگشت،
-  انتخاب حروف قطع نشود.
-*/
-
 
 lettersArea.addEventListener(
   "pointerdown",
