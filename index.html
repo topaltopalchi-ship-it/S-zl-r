@@ -1,1966 +1,774 @@
 <!DOCTYPE html>
 <html lang="az">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SÖZLƏR</title>
 
 <style>
-
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-
-    margin: 0;
-
-    font-family:
-        Arial,
-        Tahoma,
-        sans-serif;
-
-    background:
-        linear-gradient(
-            135deg,
-            #eef2ff,
-            #dbeafe
-        );
-
-    min-height: 100vh;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    color: #222;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #e8f5e9, #ffffff);
+  text-align: center;
+  color: #222;
 }
 
-
-.game {
-
-    width: 95%;
-
-    max-width: 500px;
-
-    background: white;
-
-    border-radius: 25px;
-
-    padding: 22px;
-
-    box-shadow:
-        0 10px 35px
-        rgba(0,0,0,0.15);
-
-    text-align: center;
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
 }
-
 
 h1 {
-
-    margin: 5px 0 3px;
-
-    font-size: 42px;
-
-    letter-spacing: 5px;
+  font-size: 42px;
+  margin: 10px 0;
+  color: #00897b;
 }
-
 
 .subtitle {
-
-    color: #666;
-
-    margin-bottom: 18px;
+  color: #555;
+  margin-bottom: 20px;
 }
 
-
-.language {
-
-    display: flex;
-
-    gap: 10px;
-
-    margin-bottom: 18px;
+.mode-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-
-.language button {
-
-    flex: 1;
-
-    border: none;
-
-    padding: 12px;
-
-    border-radius: 12px;
-
-    font-size: 16px;
-
-    cursor: pointer;
-
-    background: #e5e7eb;
+.mode-buttons button {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-size: 17px;
+  cursor: pointer;
+  background: #eeeeee;
 }
 
-
-.language button.active {
-
-    background: #2563eb;
-
-    color: white;
+.mode-buttons button.active {
+  background: #00897b;
+  color: white;
 }
 
-
-.stats {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 7px;
-
-    margin-bottom: 18px;
+.info {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
-
-.stat {
-
-    background: #f3f4f6;
-
-    border-radius: 12px;
-
-    padding: 9px 4px;
+.info-box {
+  background: white;
+  border-radius: 12px;
+  padding: 10px 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  min-width: 100px;
 }
-
-
-.stat-title {
-
-    font-size: 12px;
-
-    color: #777;
-}
-
-
-.stat-value {
-
-    font-size: 18px;
-
-    font-weight: bold;
-
-    margin-top: 3px;
-}
-
-
-.timer-container {
-
-    margin-top: 10px;
-
-    font-size: 15px;
-}
-
-
-.timer {
-
-    font-weight: bold;
-
-    font-size: 18px;
-}
-
-
-.progress-container {
-
-    height: 10px;
-
-    background: #e5e7eb;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-
-    margin-top: 15px;
-}
-
-
-.progress {
-
-    height: 100%;
-
-    width: 0%;
-
-    background: #2563eb;
-
-    transition:
-        width 0.3s;
-}
-
-
-/*
-   حروف به هم ریخته
-*/
 
 #scrambled {
-
-    min-height: 100px;
-
-    margin: 25px 0;
-
-    padding: 18px;
-
-    border-radius: 18px;
-
-    background: #f8fafc;
-
-    border: 2px dashed #cbd5e1;
-
-    font-size: 38px;
-
-    font-weight: bold;
-
-    letter-spacing: 10px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    flex-wrap: wrap;
-
-    gap: 8px;
+  min-height: 90px;
+  background: white;
+  border-radius: 18px;
+  padding: 20px;
+  margin: 20px 0;
+  font-size: 34px;
+  font-weight: bold;
+  letter-spacing: 8px;
+  direction: ltr;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
 }
-
-
-/*
-   حالت عربی
-*/
 
 #scrambled.arabic {
-
-    direction: rtl;
-
-    font-family:
-        Tahoma,
-        Arial,
-        sans-serif;
-
-    letter-spacing: 0;
-
-    gap: 12px;
+  direction: rtl;
+  letter-spacing: 3px;
 }
 
-
-#answer {
-
-    width: 100%;
-
-    padding: 15px;
-
-    font-size: 20px;
-
-    border:
-        2px solid #ddd;
-
-    border-radius: 14px;
-
-    text-align: center;
-
-    outline: none;
+input {
+  width: 90%;
+  max-width: 450px;
+  padding: 15px;
+  border: 2px solid #00897b;
+  border-radius: 12px;
+  font-size: 22px;
+  text-align: center;
+  outline: none;
 }
 
-
-#answer:focus {
-
-    border-color: #2563eb;
+input.arabic-input {
+  direction: rtl;
 }
-
-
-#answer.arabic {
-
-    direction: rtl;
-
-    font-family:
-        Tahoma,
-        Arial,
-        sans-serif;
-}
-
 
 .buttons {
-
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 10px;
-
-    margin-top: 12px;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-
-.buttons button,
-.main-button {
-
-    border: none;
-
-    border-radius: 13px;
-
-    padding: 13px;
-
-    font-size: 17px;
-
-    cursor: pointer;
+.buttons button {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 17px;
+  cursor: pointer;
 }
 
-
-.check {
-
-    background: #2563eb;
-
-    color: white;
+#checkBtn {
+  background: #00897b;
+  color: white;
 }
 
-
-.hint {
-
-    background: #f59e0b;
-
-    color: white;
+#hintBtn {
+  background: #ffb300;
+  color: white;
 }
 
-
-.restart {
-
-    background: #16a34a;
-
-    color: white;
-
-    width: 100%;
-
-    margin-top: 10px;
+#restartBtn {
+  background: #546e7a;
+  color: white;
 }
 
-
-.home {
-
-    background: #6b7280;
-
-    color: white;
-
-    width: 100%;
-
-    margin-top: 10px;
+#message {
+  min-height: 35px;
+  margin-top: 15px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
-
-.message {
-
-    min-height: 30px;
-
-    margin-top: 14px;
-
-    font-size: 17px;
-
-    font-weight: bold;
+#gameOver {
+  display: none;
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  margin-top: 20px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
 }
 
-
-#hintText {
-
-    min-height: 25px;
-
-    margin-top: 8px;
-
-    color: #b45309;
-
-    font-weight: bold;
+#gameOver h2 {
+  color: #00897b;
 }
 
-
-.game-over {
-
-    display: none;
+.small {
+  color: #666;
+  font-size: 14px;
+  margin-top: 15px;
 }
-
-
-.final-score {
-
-    font-size: 32px;
-
-    font-weight: bold;
-
-    margin: 20px 0;
-}
-
-
-.record {
-
-    color: #b45309;
-
-    font-weight: bold;
-}
-
-
-/*
-   صفحه شروع
-*/
-
-.start-screen {
-
-    display: none;
-}
-
-
-.start-button {
-
-    width: 100%;
-
-    padding: 16px;
-
-    border: none;
-
-    border-radius: 14px;
-
-    background: #2563eb;
-
-    color: white;
-
-    font-size: 20px;
-
-    cursor: pointer;
-}
-
-
-/*
-   موبایل
-*/
-
-@media (max-width: 400px) {
-
-    h1 {
-        font-size: 36px;
-    }
-
-    #scrambled {
-        font-size: 30px;
-        letter-spacing: 6px;
-    }
-
-    .stats {
-        gap: 4px;
-    }
-
-    .stat-value {
-        font-size: 15px;
-    }
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
+<div class="container">
 
-<div class="game">
+  <h1>SÖZLƏR</h1>
+  <div class="subtitle">Sözləri qarışıq hərflərdən tap!</div>
 
+  <div class="mode-buttons">
+    <button id="latinBtn" class="active">🇮🇷 Latin</button>
+    <button id="arabicBtn">🇮🇷 Ərəb</button>
+  </div>
 
-    <h1>SÖZLƏR</h1>
-
-
-    <div class="subtitle">
-
-        Azərbaycan söz oyunu
-
+  <div class="info">
+    <div class="info-box">
+      Mərhələ<br>
+      <strong id="stage">1</strong>
     </div>
 
-
-    <!-- =========================
-         انتخاب زبان
-    ========================== -->
-
-    <div class="language">
-
-
-        <button
-            id="latinBtn"
-            class="active">
-
-            🇮🇷 Latın
-
-        </button>
-
-
-        <button
-            id="arabicBtn">
-
-            🇮🇷 Ərəb
-
-        </button>
-
-
+    <div class="info-box">
+      Can ❤️<br>
+      <strong id="lives">3</strong>
     </div>
 
-
-    <!-- =========================
-         بازی
-    ========================== -->
-
-    <div id="gameScreen">
-
-
-        <!-- اطلاعات بازی -->
-
-        <div class="stats">
-
-
-            <div class="stat">
-
-                <div class="stat-title">
-                    Xal
-                </div>
-
-                <div
-                    class="stat-value"
-                    id="score">
-
-                    0
-
-                </div>
-
-            </div>
-
-
-            <div class="stat">
-
-                <div class="stat-title">
-                    Rekord
-                </div>
-
-                <div
-                    class="stat-value"
-                    id="best">
-
-                    0
-
-                </div>
-
-            </div>
-
-
-            <div class="stat">
-
-                <div class="stat-title">
-                    Can
-                </div>
-
-                <div
-                    class="stat-value"
-                    id="lives">
-
-                    ❤️❤️❤️
-
-                </div>
-
-            </div>
-
-
-            <div class="stat">
-
-                <div class="stat-title">
-                    Mərhələ
-                </div>
-
-                <div
-                    class="stat-value"
-                    id="stage">
-
-                    1
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-        <!-- زمان -->
-
-        <div class="timer-container">
-
-            Vaxt:
-
-            <span
-                class="timer"
-                id="timer">
-
-                30
-
-            </span>
-
-            saniyə
-
-        </div>
-
-
-        <!-- پیشرفت -->
-
-        <div class="progress-container">
-
-            <div
-                class="progress"
-                id="progress">
-
-            </div>
-
-        </div>
-
-
-        <!-- =========================
-             حروف به هم ریخته
-        ========================== -->
-
-        <div id="scrambled">
-
-            گونش
-
-        </div>
-
-
-        <!-- جواب بازیکن -->
-
-        <input
-            id="answer"
-            type="text"
-            placeholder="Cavabı yaz..."
-            autocomplete="off"
-        >
-
-
-        <!-- راهنما -->
-
-        <div id="hintText"></div>
-
-
-        <!-- دکمه‌ها -->
-
-        <div class="buttons">
-
-
-            <button
-                class="check"
-                onclick="checkAnswer()">
-
-                Yoxla
-
-            </button>
-
-
-            <button
-                class="hint"
-                onclick="showHint()">
-
-                💡 İpucu
-
-            </button>
-
-
-        </div>
-
-
-        <!-- پیام -->
-
-        <div
-            class="message"
-            id="message">
-
-        </div>
-
-
+    <div class="info-box">
+      Vaxt ⏱️<br>
+      <strong id="timer">30</strong>
     </div>
 
-
-    <!-- =========================
-         پایان بازی
-    ========================== -->
-
-    <div
-        class="game-over"
-        id="gameOver">
-
-
-        <h2>
-
-            🎉 Oyun bitdi!
-
-        </h2>
-
-
-        <div
-            class="final-score"
-            id="finalScore">
-
-            0 xal
-
-        </div>
-
-
-        <div
-            class="record"
-            id="recordMessage">
-
-        </div>
-
-
-        <button
-            class="main-button restart"
-            onclick="restartGame()">
-
-            🔄 Yenidən oyna
-
-        </button>
-
-
-        <button
-            class="main-button home"
-            onclick="goHome()">
-
-            🏠 Əsas səhifə
-
-        </button>
-
-
+    <div class="info-box">
+      Xal ⭐<br>
+      <strong id="score">0</strong>
     </div>
+  </div>
 
+  <div id="scrambled"></div>
+
+  <input
+    id="answer"
+    type="text"
+    autocomplete="off"
+    placeholder="Cavabını yaz..."
+  >
+
+  <div class="buttons">
+    <button id="checkBtn">Yoxla</button>
+    <button id="hintBtn">💡 İpucu</button>
+    <button id="restartBtn">🔄 Yenidən</button>
+  </div>
+
+  <div id="message"></div>
+
+  <div id="gameOver">
+    <h2>🎉 Oyun bitdi!</h2>
+    <p>Sənin xalın:</p>
+    <h2 id="finalScore">0</h2>
+
+    <p>Ən yaxşı xal:</p>
+    <h3 id="bestScore">0</h3>
+
+    <button id="playAgainBtn" class="buttons"
+      style="background:#00897b;color:white;border:none;border-radius:12px;padding:12px 20px;font-size:17px;cursor:pointer;">
+      🔄 Yenidən oyna
+    </button>
+  </div>
+
+  <div class="small">
+    Düzgün cavab üçün +10 xal ⭐
+  </div>
 
 </div>
 
-
 <script>
 
-
-/* ==========================================
-   کلمات بازی
-
-   نکته:
-   latin = جواب لاتین
-   arabic = جواب عربی
-
-   این جواب‌ها فقط داخل JavaScript هستند
-   و روی صفحه نمایش داده نمی‌شوند.
-========================================== */
-
+/* =========================
+   SÖZLƏR
+========================= */
 
 const words = [
 
-    {
-        latin: "Günəş",
-        arabic: "گونش"
-    },
-
-    {
-        latin: "Çörək",
-        arabic: "چورک"
-    },
-
-    {
-        latin: "Göy",
-        arabic: "گوی"
-    },
-
-    {
-        latin: "Ev",
-        arabic: "ائو"
-    },
-
-    {
-        latin: "Su",
-        arabic: "سو"
-    },
-
-    {
-        latin: "Dağ",
-        arabic: "داغ"
-    },
-
-    {
-        latin: "Gül",
-        arabic: "گول"
-    },
-
-    {
-        latin: "Ay",
-        arabic: "آی"
-    },
-
-    {
-        latin: "Ulduz",
-        arabic: "اولدوز"
-    },
-
-    {
-        latin: "Külək",
-        arabic: "کولک"
-    },
-
-    {
-        latin: "Yağış",
-        arabic: "یاغیش"
-    },
-
-    {
-        latin: "Torpaq",
-        arabic: "تورپاق"
-    },
-
-    {
-        latin: "Dəniz",
-        arabic: "دنیز"
-    },
-
-    {
-        latin: "Çay",
-        arabic: "چای"
-    },
-
-    {
-        latin: "Bulud",
-        arabic: "بولود"
-    },
-
-    {
-        latin: "Gecə",
-        arabic: "گجه"
-    },
-
-    {
-        latin: "Səhər",
-        arabic: "سحر"
-    },
-
-    {
-        latin: "Axşam",
-        arabic: "آخشام"
-    },
-
-    {
-        latin: "Ana",
-        arabic: "آنا"
-    },
-
-    {
-        latin: "Ata",
-        arabic: "آتا"
-    },
-
-    {
-        latin: "Qardaş",
-        arabic: "قارداش"
-    },
-
-    {
-        latin: "Bacı",
-        arabic: "باجی"
-    },
-
-    {
-        latin: "Uşaq",
-        arabic: "اوشاق"
-    },
-
-    {
-        latin: "Dost",
-        arabic: "دوست"
-    },
-
-    {
-        latin: "Kitab",
-        arabic: "کیتاب"
-    },
-
-    {
-        latin: "Qələm",
-        arabic: "قلم"
-    },
-
-    {
-        latin: "Məktəb",
-        arabic: "مکتب"
-    },
-
-    {
-        latin: "Müəllim",
-        arabic: "معلم"
-    },
-
-    {
-        latin: "Şəhər",
-        arabic: "شهر"
-    },
-
-    {
-        latin: "Kənd",
-        arabic: "کند"
-    },
-
-    {
-        latin: "Yol",
-        arabic: "یول"
-    },
-
-    {
-        latin: "Maşın",
-        arabic: "ماشین"
-    },
-
-    {
-        latin: "Qapı",
-        arabic: "قاپی"
-    },
-
-    {
-        latin: "Pəncərə",
-        arabic: "پنجره"
-    },
-
-    {
-        latin: "Otaq",
-        arabic: "اوتاق"
-    },
-
-    {
-        latin: "Bağ",
-        arabic: "باغ"
-    },
-
-    {
-        latin: "Ağac",
-        arabic: "آغاج"
-    },
-
-    {
-        latin: "Çiçək",
-        arabic: "چیچک"
-    },
-
-    {
-        latin: "Quş",
-        arabic: "قوش"
-    },
-
-    {
-        latin: "Balıq",
-        arabic: "بالق"
-    },
-
-    {
-        latin: "At",
-        arabic: "آت"
-    },
-
-    {
-        latin: "İt",
-        arabic: "ایت"
-    },
-
-    {
-        latin: "Pişik",
-        arabic: "پیشیک"
-    },
-
-    {
-        latin: "Aslan",
-        arabic: "آسلان"
-    },
-
-    {
-        latin: "Qurd",
-        arabic: "قورد"
-    },
-
-    {
-        latin: "Yemək",
-        arabic: "یمک"
-    },
-
-    {
-        latin: "Alma",
-        arabic: "آلما"
-    },
-
-    {
-        latin: "Nar",
-        arabic: "نار"
-    }
+  { latin: "Günəş", arabic: "گونش" },
+  { latin: "Çörək", arabic: "چورک" },
+  { latin: "Göy", arabic: "گوی" },
+  { latin: "Ev", arabic: "ائو" },
+  { latin: "Ğələm", arabic: "غلم" },
+  { latin: "Ana", arabic: "آنا" },
+  { latin: "Ata", arabic: "آتا" },
+  { latin: "Su", arabic: "سو" },
+  { latin: "Kitab", arabic: "کیتاب" },
+  { latin: "Qələm", arabic: "قلم" },
+  { latin: "Məktəb", arabic: "مکتب" },
+  { latin: "Uşaq", arabic: "اوشاق" },
+  { latin: "Dost", arabic: "دوست" },
+  { latin: "Dağ", arabic: "داغ" },
+  { latin: "Dəniz", arabic: "دنیز" },
+  { latin: "Torpaq", arabic: "تورپاق" },
+  { latin: "Bulud", arabic: "بولود" },
+  { latin: "Yağış", arabic: "یاغیش" },
+  { latin: "Külək", arabic: "کولک" },
+  { latin: "Ulduz", arabic: "اولدوز" },
+  { latin: "Ay", arabic: "آی" },
+  { latin: "Gecə", arabic: "گجه" },
+  { latin: "Səhər", arabic: "سحر" },
+  { latin: "Axşam", arabic: "آخشام" },
+  { latin: "Yol", arabic: "یول" },
+  { latin: "Maşın", arabic: "ماشین" },
+  { latin: "Çiçək", arabic: "چیچک" },
+  { latin: "Ağac", arabic: "آغاج" },
+  { latin: "Yarpaq", arabic: "یارپاق" },
+  { latin: "Meyvə", arabic: "میوه" },
+  { latin: "Alma", arabic: "آلما" },
+  { latin: "Armud", arabic: "آرمود" },
+  { latin: "Nar", arabic: "نار" },
+  { latin: "Üzüm", arabic: "اوزوم" },
+  { latin: "Balıq", arabic: "بالق" },
+  { latin: "Quş", arabic: "قوش" },
+  { latin: "At", arabic: "آت" },
+  { latin: "İt", arabic: "ایت" },
+  { latin: "Pişik", arabic: "پیشیک" },
+  { latin: "Süd", arabic: "سود" },
+  { latin: "Qəhvə", arabic: "قهوه" },
+  { latin: "Çay", arabic: "چای" },
+  { latin: "Şəkər", arabic: "شکر" },
+  { latin: "Duz", arabic: "دوز" },
+  { latin: "Ürək", arabic: "اورک" },
+  { latin: "Əl", arabic: "ال" },
+  { latin: "Göz", arabic: "گوز" },
+  { latin: "Baş", arabic: "باش" },
+  { latin: "Ayaq", arabic: "آیاق" }
 
 ];
 
 
-/* ==========================================
-   متغیرها
-========================================== */
+/* =========================
+   DƏYİŞƏNLƏR
+========================= */
 
-let currentIndex = 0;
-
-let score = 0;
-
-let lives = 3;
-
+let currentWord = null;
 let stage = 1;
-
-let language = "latin";
-
-let timer = 30;
-
+let lives = 3;
+let score = 0;
+let timeLeft = 30;
 let timerInterval = null;
-
 let hintUsed = false;
+let currentMode = "latin";
 
 
-/* رکورد */
+/* =========================
+   ELEMENTLƏR
+========================= */
 
-let bestScore =
-    Number(
-        localStorage.getItem(
-            "sozlerBest"
-        )
-    ) || 0;
+const scrambledEl = document.getElementById("scrambled");
+const answerEl = document.getElementById("answer");
+const stageEl = document.getElementById("stage");
+const livesEl = document.getElementById("lives");
+const timerEl = document.getElementById("timer");
+const scoreEl = document.getElementById("score");
+const messageEl = document.getElementById("message");
+
+const latinBtn = document.getElementById("latinBtn");
+const arabicBtn = document.getElementById("arabicBtn");
+
+const checkBtn = document.getElementById("checkBtn");
+const hintBtn = document.getElementById("hintBtn");
+const restartBtn = document.getElementById("restartBtn");
+
+const gameOverEl = document.getElementById("gameOver");
+const finalScoreEl = document.getElementById("finalScore");
+const bestScoreEl = document.getElementById("bestScore");
+const playAgainBtn = document.getElementById("playAgainBtn");
 
 
-document
-    .getElementById("best")
-    .textContent = bestScore;
+/* =========================
+   صدا
+========================= */
+
+let audioContext = null;
+
+function getAudioContext() {
+
+  if (!audioContext) {
+    audioContext = new (
+      window.AudioContext ||
+      window.webkitAudioContext
+    )();
+  }
+
+  if (audioContext.state === "suspended") {
+    audioContext.resume();
+  }
+
+  return audioContext;
+}
 
 
-/* ==========================================
-   تابع مخلوط کردن حروف
-========================================== */
+/* صدای جواب درست */
+
+function playCorrectSound() {
+
+  const ctx = getAudioContext();
+  const now = ctx.currentTime;
+
+  const oscillator1 = ctx.createOscillator();
+  const gain1 = ctx.createGain();
+
+  oscillator1.type = "sine";
+  oscillator1.frequency.setValueAtTime(523.25, now);
+  oscillator1.frequency.setValueAtTime(659.25, now + 0.12);
+
+  gain1.gain.setValueAtTime(0.001, now);
+  gain1.gain.exponentialRampToValueAtTime(0.25, now + 0.02);
+  gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+
+  oscillator1.connect(gain1);
+  gain1.connect(ctx.destination);
+
+  oscillator1.start(now);
+  oscillator1.stop(now + 0.3);
+}
+
+
+/* صدای جواب غلط */
+
+function playWrongSound() {
+
+  const ctx = getAudioContext();
+  const now = ctx.currentTime;
+
+  const oscillator = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  oscillator.type = "sawtooth";
+
+  oscillator.frequency.setValueAtTime(260, now);
+  oscillator.frequency.setValueAtTime(180, now + 0.12);
+  oscillator.frequency.setValueAtTime(120, now + 0.24);
+
+  gain.gain.setValueAtTime(0.001, now);
+  gain.gain.exponentialRampToValueAtTime(0.18, now + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+  oscillator.connect(gain);
+  gain.connect(ctx.destination);
+
+  oscillator.start(now);
+  oscillator.stop(now + 0.37);
+}
+
+
+/* =========================
+   مخلوط کردن حروف
+========================= */
 
 function shuffleLetters(text) {
 
-    /*
-       تبدیل متن به آرایه حروف
-    */
+  const letters = Array.from(text);
 
-    const letters =
-        Array.from(text);
+  let shuffled;
 
+  do {
 
-    /*
-       اگر فقط یک حرف بود
-    */
+    shuffled = [...letters];
 
-    if (letters.length <= 1) {
+    for (let i = shuffled.length - 1; i > 0; i--) {
 
-        return text;
+      const j = Math.floor(Math.random() * (i + 1));
 
+      [shuffled[i], shuffled[j]] =
+      [shuffled[j], shuffled[i]];
     }
 
+  } while (
+    shuffled.join("") === text &&
+    text.length > 1
+  );
 
-    /*
-       Fisher-Yates
-    */
-
-    for (
-        let i = letters.length - 1;
-        i > 0;
-        i--
-    ) {
-
-        const j =
-            Math.floor(
-                Math.random() *
-                (i + 1)
-            );
-
-
-        [
-            letters[i],
-            letters[j]
-        ] =
-        [
-            letters[j],
-            letters[i]
-        ];
-
-    }
-
-
-    /*
-       اگر اتفاقاً همان کلمه اصلی شد،
-       دوباره مخلوط کن.
-    */
-
-    const result =
-        letters.join("");
-
-
-    if (result === text) {
-
-        return shuffleLetters(text);
-
-    }
-
-
-    return result;
+  return shuffled.join("");
 }
 
 
-/* ==========================================
-   نمایش حروف به هم ریخته
-========================================== */
+/* =========================
+   نمایش کلمه جدید
+========================= */
 
 function showScrambled() {
 
+  currentWord =
+    words[Math.floor(Math.random() * words.length)];
 
-    if (
-        currentIndex >=
-        words.length
-    ) {
+  const text =
+    currentMode === "latin"
+      ? currentWord.latin
+      : currentWord.arabic;
 
-        finishGame();
+  scrambledEl.textContent =
+    shuffleLetters(text);
 
-        return;
+  if (currentMode === "arabic") {
 
-    }
+    scrambledEl.classList.add("arabic");
+    answerEl.classList.add("arabic-input");
 
+  } else {
 
-    const word =
-        words[currentIndex];
+    scrambledEl.classList.remove("arabic");
+    answerEl.classList.remove("arabic-input");
 
+  }
 
-    const scrambled =
-        document
-            .getElementById(
-                "scrambled"
-            );
+  answerEl.value = "";
+  answerEl.focus();
 
+  hintUsed = false;
 
-    if (language === "arabic") {
+  messageEl.textContent = "";
 
+  timeLeft = 30;
+  timerEl.textContent = timeLeft;
 
-        /*
-           فقط حروف عربی
-        */
-
-        scrambled.textContent =
-            shuffleLetters(
-                word.arabic
-            );
-
-
-        scrambled.classList.add(
-            "arabic"
-        );
-
-    }
-
-
-    else {
-
-
-        /*
-           فقط حروف لاتین
-        */
-
-        scrambled.textContent =
-            shuffleLetters(
-                word.latin
-            );
-
-
-        scrambled.classList.remove(
-            "arabic"
-        );
-
-    }
-
-
-    /*
-       پاک کردن جواب قبلی
-    */
-
-    document
-        .getElementById("answer")
-        .value = "";
-
-
-    document
-        .getElementById("message")
-        .textContent = "";
-
-
-    document
-        .getElementById("hintText")
-        .textContent = "";
-
-
-    hintUsed = false;
-
-
-    /*
-       حالت نوشتن
-    */
-
-    const input =
-        document.getElementById(
-            "answer"
-        );
-
-
-    if (language === "arabic") {
-
-        input.classList.add(
-            "arabic"
-        );
-
-        input.setAttribute(
-            "dir",
-            "rtl"
-        );
-
-        input.placeholder =
-            "Cavabı yaz...";
-
-    }
-
-    else {
-
-        input.classList.remove(
-            "arabic"
-        );
-
-        input.setAttribute(
-            "dir",
-            "ltr"
-        );
-
-        input.placeholder =
-            "Cavabı yaz...";
-
-    }
-
-
-    updateStage();
-
-    updateProgress();
-
-    startTimer();
-
-
-    input.focus();
-
+  startTimer();
 }
 
 
-/* ==========================================
-   دکمه لاتین
-========================================== */
-
-document
-    .getElementById("latinBtn")
-    .addEventListener(
-        "click",
-        function() {
-
-
-            language = "latin";
-
-
-            this.classList.add(
-                "active"
-            );
-
-
-            document
-                .getElementById(
-                    "arabicBtn"
-                )
-                .classList.remove(
-                    "active"
-                );
-
-
-            showScrambled();
-
-        }
-    );
-
-
-/* ==========================================
-   دکمه عربی
-========================================== */
-
-document
-    .getElementById("arabicBtn")
-    .addEventListener(
-        "click",
-        function() {
-
-
-            language = "arabic";
-
-
-            this.classList.add(
-                "active"
-            );
-
-
-            document
-                .getElementById(
-                    "latinBtn"
-                )
-                .classList.remove(
-                    "active"
-                );
-
-
-            showScrambled();
-
-        }
-    );
-
-
-/* ==========================================
-   نرمال‌سازی جواب
-========================================== */
-
-function normalizeAnswer(text) {
-
-    return text
-        .trim()
-        .normalize("NFC");
-
-}
-
-
-/* ==========================================
-   بررسی جواب
-========================================== */
-
-function checkAnswer() {
-
-
-    const input =
-        normalizeAnswer(
-            document
-                .getElementById(
-                    "answer"
-                )
-                .value
-        );
-
-
-    if (!input) {
-
-        return;
-
-    }
-
-
-    let correctAnswer;
-
-
-    /*
-       جواب حالت عربی
-    */
-
-    if (
-        language === "arabic"
-    ) {
-
-        correctAnswer =
-            normalizeAnswer(
-                words[currentIndex]
-                    .arabic
-            );
-
-    }
-
-
-    /*
-       جواب حالت لاتین
-    */
-
-    else {
-
-        correctAnswer =
-            normalizeAnswer(
-                words[currentIndex]
-                    .latin
-            )
-            .toLowerCase();
-
-    }
-
-
-    let userAnswer = input;
-
-
-    if (
-        language === "latin"
-    ) {
-
-        userAnswer =
-            userAnswer.toLowerCase();
-
-    }
-
-
-    clearInterval(
-        timerInterval
-    );
-
-
-    /*
-       جواب درست
-    */
-
-    if (
-        userAnswer ===
-        correctAnswer
-    ) {
-
-
-        const points =
-            hintUsed
-            ? 5
-            : 10;
-
-
-        score += points;
-
-
-        document
-            .getElementById(
-                "score"
-            )
-            .textContent =
-            score;
-
-
-        document
-            .getElementById(
-                "message"
-            )
-            .textContent =
-            "✅ Düzdür! +" +
-            points +
-            " xal";
-
-
-        currentIndex++;
-
-
-        setTimeout(
-            function() {
-
-                showScrambled();
-
-            },
-            700
-        );
-
-    }
-
-
-    /*
-       جواب غلط
-    */
-
-    else {
-
-
-        loseLife(
-            "❌ Səhv cavab!"
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   کم شدن جان
-========================================== */
-
-function loseLife(message) {
-
-
-    lives--;
-
-
-    updateLives();
-
-
-    document
-        .getElementById(
-            "message"
-        )
-        .textContent =
-        message;
-
-
-    /*
-       اگر جان تمام شد
-    */
-
-    if (lives <= 0) {
-
-
-        setTimeout(
-            function() {
-
-                finishGame();
-
-            },
-            700
-        );
-
-
-        return;
-
-    }
-
-
-    /*
-       رفتن به کلمه بعدی
-    */
-
-    currentIndex++;
-
-
-    setTimeout(
-        function() {
-
-            showScrambled();
-
-        },
-        700
-    );
-
-}
-
-
-/* ==========================================
+/* =========================
    تایمر
-========================================== */
+========================= */
 
 function startTimer() {
 
+  clearInterval(timerInterval);
 
-    clearInterval(
-        timerInterval
-    );
+  timerInterval = setInterval(() => {
 
+    timeLeft--;
 
-    timer = 30;
+    timerEl.textContent = timeLeft;
 
+    if (timeLeft <= 0) {
 
-    document
-        .getElementById(
-            "timer"
-        )
-        .textContent =
-        timer;
+      clearInterval(timerInterval);
 
+      messageEl.textContent = "⏰ Vaxt bitdi!";
 
-    timerInterval =
-        setInterval(
-            function() {
-
-
-                timer--;
-
-
-                document
-                    .getElementById(
-                        "timer"
-                    )
-                    .textContent =
-                    timer;
-
-
-                if (
-                    timer <= 0
-                ) {
-
-
-                    clearInterval(
-                        timerInterval
-                    );
-
-
-                    loseLife(
-                        "⏰ Vaxt bitdi!"
-                    );
-
-                }
-
-            },
-            1000
-        );
-
-}
-
-
-/* ==========================================
-   نمایش جان
-========================================== */
-
-function updateLives() {
-
-
-    let hearts = "";
-
-
-    for (
-        let i = 0;
-        i < lives;
-        i++
-    ) {
-
-        hearts += "❤️";
+      loseLife();
 
     }
 
-
-    for (
-        let i = lives;
-        i < 3;
-        i++
-    ) {
-
-        hearts += "🖤";
-
-    }
-
-
-    document
-        .getElementById(
-            "lives"
-        )
-        .textContent =
-        hearts;
-
+  }, 1000);
 }
 
 
-/* ==========================================
-   مرحله
-========================================== */
+/* =========================
+   بررسی جواب
+========================= */
 
-function updateStage() {
+function checkAnswer() {
 
+  getAudioContext();
 
-    stage =
-        Math.floor(
-            currentIndex / 10
-        ) + 1;
+  const userAnswer =
+    answerEl.value.trim();
 
+  if (!userAnswer) return;
 
-    if (stage > 5) {
+  const correctAnswer =
+    currentMode === "latin"
+      ? currentWord.latin
+      : currentWord.arabic;
 
-        stage = 5;
+  if (userAnswer === correctAnswer) {
 
-    }
+    clearInterval(timerInterval);
 
+    playCorrectSound();
 
-    document
-        .getElementById(
-            "stage"
-        )
-        .textContent =
-        stage;
-
-}
-
-
-/* ==========================================
-   پیشرفت
-========================================== */
-
-function updateProgress() {
-
-
-    const percent =
-        (
-            currentIndex /
-            words.length
-        ) * 100;
-
-
-    document
-        .getElementById(
-            "progress"
-        )
-        .style.width =
-        percent + "%";
-
-}
-
-
-/* ==========================================
-   راهنما
-========================================== */
-
-function showHint() {
-
+    let points = 10;
 
     if (hintUsed) {
-
-        return;
-
+      points = 5;
     }
 
+    score += points;
 
-    hintUsed = true;
+    scoreEl.textContent = score;
 
+    messageEl.textContent =
+      "✅ Düzdür! +" + points + " xal";
 
-    const word =
-        words[currentIndex];
+    setTimeout(() => {
 
+      stage++;
 
-    let firstLetter;
+      stageEl.textContent = stage;
 
+      showScrambled();
 
-    /*
-       در حالت عربی،
-       اولین حرف عربی نشان داده می‌شود.
-    */
+    }, 700);
 
-    if (
-        language === "arabic"
-    ) {
+  } else {
 
-        firstLetter =
-            Array.from(
-                word.arabic
-            )[0];
+    messageEl.textContent =
+      "❌ Səhv cavab!";
 
-    }
+    loseLife();
 
-
-    else {
-
-        firstLetter =
-            Array.from(
-                word.latin
-            )[0];
-
-    }
-
-
-    document
-        .getElementById(
-            "hintText"
-        )
-        .textContent =
-        "💡 İlk hərf: " +
-        firstLetter;
-
+  }
 }
 
 
-/* ==========================================
-   پایان بازی
-========================================== */
+/* =========================
+   کم شدن جان
+========================= */
 
-function finishGame() {
+function loseLife() {
 
+  playWrongSound();
 
-    clearInterval(
-        timerInterval
-    );
+  lives--;
 
+  livesEl.textContent = lives;
 
-    document
-        .getElementById(
-            "gameScreen"
-        )
-        .style.display =
-        "none";
+  answerEl.value = "";
 
+  if (lives <= 0) {
 
-    document
-        .getElementById(
-            "gameOver"
-        )
-        .style.display =
-        "block";
+    clearInterval(timerInterval);
 
+    setTimeout(() => {
+      finishGame();
+    }, 500);
 
-    document
-        .getElementById(
-            "finalScore"
-        )
-        .textContent =
-        score + " xal";
+    return;
+  }
 
-
-    /*
-       رکورد جدید
-    */
-
-    if (
-        score > bestScore
-    ) {
-
-
-        bestScore = score;
-
-
-        localStorage.setItem(
-            "sozlerBest",
-            bestScore
-        );
-
-
-        document
-            .getElementById(
-                "best"
-            )
-            .textContent =
-            bestScore;
-
-
-        document
-            .getElementById(
-                "recordMessage"
-            )
-            .textContent =
-            "🏆 Yeni rekord!";
-
-    }
-
-
-    else {
-
-
-        document
-            .getElementById(
-                "recordMessage"
-            )
-            .textContent =
-            "Rekord: " +
-            bestScore +
-            " xal";
-
-    }
-
-}
-
-
-/* ==========================================
-   شروع دوباره
-========================================== */
-
-function restartGame() {
-
-
-    clearInterval(
-        timerInterval
-    );
-
-
-    currentIndex = 0;
-
-    score = 0;
-
-    lives = 3;
-
-    stage = 1;
-
-
-    document
-        .getElementById(
-            "score"
-        )
-        .textContent =
-        "0";
-
-
-    updateLives();
-
-
-    document
-        .getElementById(
-            "gameOver"
-        )
-        .style.display =
-        "none";
-
-
-    document
-        .getElementById(
-            "gameScreen"
-        )
-        .style.display =
-        "block";
-
+  setTimeout(() => {
 
     showScrambled();
 
+  }, 700);
 }
 
 
-/* ==========================================
-   خانه
-========================================== */
+/* =========================
+   راهنمایی
+========================= */
 
-function goHome() {
+function showHint() {
 
-    restartGame();
+  if (hintUsed || !currentWord) return;
+
+  hintUsed = true;
+
+  const answer =
+    currentMode === "latin"
+      ? currentWord.latin
+      : currentWord.arabic;
+
+  const firstLetter =
+    Array.from(answer)[0];
+
+  messageEl.textContent =
+    "💡 İlk hərf: " + firstLetter;
 
 }
 
 
-/* ==========================================
-   Enter
-========================================== */
+/* =========================
+   پایان بازی
+========================= */
 
-document
-    .getElementById(
-        "answer"
-    )
-    .addEventListener(
-        "keydown",
-        function(event) {
+function finishGame() {
 
+  clearInterval(timerInterval);
 
-            if (
-                event.key ===
-                "Enter"
-            ) {
+  finalScoreEl.textContent = score;
 
-                checkAnswer();
+  const oldBest =
+    Number(localStorage.getItem("sozlerBest") || 0);
 
-            }
+  if (score > oldBest) {
 
-        }
+    localStorage.setItem(
+      "sozlerBest",
+      score
     );
 
+  }
 
-/* ==========================================
+  bestScoreEl.textContent =
+    localStorage.getItem("sozlerBest") || 0;
+
+  gameOverEl.style.display = "block";
+
+  scrambledEl.style.display = "none";
+  answerEl.style.display = "none";
+
+  checkBtn.style.display = "none";
+  hintBtn.style.display = "none";
+}
+
+
+/* =========================
+   شروع دوباره
+========================= */
+
+function restartGame() {
+
+  clearInterval(timerInterval);
+
+  stage = 1;
+  lives = 3;
+  score = 0;
+
+  stageEl.textContent = stage;
+  livesEl.textContent = lives;
+  scoreEl.textContent = score;
+
+  gameOverEl.style.display = "none";
+
+  scrambledEl.style.display = "block";
+  answerEl.style.display = "block";
+
+  checkBtn.style.display = "inline-block";
+  hintBtn.style.display = "inline-block";
+
+  showScrambled();
+}
+
+
+/* =========================
+   تغییر حالت Latin
+========================= */
+
+latinBtn.addEventListener("click", () => {
+
+  currentMode = "latin";
+
+  latinBtn.classList.add("active");
+  arabicBtn.classList.remove("active");
+
+  showScrambled();
+});
+
+
+/* =========================
+   تغییر حالت عربی
+========================= */
+
+arabicBtn.addEventListener("click", () => {
+
+  currentMode = "arabic";
+
+  arabicBtn.classList.add("active");
+  latinBtn.classList.remove("active");
+
+  showScrambled();
+});
+
+
+/* =========================
+   دکمه‌ها
+========================= */
+
+checkBtn.addEventListener(
+  "click",
+  checkAnswer
+);
+
+hintBtn.addEventListener(
+  "click",
+  showHint
+);
+
+restartBtn.addEventListener(
+  "click",
+  restartGame
+);
+
+playAgainBtn.addEventListener(
+  "click",
+  restartGame
+);
+
+
+/* =========================
+   Enter
+========================= */
+
+answerEl.addEventListener("keydown", (event) => {
+
+  if (event.key === "Enter") {
+
+    checkAnswer();
+
+  }
+
+});
+
+
+/* =========================
    شروع بازی
-========================================== */
+========================= */
 
 showScrambled();
-
 
 </script>
 
 </body>
-
 </html>
