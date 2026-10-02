@@ -3,7 +3,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.heydarbaba.game',
   appName: 'حیدربابا',
-  webDir: '.',
+  webDir: 'www',
   bundledWebRuntime: false
 };
 
