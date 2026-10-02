@@ -1998,18 +1998,18 @@ function finishStage(){
       "next"
     );
 
-  }else{
 
-    showModal(
-      "Təbriklər! 🎉",
-      `Bütün ${stages.length} mərhələni tamamladın.`,
-      "1-ci mərhələ",
-      "restart"
-    );
-
-  }
-
+}else{
+  showModal(
+    "Təbriklər! 🎉",
+    `Bütün ${stages.length} mərhələni tamamladın.<br>
+     🏆 Oyunu tamamladın!<br>
+     İstəsən 20-ci mərhələni yenidən oynaya bilərsən.`,
+    "20-ci mərhələ",
+    "final"
+  );
 }
+    
 
 /* GAME OVER */
 
@@ -2086,18 +2086,21 @@ modalAction.onclick =
 
     }
 
-    else if(
-      modalActionType ===
-      "restart"
-    ){
 
-      selectedStage = 1;
+else if(
+  modalActionType ===
+  "final"
+){
+  selectedStage = stages.length;
 
-      save();
+  save();
 
-      startGame(1);
+  startGame(
+    stages.length
+  );
+}
 
-    }
+    
 
   };
 
