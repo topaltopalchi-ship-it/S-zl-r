@@ -86,6 +86,7 @@ button{
   color:#fff;
   background:rgba(255,255,255,.08);
   font-weight:800;
+  touch-action:manipulation;
 }
 
 .mode-btn.selected{
@@ -103,6 +104,7 @@ button{
   font-weight:900;
   font-size:18px;
   background:linear-gradient(135deg,#e0a53d,#b87818);
+  touch-action:manipulation;
 }
 
 .stats{
@@ -150,6 +152,7 @@ button{
   background:rgba(255,255,255,.08);
   color:#fff;
   font-weight:900;
+  touch-action:manipulation;
 }
 
 .stage-btn.open{
@@ -204,7 +207,7 @@ button{
 }
 
 
-/* جواب‌ها */
+/* ANSWER SLOTS */
 
 .word-slots{
   min-height:78px;
@@ -235,7 +238,7 @@ button{
 }
 
 
-/* کلمه انتخاب شده */
+/* CURRENT WORD */
 
 .current-word{
   height:55px;
@@ -249,15 +252,19 @@ button{
 }
 
 
-/* حروف */
+/* TOUCH AREA */
 
 .letters-area{
   display:grid;
   grid-template-columns:repeat(5,1fr);
   gap:10px;
+
+  /* مهم برای لمس گوشی */
   touch-action:none;
   user-select:none;
   -webkit-user-select:none;
+  -webkit-touch-callout:none;
+  overscroll-behavior:none;
 }
 
 .letter{
@@ -265,18 +272,25 @@ button{
   display:flex;
   justify-content:center;
   align-items:center;
+
   border-radius:20px;
   color:#fff;
   font-size:25px;
   font-weight:900;
+
   background:linear-gradient(
     145deg,
     rgba(255,255,255,.20),
     rgba(255,255,255,.07)
   );
+
   border:1px solid rgba(255,255,255,.22);
   box-shadow:0 8px 18px rgba(0,0,0,.2);
+
+  /* مهم */
   touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
 }
 
 .letter.selected{
@@ -286,7 +300,7 @@ button{
 }
 
 
-/* دکمه‌ها */
+/* BUTTONS */
 
 .game-actions{
   display:grid;
@@ -302,6 +316,7 @@ button{
   color:#fff;
   background:rgba(255,255,255,.09);
   font-weight:900;
+  touch-action:manipulation;
 }
 
 .check-btn{
@@ -346,7 +361,7 @@ button{
 }
 
 
-/* موسیقی */
+/* MUSIC */
 
 .music-btn{
   position:fixed;
@@ -363,7 +378,7 @@ button{
 }
 
 
-/* مودال */
+/* MODAL */
 
 .modal{
   position:fixed;
@@ -409,6 +424,7 @@ button{
   color:#fff;
   background:linear-gradient(135deg,#e0a53d,#b87818);
   font-weight:900;
+  touch-action:manipulation;
 }
 
 @media(max-width:360px){
@@ -427,8 +443,6 @@ button{
 </audio>
 
 <div class="app">
-
-<!-- ================= HOME ================= -->
 
 <section id="homeScreen" class="screen active">
 
@@ -450,7 +464,6 @@ button{
 
     </div>
 
-
     <div class="stats">
 
       <div class="stat">
@@ -470,11 +483,9 @@ button{
 
     </div>
 
-
     <button id="continueBtn" class="start-btn">
       Oyuna başla
     </button>
-
 
     <div class="stage-title">
       Mərhələlər
@@ -489,14 +500,11 @@ button{
 </section>
 
 
-<!-- ================= GAME ================= -->
-
 <section id="gameScreen" class="screen">
 
   <div class="logo" style="font-size:30px;">
     حیدربابا
   </div>
-
 
   <div class="game-top">
 
@@ -517,23 +525,13 @@ button{
 
   </div>
 
-
   <div class="glass game-card">
-
-    <!--
-      مهم:
-      اینجا جواب‌ها مخفی هستند.
-      فقط خانه‌های خالی نمایش داده می‌شوند.
-    -->
 
     <div id="wordSlots" class="word-slots"></div>
 
-
     <div id="currentWord" class="current-word"></div>
 
-
     <div id="lettersArea" class="letters-area"></div>
-
 
     <div class="game-actions">
 
@@ -551,9 +549,7 @@ button{
 
     </div>
 
-
     <div id="message" class="message"></div>
-
 
     <button
       id="hintBtn"
@@ -574,8 +570,6 @@ button{
   🔊
 </button>
 
-
-<!-- ================= MODAL ================= -->
 
 <div id="modal" class="modal">
 
@@ -774,6 +768,8 @@ let foundWords = [];
 
 let dragging = false;
 
+let activePointerId = null;
+
 let gameOver = false;
 
 let modalActionType = "";
@@ -884,20 +880,11 @@ const musicBtn =
 
 function save(){
 
-  localStorage.setItem(
-    "hb_mode",
-    mode
-  );
+  localStorage.setItem("hb_mode",mode);
 
-  localStorage.setItem(
-    "hb_coins",
-    coins
-  );
+  localStorage.setItem("hb_coins",coins);
 
-  localStorage.setItem(
-    "hb_score",
-    score
-  );
+  localStorage.setItem("hb_score",score);
 
   localStorage.setItem(
     "hb_unlockedStage",
@@ -1038,7 +1025,7 @@ continueBtn.onclick = function(){
 
 
 /* =====================================================
-   START GAME
+   START
    ===================================================== */
 
 function startGame(stageNumber){
@@ -1058,6 +1045,8 @@ function startGame(stageNumber){
   selectedIndexes = [];
 
   dragging = false;
+
+  activePointerId = null;
 
   gameOver = false;
 
@@ -1079,7 +1068,7 @@ function startGame(stageNumber){
 
 
 /* =====================================================
-   LOAD STAGE
+   LOAD
    ===================================================== */
 
 function loadStage(){
@@ -1092,9 +1081,7 @@ function loadStage(){
       ? [...stage.latinLetters]
       : [...stage.arabicLetters];
 
-  shuffleArray(
-    currentLetters
-  );
+  shuffleArray(currentLetters);
 
   gameStage.textContent =
     selectedStage;
@@ -1130,7 +1117,7 @@ function getAnswers(){
 
 
 /* =====================================================
-   HIDDEN ANSWER SLOTS
+   HIDDEN ANSWERS
    ===================================================== */
 
 function renderSlots(){
@@ -1148,12 +1135,6 @@ function renderSlots(){
     slot.className =
       "answer-slot";
 
-    /*
-      این قسمت مهم است:
-      جواب تا وقتی پیدا نشده
-      اصلاً نمایش داده نمی‌شود.
-    */
-
     if(foundWords.includes(answer)){
 
       slot.classList.add("found");
@@ -1162,6 +1143,8 @@ function renderSlots(){
         answer;
 
     }else{
+
+      /* عمداً خالی است */
 
       slot.textContent =
         "";
@@ -1176,7 +1159,7 @@ function renderSlots(){
 
 
 /* =====================================================
-   LETTERS
+   RENDER LETTERS
    ===================================================== */
 
 function renderLetters(){
@@ -1198,26 +1181,6 @@ function renderLetters(){
       el.textContent =
         letter;
 
-      el.addEventListener(
-        "pointerdown",
-        startSelect
-      );
-
-      el.addEventListener(
-        "pointermove",
-        moveSelect
-      );
-
-      el.addEventListener(
-        "pointerup",
-        endSelect
-      );
-
-      el.addEventListener(
-        "pointercancel",
-        endSelect
-      );
-
       lettersArea.appendChild(el);
 
     }
@@ -1227,97 +1190,163 @@ function renderLetters(){
 
 
 /* =====================================================
-   SELECT LETTER
+   TOUCH SYSTEM
    ===================================================== */
 
-function startSelect(e){
+/*
+  مهم‌ترین قسمت نسخه جدید:
 
-  if(gameOver)
-    return;
+  لمس و کشیدن روی کل lettersArea مدیریت می‌شود،
+  نه روی تک‌تک حروف.
 
-  e.preventDefault();
-
-  dragging = true;
-
-  selectedIndexes = [];
-
-  clearCurrentWord();
-
-  const index =
-    Number(
-      e.currentTarget.dataset.index
-    );
-
-  addLetter(index);
-
-  try{
-    lettersArea.setPointerCapture(
-      e.pointerId
-    );
-  }catch(err){}
-
-}
+  این باعث می‌شود روی گوشی هنگام کشیدن انگشت،
+  انتخاب حروف قطع نشود.
+*/
 
 
-function moveSelect(e){
-
-  if(!dragging || gameOver)
-    return;
-
-  e.preventDefault();
-
-  const element =
-    document.elementFromPoint(
-      e.clientX,
-      e.clientY
-    );
-
-  if(!element)
-    return;
-
-  const letterEl =
-    element.closest(".letter");
-
-  if(!letterEl)
-    return;
-
-  const index =
-    Number(
-      letterEl.dataset.index
-    );
-
-  addLetter(index);
-
-}
-
-
-function endSelect(e){
-
-  if(!dragging)
-    return;
-
-  dragging = false;
-
-  try{
-    lettersArea.releasePointerCapture(
-      e.pointerId
-    );
-  }catch(err){}
-
-}
-
-
-/* =====================================================
-   PREVENT SCROLL WHILE DRAGGING
-   ===================================================== */
-
-document.addEventListener(
-  "touchmove",
+lettersArea.addEventListener(
+  "pointerdown",
   function(e){
 
-    if(dragging){
-      e.preventDefault();
-    }
+    if(gameOver)
+      return;
+
+    if(e.pointerType === "mouse" && e.button !== 0)
+      return;
+
+    const letter =
+      e.target.closest(".letter");
+
+    if(!letter)
+      return;
+
+    e.preventDefault();
+
+    dragging = true;
+
+    activePointerId =
+      e.pointerId;
+
+    clearCurrentWord();
+
+    try{
+
+      lettersArea.setPointerCapture(
+        e.pointerId
+      );
+
+    }catch(err){}
+
+    const index =
+      Number(letter.dataset.index);
+
+    addLetter(index);
+
+  },
+  {passive:false}
+);
+
+
+lettersArea.addEventListener(
+  "pointermove",
+  function(e){
+
+    if(!dragging)
+      return;
+
+    if(
+      activePointerId !==
+      e.pointerId
+    )
+      return;
+
+    e.preventDefault();
+
+    const element =
+      document.elementFromPoint(
+        e.clientX,
+        e.clientY
+      );
+
+    if(!element)
+      return;
+
+    const letter =
+      element.closest(".letter");
+
+    if(!letter)
+      return;
+
+    const index =
+      Number(letter.dataset.index);
+
+    addLetter(index);
+
+  },
+  {passive:false}
+);
+
+
+lettersArea.addEventListener(
+  "pointerup",
+  function(e){
+
+    if(
+      activePointerId !==
+      e.pointerId
+    )
+      return;
+
+    e.preventDefault();
+
+    dragging = false;
+
+    try{
+
+      if(
+        lettersArea.hasPointerCapture(
+          e.pointerId
+        )
+      ){
+
+        lettersArea.releasePointerCapture(
+          e.pointerId
+        );
+
+      }
+
+    }catch(err){}
+
+    activePointerId = null;
+
+  },
+  {passive:false}
+);
+
+
+lettersArea.addEventListener(
+  "pointercancel",
+  function(e){
+
+    dragging = false;
+
+    activePointerId = null;
+
+    try{
+
+      if(
+        lettersArea.hasPointerCapture(
+          e.pointerId
+        )
+      ){
+
+        lettersArea.releasePointerCapture(
+          e.pointerId
+        );
+
+      }
+
+    }catch(err){}
 
   },
   {passive:false}
@@ -1389,19 +1418,16 @@ function clearCurrentWord(){
 
 
 /* =====================================================
-   CHECK BUTTON
+   CHECK
    ===================================================== */
 
-checkBtn.onclick = function(){
+checkBtn.onclick =
+function(){
 
   checkWord();
 
 };
 
-
-/* =====================================================
-   CHECK WORD
-   ===================================================== */
 
 function checkWord(){
 
@@ -1676,7 +1702,7 @@ function(){
 
 
 /* =====================================================
-   CLEAR BUTTON
+   CLEAR
    ===================================================== */
 
 clearBtn.onclick =
