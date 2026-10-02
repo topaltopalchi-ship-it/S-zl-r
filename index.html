@@ -1,166 +1,225 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>SÖZLƏR</title>
+<title>SÖZLƏR</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #f5f7ff, #e8ecff);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #222;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #f5f7ff, #e8ecff);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #222;
+}
 
-    .game {
-      width: 92%;
-      max-width: 500px;
-      background: white;
-      border-radius: 24px;
-      padding: 25px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
-      text-align: center;
-    }
+.game {
+  width: 92%;
+  max-width: 500px;
+  background: white;
+  border-radius: 24px;
+  padding: 25px;
+  box-shadow: 0 10px 35px rgba(0,0,0,.12);
+  text-align: center;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 42px;
-      letter-spacing: 4px;
-    }
+h1 {
+  margin: 0;
+  font-size: 42px;
+  letter-spacing: 4px;
+}
 
-    .subtitle {
-      margin-top: 5px;
-      color: #666;
-      font-size: 15px;
-    }
+.subtitle {
+  color: #666;
+  margin: 6px 0 25px;
+}
 
-    .top {
-      display: flex;
-      justify-content: space-between;
-      margin: 22px 0;
-      gap: 10px;
-    }
+.selection {
+  display: block;
+}
 
-    .box {
-      flex: 1;
-      background: #f1f3ff;
-      border-radius: 14px;
-      padding: 12px;
-    }
+.selection h2 {
+  margin-bottom: 20px;
+}
 
-    .box strong {
-      display: block;
-      font-size: 22px;
-      margin-top: 4px;
-    }
+.choice {
+  width: 100%;
+  padding: 20px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 16px;
+  font-size: 19px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .label {
-      color: #777;
-      font-size: 13px;
-    }
+.latin {
+  background: #3949ab;
+  color: white;
+}
 
-    .scrambled {
-      margin: 25px 0;
-      font-size: 34px;
-      font-weight: bold;
-      letter-spacing: 8px;
-      color: #3949ab;
-      min-height: 45px;
-    }
+.arabic {
+  background: #2e7d32;
+  color: white;
+}
 
-    .hint {
-      background: #fff8df;
-      border-radius: 14px;
-      padding: 12px;
-      margin-bottom: 18px;
-      font-size: 15px;
-    }
+.gameScreen {
+  display: none;
+}
 
-    input {
-      width: 100%;
-      padding: 16px;
-      border: 2px solid #ddd;
-      border-radius: 14px;
-      font-size: 20px;
-      text-align: center;
-      outline: none;
-      margin-bottom: 12px;
-    }
+.top {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
 
-    input:focus {
-      border-color: #3949ab;
-    }
+.box {
+  flex: 1;
+  background: #f1f3ff;
+  border-radius: 14px;
+  padding: 12px;
+}
 
-    button {
-      border: none;
-      border-radius: 14px;
-      padding: 14px 18px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin: 5px;
-    }
+.label {
+  color: #777;
+  font-size: 13px;
+}
 
-    .check {
-      background: #3949ab;
-      color: white;
-      width: 90%;
-    }
+.box strong {
+  display: block;
+  font-size: 22px;
+  margin-top: 4px;
+}
 
-    .next {
-      background: #2e7d32;
-      color: white;
-      width: 90%;
-      display: none;
-    }
+.scrambled {
+  margin: 25px 0;
+  font-size: 34px;
+  font-weight: bold;
+  letter-spacing: 7px;
+  color: #3949ab;
+  min-height: 45px;
+}
 
-    .hint-btn {
-      background: #ffca28;
-      color: #222;
-    }
+.hint {
+  background: #fff8df;
+  border-radius: 14px;
+  padding: 13px;
+  margin-bottom: 18px;
+}
 
-    .message {
-      min-height: 30px;
-      margin: 12px 0;
-      font-weight: bold;
-      font-size: 17px;
-    }
+input {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #ddd;
+  border-radius: 14px;
+  font-size: 20px;
+  text-align: center;
+  outline: none;
+  margin-bottom: 12px;
+}
 
-    .correct {
-      color: #2e7d32;
-    }
+button {
+  border: none;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px;
+}
 
-    .wrong {
-      color: #c62828;
-    }
+.check {
+  background: #3949ab;
+  color: white;
+  width: 90%;
+}
 
-    .footer {
-      margin-top: 18px;
-      color: #999;
-      font-size: 12px;
-    }
-  </style>
+.next {
+  background: #2e7d32;
+  color: white;
+  width: 90%;
+  display: none;
+}
+
+.hint-btn {
+  background: #ffca28;
+}
+
+.back {
+  background: #eee;
+  width: 90%;
+  margin-top: 12px;
+}
+
+.message {
+  min-height: 30px;
+  margin: 12px 0;
+  font-weight: bold;
+}
+
+.correct {
+  color: #2e7d32;
+}
+
+.wrong {
+  color: #c62828;
+}
+
+.footer {
+  margin-top: 18px;
+  color: #999;
+  font-size: 12px;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.rtl .scrambled {
+  letter-spacing: 3px;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="game">
+<div class="game">
 
-    <h1>SÖZLƏR</h1>
+  <h1>SÖZLƏR</h1>
 
-    <div class="subtitle">
-      Azərbaycan türkcəsi söz oyunu
-    </div>
+  <div class="subtitle">
+    Türkçe söz oyunu
+  </div>
+
+  <!-- SEÇİM EKRANI -->
+
+  <div class="selection" id="selection">
+
+    <h2>Əlifbanı seçin</h2>
+
+    <button class="choice latin" onclick="startGame('latin')">
+      🇹🇷 Türkçe — Latin əlifbası
+    </button>
+
+    <button class="choice arabic" onclick="startGame('arabic')">
+      ☪️ Türkçe — Ərəb əlifbası
+    </button>
+
+  </div>
+
+
+  <!-- OYUN -->
+
+  <div class="gameScreen" id="gameScreen">
 
     <div class="top">
 
@@ -176,12 +235,10 @@
 
     </div>
 
-    <div class="scrambled" id="scrambled">
-      EV
-    </div>
+    <div class="scrambled" id="scrambled"></div>
 
     <div class="hint">
-      💡 <span id="hint">Bir insanın yaşadığı yer</span>
+      💡 <span id="hint"></span>
     </div>
 
     <input
@@ -189,304 +246,350 @@
       type="text"
       placeholder="Cavabınızı yazın"
       autocomplete="off"
-      autocapitalize="none"
     >
 
-    <button class="check" id="checkBtn">
+    <button class="check" onclick="checkAnswer()">
       Yoxla
     </button>
 
-    <button class="hint-btn" id="hintBtn">
+    <button class="hint-btn" id="hintBtn" onclick="showHint()">
       💡 İpucu
     </button>
 
-    <button class="next" id="nextBtn">
+    <button class="next" id="nextBtn" onclick="nextWord()">
       Növbəti söz ➜
     </button>
 
     <div class="message" id="message"></div>
 
+    <button class="back" onclick="backToSelection()">
+      ← Əlifbanı dəyiş
+    </button>
+
     <div class="footer">
-      SÖZLƏR • Azərbaycan dili söz oyunu
+      SÖZLƏR • Türkçe söz oyunu
     </div>
 
   </div>
 
+</div>
+
+
 <script>
 
-  const words = [
-    {
-      word: "kitab",
-      hint: "Oxumaq üçün istifadə olunur."
-    },
-    {
-      word: "məktəb",
-      hint: "Şagirdlərin dərs oxuduğu yer."
-    },
-    {
-      word: "çiçək",
-      hint: "Bağlarda və təbiətdə bitən gözəl bitki."
-    },
-    {
-      word: "dəniz",
-      hint: "Böyük su hövzəsi."
-    },
-    {
-      word: "günəş",
-      hint: "Yerə işıq və istilik verir."
-    },
-    {
-      word: "ulduz",
-      hint: "Gecə səmasında görünür."
-    },
-    {
-      word: "qələm",
-      hint: "Yazmaq üçün istifadə olunur."
-    },
-    {
-      word: "dost",
-      hint: "Yaxın və etibar etdiyimiz insan."
-    },
-    {
-      word: "ailə",
-      hint: "Ana, ata və övladlardan ibarət ola bilər."
-    },
-    {
-      word: "şəhər",
-      hint: "İnsanların çox yaşadığı böyük yaşayış yeri."
-    },
-    {
-      word: "bahar",
-      hint: "Təbiətin canlandığı fəsil."
-    },
-    {
-      word: "qış",
-      hint: "İlin soyuq fəsli."
-    },
-    {
-      word: "yağış",
-      hint: "Göydən su damcıları şəklində yağır."
-    },
-    {
-      word: "bulud",
-      hint: "Göydə görünən ağ və ya boz kütlə."
-    },
-    {
-      word: "ağac",
-      hint: "Kökləri və budaqları olan bitki."
-    }
-  ];
+const words = [
 
-  let current = 0;
-  let score = 0;
-  let hintUsed = false;
+  {
+    latin: "kitap",
+    arabic: "کیتاپ",
+    hint: "Oxumaq üçün istifadə olunur."
+  },
 
-  const scrambledEl = document.getElementById("scrambled");
-  const hintEl = document.getElementById("hint");
-  const answerEl = document.getElementById("answer");
-  const messageEl = document.getElementById("message");
-  const scoreEl = document.getElementById("score");
-  const numberEl = document.getElementById("number");
-  const checkBtn = document.getElementById("checkBtn");
-  const nextBtn = document.getElementById("nextBtn");
-  const hintBtn = document.getElementById("hintBtn");
+  {
+    latin: "mektep",
+    arabic: "مکتپ",
+    hint: "Şagirdlərin dərs oxuduğu yer."
+  },
 
-  function shuffleWord(word) {
-    const letters = [...word];
+  {
+    latin: "çiçek",
+    arabic: "چیچک",
+    hint: "Bağlarda bitən gözəl bitki."
+  },
 
-    for (let i = letters.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+  {
+    latin: "deniz",
+    arabic: "دنیز",
+    hint: "Böyük su hövzəsi."
+  },
 
-      [letters[i], letters[j]] =
-      [letters[j], letters[i]];
-    }
+  {
+    latin: "güneş",
+    arabic: "گونش",
+    hint: "Yerə işıq və istilik verir."
+  },
 
-    let result = letters.join("");
+  {
+    latin: "yıldız",
+    arabic: "ییلدیز",
+    hint: "Gecə səmasında görünür."
+  },
 
-    if (result === word && word.length > 1) {
-      return shuffleWord(word);
-    }
+  {
+    latin: "kalem",
+    arabic: "قالم",
+    hint: "Yazmaq üçün istifadə olunur."
+  },
 
-    return result;
+  {
+    latin: "dost",
+    arabic: "دوست",
+    hint: "Yaxın və etibar etdiyimiz insan."
+  },
+
+  {
+    latin: "aile",
+    arabic: "آیله",
+    hint: "Ana, ata və övladlardan ibarət ola bilər."
+  },
+
+  {
+    latin: "şehir",
+    arabic: "شهر",
+    hint: "İnsanların çox yaşadığı yaşayış yeri."
+  },
+
+  {
+    latin: "bahar",
+    arabic: "بهار",
+    hint: "Təbiətin canlandığı fəsil."
+  },
+
+  {
+    latin: "yağmur",
+    arabic: "یاغمور",
+    hint: "Göydən su damcıları şəklində yağır."
   }
 
-  function loadWord() {
+];
 
-    const item = words[current];
 
-    scrambledEl.textContent =
-      shuffleWord(item.word);
+let mode = "latin";
+let current = 0;
+let score = 0;
+let hintUsed = false;
 
-    hintEl.textContent =
-      item.hint;
 
-    answerEl.value = "";
+function shuffleWord(word) {
 
-    messageEl.textContent = "";
+  const letters = [...word];
 
-    messageEl.className = "message";
+  for (let i = letters.length - 1; i > 0; i--) {
 
-    numberEl.textContent =
-      current + 1;
+    const j = Math.floor(Math.random() * (i + 1));
 
-    nextBtn.style.display = "none";
+    [letters[i], letters[j]] =
+    [letters[j], letters[i]];
 
-    checkBtn.style.display = "inline-block";
-
-    hintBtn.style.display = "inline-block";
-
-    hintUsed = false;
-
-    answerEl.disabled = false;
-
-    answerEl.focus();
   }
 
-  function checkAnswer() {
+  let result = letters.join("");
 
-    const answer =
-      answerEl.value
-        .trim()
-        .toLowerCase();
-
-    const correct =
-      words[current].word
-        .toLowerCase();
-
-    if (!answer) {
-
-      messageEl.textContent =
-        "Əvvəlcə cavabı yazın.";
-
-      messageEl.className =
-        "message wrong";
-
-      return;
-    }
-
-    if (answer === correct) {
-
-      let points = 10;
-
-      if (hintUsed) {
-        points = 5;
-      }
-
-      score += points;
-
-      scoreEl.textContent =
-        score;
-
-      messageEl.textContent =
-        "🎉 Düzdür! +" + points + " xal";
-
-      messageEl.className =
-        "message correct";
-
-      answerEl.disabled = true;
-
-      checkBtn.style.display =
-        "none";
-
-      hintBtn.style.display =
-        "none";
-
-      nextBtn.style.display =
-        "inline-block";
-
-    } else {
-
-      messageEl.textContent =
-        "❌ Səhvdir. Yenidən cəhd edin.";
-
-      messageEl.className =
-        "message wrong";
-
-    }
+  if (result === word && word.length > 1) {
+    return shuffleWord(word);
   }
 
-  function showHint() {
+  return result;
+}
 
-    hintUsed = true;
 
-    hintEl.textContent =
-      "İpucu: " +
-      words[current].hint;
+function startGame(selectedMode) {
 
-    messageEl.textContent =
-      "💡 İpucu فعال شد. Bu söz üçün 5 xal qazanacaqsınız.";
+  mode = selectedMode;
 
-    messageEl.className =
-      "message";
+  current = 0;
 
-    hintBtn.style.display =
-      "none";
+  score = 0;
+
+  document.getElementById("score").textContent = "0";
+
+  document.getElementById("selection").style.display = "none";
+
+  document.getElementById("gameScreen").style.display = "block";
+
+  if (mode === "arabic") {
+
+    document.body.classList.add("rtl");
+
+  } else {
+
+    document.body.classList.remove("rtl");
+
   }
-
-  function nextWord() {
-
-    current++;
-
-    if (current >= words.length) {
-
-      scrambledEl.textContent =
-        "🏆";
-
-      hintEl.textContent =
-        "Bütün sözləri tamamladınız!";
-
-      answerEl.style.display =
-        "none";
-
-      checkBtn.style.display =
-        "none";
-
-      nextBtn.style.display =
-        "none";
-
-      hintBtn.style.display =
-        "none";
-
-      messageEl.textContent =
-        "Təbriklər! Yekun xalınız: " +
-        score;
-
-      messageEl.className =
-        "message correct";
-
-      return;
-    }
-
-    loadWord();
-  }
-
-  checkBtn.addEventListener(
-    "click",
-    checkAnswer
-  );
-
-  nextBtn.addEventListener(
-    "click",
-    nextWord
-  );
-
-  hintBtn.addEventListener(
-    "click",
-    showHint
-  );
-
-  answerEl.addEventListener(
-    "keydown",
-    function(event) {
-
-      if (event.key === "Enter") {
-        checkAnswer();
-      }
-
-    }
-  );
 
   loadWord();
+}
+
+
+function loadWord() {
+
+  const item = words[current];
+
+  const word =
+    mode === "latin"
+      ? item.latin
+      : item.arabic;
+
+  document.getElementById("scrambled").textContent =
+    shuffleWord(word);
+
+  document.getElementById("hint").textContent =
+    item.hint;
+
+  document.getElementById("answer").value = "";
+
+  document.getElementById("message").textContent = "";
+
+  document.getElementById("number").textContent =
+    current + 1;
+
+  document.getElementById("nextBtn").style.display =
+    "none";
+
+  document.querySelector(".check").style.display =
+    "inline-block";
+
+  document.getElementById("hintBtn").style.display =
+    "inline-block";
+
+  document.getElementById("answer").disabled = false;
+
+  hintUsed = false;
+}
+
+
+function checkAnswer() {
+
+  const answer =
+    document.getElementById("answer")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const correct =
+    mode === "latin"
+      ? words[current].latin.toLowerCase()
+      : words[current].arabic;
+
+  if (!answer) {
+
+    showMessage(
+      "Əvvəlcə cavabı yazın.",
+      "wrong"
+    );
+
+    return;
+  }
+
+  if (answer === correct) {
+
+    let points = hintUsed ? 5 : 10;
+
+    score += points;
+
+    document.getElementById("score").textContent =
+      score;
+
+    showMessage(
+      "🎉 Düzdür! +" + points + " xal",
+      "correct"
+    );
+
+    document.getElementById("answer").disabled = true;
+
+    document.querySelector(".check").style.display =
+      "none";
+
+    document.getElementById("hintBtn").style.display =
+      "none";
+
+    document.getElementById("nextBtn").style.display =
+      "inline-block";
+
+  } else {
+
+    showMessage(
+      "❌ Səhvdir. Yenidən cəhd edin.",
+      "wrong"
+    );
+
+  }
+}
+
+
+function showHint() {
+
+  hintUsed = true;
+
+  showMessage(
+    "💡 İpucu istifadə edildi. Bu söz 5 xal dəyərindədir.",
+    ""
+  );
+
+  document.getElementById("hintBtn").style.display =
+    "none";
+}
+
+
+function nextWord() {
+
+  current++;
+
+  if (current >= words.length) {
+
+    document.getElementById("scrambled").textContent =
+      "🏆";
+
+    document.getElementById("hint").textContent =
+      "Bütün sözləri tamamladınız!";
+
+    document.getElementById("answer").style.display =
+      "none";
+
+    document.querySelector(".check").style.display =
+      "none";
+
+    document.getElementById("nextBtn").style.display =
+      "none";
+
+    document.getElementById("hintBtn").style.display =
+      "none";
+
+    showMessage(
+      "Təbriklər! Yekun xalınız: " + score,
+      "correct"
+    );
+
+    return;
+  }
+
+  loadWord();
+}
+
+
+function showMessage(text, type) {
+
+  const message =
+    document.getElementById("message");
+
+  message.textContent = text;
+
+  message.className =
+    "message " + type;
+}
+
+
+function backToSelection() {
+
+  document.getElementById("gameScreen").style.display =
+    "none";
+
+  document.getElementById("selection").style.display =
+    "block";
+
+  document.body.classList.remove("rtl");
+
+}
+
+
+document.getElementById("answer")
+  .addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+      checkAnswer();
+    }
+
+  });
 
 </script>
 
