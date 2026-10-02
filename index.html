@@ -78,7 +78,7 @@ button:active{
   font-size:36px;
   letter-spacing:8px;
   margin:25px 0;
-  min-height:50px;
+  min-height:55px;
 }
 
 .hint{
@@ -107,37 +107,43 @@ input{
 
 .arabic{
   direction:rtl;
-  font-size:36px;
+  font-size:38px;
   letter-spacing:3px;
 }
 
-/* Ü — و با ۷ کوچک بالا */
+/* Ü
+   و با علامت ۷ کوچک بالای آن
+*/
 .special-u{
   position:relative;
   display:inline-block;
-  padding-top:12px;
+  padding-top:13px;
+  margin:0 2px;
 }
 
 .special-u::before{
   content:"۷";
   position:absolute;
-  top:-7px;
+  top:-8px;
   left:50%;
   transform:translateX(-50%) scale(.45);
   font-weight:bold;
 }
 
-/* Ö — و با همزه کوچک بالا */
+/* Ö
+   و با همزه کوچک بالای آن
+*/
 .special-o{
   position:relative;
   display:inline-block;
-  padding-top:12px;
+  padding-top:13px;
+  margin:0 2px;
 }
 
 .special-o::before{
   content:"ء";
   position:absolute;
-  top:-7px;
+  top:-8px;
   left:50%;
   transform:translateX(-50%) scale(.55);
   font-weight:bold;
@@ -149,7 +155,7 @@ input{
 
 <div class="container">
 
-<!-- MENU -->
+<!-- صفحه اصلی -->
 <div id="menu">
 
 <h1>SÖZLƏR</h1>
@@ -159,17 +165,17 @@ Azərbaycan Türkcəsi söz oyunu
 </div>
 
 <button onclick="startGame('latin')">
-🇦🇿 Azərbaycan Türkcəsi — Latın əlifbası
+🇮🇷 Azərbaycan Türkcəsi — Latın əlifbası
 </button>
 
 <button onclick="startGame('arabic')">
-☪️ Azərbaycan Türkcəsi — Ərəb əlifbası
+🇮🇷 Azərbaycan Türkcəsi — Ərəb əlifbası
 </button>
 
 </div>
 
 
-<!-- GAME -->
+<!-- صفحه بازی -->
 <div id="game" class="hidden">
 
 <div class="stats">
@@ -398,7 +404,7 @@ makeArabicDisplay(word);
 
 
 /* =========================
-   Qarışdır
+   حروف لاتین را مخلوط کن
    ========================= */
 
 function shuffle(word){
@@ -420,7 +426,7 @@ return letters.join(" ");
 
 
 /* =========================
-   Ərəb yazısını göstər
+   نمایش حروف عربی
    ========================= */
 
 function makeArabicDisplay(word){
@@ -429,23 +435,31 @@ let result="";
 
 for(let char of word){
 
-if(char==="ۇ"){
+/*
+  ۈ = Ü
+  علامت ۷ بالای و
+*/
+if(char==="ۈ"){
 
-result+=
+result +=
 '<span class="special-u">و</span>';
 
 }
 
+/*
+  ۆ = Ö
+  همزه کوچک بالای و
+*/
 else if(char==="ۆ"){
 
-result+=
+result +=
 '<span class="special-o">و</span>';
 
 }
 
 else{
 
-result+=char;
+result += char;
 
 }
 
@@ -457,7 +471,7 @@ return result;
 
 
 /* =========================
-   Cavabı yoxla
+   جواب را بررسی کن
    ========================= */
 
 function checkAnswer(){
@@ -490,7 +504,9 @@ message.textContent=
 document.getElementById("score")
 .textContent=score;
 
-}else{
+}
+
+else{
 
 message.textContent=
 "❌ Düz deyil. Yenidən cəhd edin.";
@@ -501,7 +517,7 @@ message.textContent=
 
 
 /* =========================
-   İpucu
+   نمایش راهنما
    ========================= */
 
 function showHint(){
@@ -516,7 +532,7 @@ hintUsed=true;
 
 
 /* =========================
-   Növbəti söz
+   کلمه بعد
    ========================= */
 
 function nextWord(){
@@ -535,7 +551,7 @@ showWord();
 
 
 /* =========================
-   Menyu
+   برگشت به منو
    ========================= */
 
 function backToMenu(){
