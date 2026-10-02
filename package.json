@@ -8,9 +8,11 @@
     "cap:sync": "cap sync"
   },
   "dependencies": {
-    "@capacitor/core": "^7.4.0"
+    "@capacitor/core": "8.5.2",
+    "@capacitor/android": "8.5.2",
+    "@capacitor/ios": "8.5.2"
   },
   "devDependencies": {
-    "@capacitor/cli": "^7.4.0"
+    "@capacitor/cli": "8.5.2"
   }
 }
