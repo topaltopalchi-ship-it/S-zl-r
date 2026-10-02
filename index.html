@@ -17,19 +17,56 @@ html,body{
   min-height:100%;
   font-family:Arial,sans-serif;
   color:#fff;
-  background:
-    radial-gradient(circle at 15% 10%,rgba(255,205,100,.18),transparent 28%),
-    radial-gradient(circle at 90% 80%,rgba(80,130,255,.16),transparent 30%),
-    linear-gradient(145deg,#101d32,#0a1323 55%,#050b15);
+  background:#07111f;
 }
 
 body{
   min-height:100vh;
   overflow-x:hidden;
+  position:relative;
+}
+
+/* BACKGROUND */
+
+body::before,
+body::after{
+  content:"";
+  position:fixed;
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  pointer-events:none;
+  filter:blur(70px);
+  opacity:.22;
+  z-index:-2;
+  animation:floatGlow 9s ease-in-out infinite alternate;
+}
+
+body::before{
+  top:-80px;
+  left:-80px;
+  background:#e5a93f;
+}
+
+body::after{
+  right:-100px;
+  bottom:-80px;
+  background:#3979d8;
+  animation-delay:-4s;
+}
+
+@keyframes floatGlow{
+  from{
+    transform:translate3d(0,0,scale(1));
+  }
+  to{
+    transform:translate3d(30px,20px,scale(1.18));
+  }
 }
 
 button{
   font:inherit;
+  cursor:pointer;
 }
 
 .app{
@@ -40,42 +77,107 @@ button{
   padding:16px 14px 30px;
 }
 
+/* SCREEN */
+
 .screen{
   display:none;
 }
 
 .screen.active{
   display:block;
+  animation:screenIn .45s ease both;
 }
+
+@keyframes screenIn{
+  from{
+    opacity:0;
+    transform:translateY(15px) scale(.985);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+/* LOGO */
 
 .logo{
   text-align:center;
   font-size:34px;
   font-weight:900;
   margin:8px 0 18px;
-  text-shadow:0 4px 20px rgba(0,0,0,.45);
+  text-shadow:
+    0 4px 20px rgba(0,0,0,.45),
+    0 0 25px rgba(235,181,70,.18);
+  animation:logoFloat 3.5s ease-in-out infinite;
 }
+
+@keyframes logoFloat{
+  0%,100%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-3px);
+  }
+}
+
+/* GLASS */
 
 .glass{
   background:
-    linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.045));
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.14),
+      rgba(255,255,255,.035)
+    );
   border:1px solid rgba(255,255,255,.18);
   border-radius:30px;
   box-shadow:
-    0 20px 50px rgba(0,0,0,.30),
-    inset 0 1px 0 rgba(255,255,255,.10);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
+    0 25px 60px rgba(0,0,0,.34),
+    inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  position:relative;
+  overflow:hidden;
+}
+
+.glass::before{
+  content:"";
+  position:absolute;
+  top:-100%;
+  left:-60%;
+  width:50%;
+  height:300%;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.07),
+    transparent
+  );
+  transform:rotate(18deg);
+  animation:glassShine 8s ease-in-out infinite;
+  pointer-events:none;
+}
+
+@keyframes glassShine{
+  0%,65%{
+    left:-70%;
+  }
+  100%{
+    left:140%;
+  }
 }
 
 .home-card{
   padding:20px;
 }
 
+/* MODE */
+
 .mode-title{
   text-align:center;
   margin-bottom:12px;
-  opacity:.85;
+  opacity:.82;
 }
 
 .mode-buttons{
@@ -97,24 +199,33 @@ button{
     );
   font-weight:800;
   touch-action:manipulation;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
-  transition:transform .15s ease;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 8px 18px rgba(0,0,0,.12);
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    background .18s ease;
 }
 
 .mode-btn:active{
-  transform:scale(.96);
+  transform:scale(.95);
 }
 
 .mode-btn.selected{
   background:
     linear-gradient(
       145deg,
-      rgba(226,173,78,.55),
-      rgba(170,105,20,.30)
+      rgba(226,173,78,.62),
+      rgba(170,105,20,.32)
     );
   border-color:#efbd5a;
-  box-shadow:0 8px 25px rgba(210,145,40,.18);
+  box-shadow:
+    0 0 22px rgba(210,145,40,.18),
+    inset 0 1px 0 rgba(255,255,255,.18);
 }
+
+/* START */
 
 .start-btn{
   width:100%;
@@ -127,15 +238,21 @@ button{
   font-size:18px;
   background:linear-gradient(135deg,#efbd58,#b97618);
   box-shadow:
-    0 10px 25px rgba(190,125,25,.28),
-    inset 0 1px 0 rgba(255,255,255,.25);
+    0 12px 28px rgba(190,125,25,.30),
+    inset 0 1px 0 rgba(255,255,255,.28);
   touch-action:manipulation;
-  transition:transform .15s ease;
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease;
 }
 
 .start-btn:active{
   transform:scale(.97);
+  box-shadow:
+    0 5px 15px rgba(190,125,25,.22);
 }
+
+/* STATS */
 
 .stats{
   display:grid;
@@ -149,6 +266,12 @@ button{
   padding:10px 5px;
   border-radius:16px;
   background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.05);
+  transition:transform .2s ease;
+}
+
+.stat:hover{
+  transform:translateY(-2px);
 }
 
 .stat small{
@@ -162,6 +285,8 @@ button{
   margin-top:4px;
   font-size:18px;
 }
+
+/* STAGES */
 
 .stage-title{
   text-align:center;
@@ -188,29 +313,44 @@ button{
   color:#fff;
   font-weight:900;
   touch-action:manipulation;
-  transition:transform .15s ease;
+  transition:
+    transform .16s ease,
+    box-shadow .16s ease,
+    border-color .16s ease;
 }
 
 .stage-btn:active{
-  transform:scale(.94);
+  transform:scale(.91);
 }
 
 .stage-btn.open{
   background:
     linear-gradient(
       145deg,
-      rgba(255,255,255,.10),
+      rgba(255,255,255,.11),
       rgba(255,255,255,.035)
     );
 }
 
 .stage-btn.current{
   border:2px solid #efbd5a;
-  box-shadow:0 0 18px rgba(235,177,70,.18);
+  box-shadow:
+    0 0 18px rgba(235,177,70,.22),
+    inset 0 0 15px rgba(235,177,70,.06);
+  animation:stagePulse 2s ease-in-out infinite;
+}
+
+@keyframes stagePulse{
+  0%,100%{
+    box-shadow:0 0 12px rgba(235,177,70,.15);
+  }
+  50%{
+    box-shadow:0 0 25px rgba(235,177,70,.35);
+  }
 }
 
 .stage-btn.locked{
-  opacity:.35;
+  opacity:.32;
 }
 
 .stage-info{
@@ -219,7 +359,6 @@ button{
   font-size:13px;
   opacity:.65;
 }
-
 
 /* GAME */
 
@@ -235,6 +374,12 @@ button{
   padding:10px 4px;
   border-radius:15px;
   background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.06);
+  transition:transform .2s ease;
+}
+
+.top-box:hover{
+  transform:translateY(-2px);
 }
 
 .top-box small{
@@ -251,7 +396,6 @@ button{
 .game-card{
   padding:16px;
 }
-
 
 /* ANSWER SLOTS */
 
@@ -292,22 +436,42 @@ button{
       rgba(255,255,255,.035)
     );
   border:1px solid rgba(255,255,255,.12);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06);
   font-size:20px;
   font-weight:900;
+  transition:
+    transform .25s ease,
+    background .25s ease,
+    box-shadow .25s ease;
 }
 
 .answer-slot.found{
   background:
     linear-gradient(
       145deg,
-      rgba(74,190,118,.42),
-      rgba(40,125,75,.20)
+      rgba(74,190,118,.48),
+      rgba(40,125,75,.22)
     );
-  border-color:rgba(110,230,150,.65);
-  box-shadow:0 0 16px rgba(70,190,110,.12);
+  border-color:rgba(110,230,150,.70);
+  box-shadow:
+    0 0 18px rgba(70,190,110,.16);
+  animation:slotFound .4s ease both;
 }
 
+@keyframes slotFound{
+  0%{
+    transform:scale(.65);
+    opacity:.2;
+  }
+  65%{
+    transform:scale(1.12);
+  }
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
+}
 
 /* CURRENT WORD */
 
@@ -320,10 +484,11 @@ button{
   font-size:28px;
   font-weight:900;
   letter-spacing:2px;
+  text-shadow:0 3px 15px rgba(0,0,0,.3);
+  transition:transform .15s ease;
 }
 
-
-/* TOUCH AREA */
+/* LETTER AREA */
 
 .letters-area{
   display:grid;
@@ -335,6 +500,8 @@ button{
   -webkit-touch-callout:none;
   overscroll-behavior:none;
 }
+
+/* LETTER */
 
 .letter{
   aspect-ratio:1;
@@ -359,27 +526,49 @@ button{
   user-select:none;
   -webkit-user-select:none;
   transition:
-    transform .12s ease,
-    background .12s ease,
-    box-shadow .12s ease;
+    transform .13s cubic-bezier(.2,.8,.2,1),
+    background .13s ease,
+    box-shadow .13s ease;
+  animation:letterAppear .35s ease both;
+}
+
+.letter:nth-child(1){animation-delay:.02s}
+.letter:nth-child(2){animation-delay:.04s}
+.letter:nth-child(3){animation-delay:.06s}
+.letter:nth-child(4){animation-delay:.08s}
+.letter:nth-child(5){animation-delay:.10s}
+.letter:nth-child(6){animation-delay:.12s}
+.letter:nth-child(7){animation-delay:.14s}
+.letter:nth-child(8){animation-delay:.16s}
+.letter:nth-child(9){animation-delay:.18s}
+.letter:nth-child(10){animation-delay:.20s}
+
+@keyframes letterAppear{
+  from{
+    opacity:0;
+    transform:translateY(12px) scale(.86);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
 }
 
 .letter.selected{
-  transform:scale(.90);
+  transform:scale(.88) translateY(-2px);
   background:
     linear-gradient(
       145deg,
-      rgba(236,181,72,.85),
-      rgba(178,112,20,.65)
+      rgba(236,181,72,.90),
+      rgba(178,112,20,.68)
     );
   border-color:#ffd978;
   box-shadow:
-    0 0 22px rgba(235,178,68,.30),
-    inset 0 1px 0 rgba(255,255,255,.25);
+    0 0 25px rgba(235,178,68,.34),
+    inset 0 1px 0 rgba(255,255,255,.28);
 }
 
-
-/* BUTTONS */
+/* ACTION BUTTONS */
 
 .game-actions{
   display:grid;
@@ -401,56 +590,102 @@ button{
     );
   font-weight:900;
   touch-action:manipulation;
-  transition:transform .12s ease;
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease;
 }
 
 .action-btn:active{
-  transform:scale(.96);
+  transform:scale(.94);
 }
 
 .check-btn{
   background:linear-gradient(135deg,#efbd58,#b97618);
+  box-shadow:
+    0 8px 20px rgba(190,125,25,.20);
 }
 
 .hint-btn{
   background:rgba(214,155,50,.22);
 }
 
+/* MESSAGE */
+
 .message{
   min-height:28px;
   margin-top:12px;
   text-align:center;
   font-weight:800;
+  transition:opacity .2s ease;
 }
 
 .correct{
   color:#9cf0b9;
+  animation:messagePop .35s ease;
 }
 
 .wrong{
   color:#ffaaa0;
+  animation:messagePop .35s ease;
 }
+
+@keyframes messagePop{
+  0%{
+    opacity:0;
+    transform:scale(.8);
+  }
+  70%{
+    transform:scale(1.08);
+  }
+  100%{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+/* SHAKE */
 
 .shake{
-  animation:shake .35s;
-}
-
-.pop{
-  animation:pop .25s;
+  animation:shake .38s ease;
 }
 
 @keyframes shake{
-  0%,100%{transform:translateX(0)}
-  25%{transform:translateX(-7px)}
-  75%{transform:translateX(7px)}
+  0%,100%{
+    transform:translateX(0);
+  }
+  20%{
+    transform:translateX(-7px);
+  }
+  40%{
+    transform:translateX(6px);
+  }
+  60%{
+    transform:translateX(-5px);
+  }
+  80%{
+    transform:translateX(4px);
+  }
+}
+
+/* POP */
+
+.pop{
+  animation:pop .3s ease;
 }
 
 @keyframes pop{
-  50%{transform:scale(1.03)}
+  0%{
+    transform:scale(1);
+  }
+  50%{
+    transform:scale(1.04);
+  }
+  100%{
+    transform:scale(1);
+  }
 }
 
-
-/* MUSIC BUTTON */
+/* MUSIC */
 
 .music-btn{
   position:fixed;
@@ -474,8 +709,14 @@ button{
     inset 0 1px 0 rgba(255,255,255,.10);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease;
 }
 
+.music-btn:active{
+  transform:scale(.90);
+}
 
 /* MODAL */
 
@@ -486,12 +727,20 @@ button{
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:rgba(0,0,0,.62);
+  background:rgba(0,0,0,.68);
   z-index:100;
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
 }
 
 .modal.show{
   display:flex;
+  animation:modalBg .25s ease;
+}
+
+@keyframes modalBg{
+  from{opacity:0}
+  to{opacity:1}
 }
 
 .modal-card{
@@ -500,9 +749,28 @@ button{
   padding:25px;
   text-align:center;
   border-radius:28px;
-  background:#182b3d;
+  background:
+    linear-gradient(
+      145deg,
+      #20384d,
+      #122333
+    );
   border:1px solid rgba(255,255,255,.16);
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.10);
+  animation:modalCardIn .35s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes modalCardIn{
+  from{
+    opacity:0;
+    transform:translateY(25px) scale(.90);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
 }
 
 .modal-card h2{
@@ -524,7 +792,14 @@ button{
   background:linear-gradient(135deg,#e0a53d,#b87818);
   font-weight:900;
   touch-action:manipulation;
+  transition:transform .15s ease;
 }
+
+.modal-card button:active{
+  transform:scale(.96);
+}
+
+/* MOBILE */
 
 @media(max-width:360px){
 
@@ -539,6 +814,10 @@ button{
     font-size:18px;
   }
 
+  .game-card{
+    padding:13px;
+  }
+
 }
 </style>
 </head>
@@ -546,9 +825,7 @@ button{
 <body>
 
 <audio id="music" loop preload="auto">
-  <source
-    src="./ays%C9%99l.mp3"
-    type="audio/mpeg">
+  <source src="./ays%C9%99l.mp3" type="audio/mpeg">
 </audio>
 
 <div class="app">
@@ -674,11 +951,9 @@ button{
 
 </div>
 
-
 <button id="musicBtn" class="music-btn">
   🔊
 </button>
-
 
 <div id="modal" class="modal">
 
@@ -694,12 +969,7 @@ button{
 
 </div>
 
-
 <script>
-
-/* =====================================================
-   STAGES
-   ===================================================== */
 
 const stages = [
 
@@ -845,11 +1115,6 @@ const stages = [
 
 ];
 
-
-/* =====================================================
-   STATE
-   ===================================================== */
-
 let mode =
   localStorage.getItem("hb_mode") || "latin";
 
@@ -866,21 +1131,13 @@ let selectedStage =
   Number(localStorage.getItem("hb_selectedStage") || 1);
 
 let lives = 3;
-
 let currentLetters = [];
-
 let currentWord = "";
-
 let selectedIndexes = [];
-
 let foundWords = [];
-
 let dragging = false;
-
 let activePointerId = null;
-
 let gameOver = false;
-
 let modalActionType = "";
 
 if(unlockedStage < 1)
@@ -895,121 +1152,43 @@ if(selectedStage < 1)
 if(selectedStage > unlockedStage)
   selectedStage = unlockedStage;
 
-
-/* =====================================================
-   ELEMENTS
-   ===================================================== */
-
-const music =
-  document.getElementById("music");
-
-const homeScreen =
-  document.getElementById("homeScreen");
-
-const gameScreen =
-  document.getElementById("gameScreen");
-
-const latinBtn =
-  document.getElementById("latinBtn");
-
-const arabicBtn =
-  document.getElementById("arabicBtn");
-
-const continueBtn =
-  document.getElementById("continueBtn");
-
-const stageGrid =
-  document.getElementById("stageGrid");
-
-const stageInfo =
-  document.getElementById("stageInfo");
-
-const homeStage =
-  document.getElementById("homeStage");
-
-const homeCoins =
-  document.getElementById("homeCoins");
-
-const homeScore =
-  document.getElementById("homeScore");
-
-const gameStage =
-  document.getElementById("gameStage");
-
-const gameCoins =
-  document.getElementById("gameCoins");
-
-const gameLives =
-  document.getElementById("gameLives");
-
-const wordSlots =
-  document.getElementById("wordSlots");
-
-const currentWordEl =
-  document.getElementById("currentWord");
-
-const lettersArea =
-  document.getElementById("lettersArea");
-
-const message =
-  document.getElementById("message");
-
-const clearBtn =
-  document.getElementById("clearBtn");
-
-const checkBtn =
-  document.getElementById("checkBtn");
-
-const shuffleBtn =
-  document.getElementById("shuffleBtn");
-
-const hintBtn =
-  document.getElementById("hintBtn");
-
-const modal =
-  document.getElementById("modal");
-
-const modalTitle =
-  document.getElementById("modalTitle");
-
-const modalText =
-  document.getElementById("modalText");
-
-const modalAction =
-  document.getElementById("modalAction");
-
-const musicBtn =
-  document.getElementById("musicBtn");
-
-
-/* =====================================================
-   SAVE
-   ===================================================== */
+const music = document.getElementById("music");
+const homeScreen = document.getElementById("homeScreen");
+const gameScreen = document.getElementById("gameScreen");
+const latinBtn = document.getElementById("latinBtn");
+const arabicBtn = document.getElementById("arabicBtn");
+const continueBtn = document.getElementById("continueBtn");
+const stageGrid = document.getElementById("stageGrid");
+const stageInfo = document.getElementById("stageInfo");
+const homeStage = document.getElementById("homeStage");
+const homeCoins = document.getElementById("homeCoins");
+const homeScore = document.getElementById("homeScore");
+const gameStage = document.getElementById("gameStage");
+const gameCoins = document.getElementById("gameCoins");
+const gameLives = document.getElementById("gameLives");
+const wordSlots = document.getElementById("wordSlots");
+const currentWordEl = document.getElementById("currentWord");
+const lettersArea = document.getElementById("lettersArea");
+const message = document.getElementById("message");
+const clearBtn = document.getElementById("clearBtn");
+const checkBtn = document.getElementById("checkBtn");
+const shuffleBtn = document.getElementById("shuffleBtn");
+const hintBtn = document.getElementById("hintBtn");
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modalTitle");
+const modalText = document.getElementById("modalText");
+const modalAction = document.getElementById("modalAction");
+const musicBtn = document.getElementById("musicBtn");
 
 function save(){
 
   localStorage.setItem("hb_mode",mode);
-
   localStorage.setItem("hb_coins",coins);
-
   localStorage.setItem("hb_score",score);
-
-  localStorage.setItem(
-    "hb_unlockedStage",
-    unlockedStage
-  );
-
-  localStorage.setItem(
-    "hb_selectedStage",
-    selectedStage
-  );
+  localStorage.setItem("hb_unlockedStage",unlockedStage);
+  localStorage.setItem("hb_selectedStage",selectedStage);
 
 }
-
-
-/* =====================================================
-   MODE
-   ===================================================== */
 
 function setMode(newMode){
 
@@ -1037,65 +1216,38 @@ arabicBtn.onclick = function(){
   setMode("arabic");
 };
 
-
-/* =====================================================
-   HOME
-   ===================================================== */
-
 function updateHome(){
 
-  homeStage.textContent =
-    selectedStage;
-
-  homeCoins.textContent =
-    coins;
-
-  homeScore.textContent =
-    score;
+  homeStage.textContent = selectedStage;
+  homeCoins.textContent = coins;
+  homeScore.textContent = score;
 
 }
-
 
 function renderStages(){
 
   stageGrid.innerHTML = "";
 
-  for(
-    let i=0;
-    i<stages.length;
-    i++
-  ){
+  for(let i=0;i<stages.length;i++){
 
     const number = i + 1;
+    const btn = document.createElement("button");
 
-    const btn =
-      document.createElement("button");
-
-    btn.className =
-      "stage-btn";
+    btn.className = "stage-btn";
 
     if(number <= unlockedStage){
 
       btn.classList.add("open");
+      btn.textContent = number;
 
-      btn.textContent =
-        number;
-
-      if(number === selectedStage){
-
+      if(number === selectedStage)
         btn.classList.add("current");
-
-      }
 
       btn.onclick = function(){
 
-        selectedStage =
-          number;
-
+        selectedStage = number;
         save();
-
         updateHome();
-
         renderStages();
 
       };
@@ -1103,9 +1255,7 @@ function renderStages(){
     }else{
 
       btn.classList.add("locked");
-
-      btn.textContent =
-        "🔒";
+      btn.textContent = "🔒";
 
     }
 
@@ -1118,65 +1268,41 @@ function renderStages(){
 
 }
 
-
 continueBtn.onclick = function(){
 
   startGame(selectedStage);
 
 };
 
-
-/* =====================================================
-   START
-   ===================================================== */
-
 function startGame(stageNumber){
 
   if(stageNumber > unlockedStage)
     return;
 
-  selectedStage =
-    stageNumber;
-
+  selectedStage = stageNumber;
   lives = 3;
-
   foundWords = [];
-
   currentWord = "";
-
   selectedIndexes = [];
-
   dragging = false;
-
   activePointerId = null;
-
   gameOver = false;
 
   message.textContent = "";
-
   message.className = "message";
 
   homeScreen.classList.remove("active");
-
   gameScreen.classList.add("active");
 
   loadStage();
-
   startMusic();
-
   save();
 
 }
 
-
-/* =====================================================
-   LOAD
-   ===================================================== */
-
 function loadStage(){
 
-  const stage =
-    stages[selectedStage - 1];
+  const stage = stages[selectedStage - 1];
 
   currentLetters =
     mode === "latin"
@@ -1185,31 +1311,20 @@ function loadStage(){
 
   shuffleArray(currentLetters);
 
-  gameStage.textContent =
-    selectedStage;
+  gameStage.textContent = selectedStage;
 
-  gameCoins.textContent =
-    coins;
+  gameCoins.textContent = coins;
 
   updateLives();
-
   renderSlots();
-
   renderLetters();
-
   clearCurrentWord();
 
 }
 
-
-/* =====================================================
-   ANSWERS
-   ===================================================== */
-
 function getAnswers(){
 
-  const stage =
-    stages[selectedStage - 1];
+  const stage = stages[selectedStage - 1];
 
   return mode === "latin"
     ? stage.latinAnswers
@@ -1217,44 +1332,29 @@ function getAnswers(){
 
 }
 
-
-/* =====================================================
-   ANSWER SLOTS
-   ===================================================== */
-
 function renderSlots(){
 
   wordSlots.innerHTML = "";
 
-  const answers =
-    getAnswers();
+  const answers = getAnswers();
 
   answers.forEach(answer=>{
 
-    const word =
-      document.createElement("div");
+    const word = document.createElement("div");
 
-    word.className =
-      "answer-word";
+    word.className = "answer-word";
 
-    if(mode === "arabic"){
-
+    if(mode === "arabic")
       word.classList.add("arabic");
-
-    }
 
     if(foundWords.includes(answer)){
 
       [...answer].forEach(letter=>{
 
-        const slot =
-          document.createElement("div");
+        const slot = document.createElement("div");
 
-        slot.className =
-          "answer-slot found";
-
-        slot.textContent =
-          letter;
+        slot.className = "answer-slot found";
+        slot.textContent = letter;
 
         word.appendChild(slot);
 
@@ -1264,14 +1364,10 @@ function renderSlots(){
 
       [...answer].forEach(()=>{
 
-        const slot =
-          document.createElement("div");
+        const slot = document.createElement("div");
 
-        slot.className =
-          "answer-slot";
-
-        slot.textContent =
-          "";
+        slot.className = "answer-slot";
+        slot.textContent = "";
 
         word.appendChild(slot);
 
@@ -1285,41 +1381,23 @@ function renderSlots(){
 
 }
 
-
-/* =====================================================
-   RENDER LETTERS
-   ===================================================== */
-
 function renderLetters(){
 
   lettersArea.innerHTML = "";
 
-  currentLetters.forEach(
-    (letter,index)=>{
+  currentLetters.forEach((letter,index)=>{
 
-      const el =
-        document.createElement("div");
+    const el = document.createElement("div");
 
-      el.className =
-        "letter";
+    el.className = "letter";
+    el.dataset.index = index;
+    el.textContent = letter;
 
-      el.dataset.index =
-        index;
+    lettersArea.appendChild(el);
 
-      el.textContent =
-        letter;
-
-      lettersArea.appendChild(el);
-
-    }
-  );
+  });
 
 }
-
-
-/* =====================================================
-   TOUCH SYSTEM
-   ===================================================== */
 
 lettersArea.addEventListener(
   "pointerdown",
@@ -1334,8 +1412,7 @@ lettersArea.addEventListener(
     )
       return;
 
-    const letter =
-      e.target.closest(".letter");
+    const letter = e.target.closest(".letter");
 
     if(!letter)
       return;
@@ -1343,29 +1420,21 @@ lettersArea.addEventListener(
     e.preventDefault();
 
     dragging = true;
-
-    activePointerId =
-      e.pointerId;
+    activePointerId = e.pointerId;
 
     clearCurrentWord();
 
     try{
-
-      lettersArea.setPointerCapture(
-        e.pointerId
-      );
-
+      lettersArea.setPointerCapture(e.pointerId);
     }catch(err){}
 
-    const index =
-      Number(letter.dataset.index);
+    const index = Number(letter.dataset.index);
 
     addLetter(index);
 
   },
   {passive:false}
 );
-
 
 lettersArea.addEventListener(
   "pointermove",
@@ -1374,10 +1443,7 @@ lettersArea.addEventListener(
     if(!dragging)
       return;
 
-    if(
-      activePointerId !==
-      e.pointerId
-    )
+    if(activePointerId !== e.pointerId)
       return;
 
     e.preventDefault();
@@ -1406,15 +1472,11 @@ lettersArea.addEventListener(
   {passive:false}
 );
 
-
 lettersArea.addEventListener(
   "pointerup",
   function(e){
 
-    if(
-      activePointerId !==
-      e.pointerId
-    )
+    if(activePointerId !== e.pointerId)
       return;
 
     e.preventDefault();
@@ -1428,11 +1490,9 @@ lettersArea.addEventListener(
           e.pointerId
         )
       ){
-
         lettersArea.releasePointerCapture(
           e.pointerId
         );
-
       }
 
     }catch(err){}
@@ -1443,13 +1503,11 @@ lettersArea.addEventListener(
   {passive:false}
 );
 
-
 lettersArea.addEventListener(
   "pointercancel",
   function(e){
 
     dragging = false;
-
     activePointerId = null;
 
     try{
@@ -1459,11 +1517,9 @@ lettersArea.addEventListener(
           e.pointerId
         )
       ){
-
         lettersArea.releasePointerCapture(
           e.pointerId
         );
-
       }
 
     }catch(err){}
@@ -1472,82 +1528,47 @@ lettersArea.addEventListener(
   {passive:false}
 );
 
-
-/* =====================================================
-   ADD LETTER
-   ===================================================== */
-
 function addLetter(index){
 
-  if(
-    selectedIndexes.includes(index)
-  )
+  if(selectedIndexes.includes(index))
     return;
 
   selectedIndexes.push(index);
 
-  currentWord +=
-    currentLetters[index];
+  currentWord += currentLetters[index];
 
-  currentWordEl.textContent =
-    currentWord;
+  currentWordEl.textContent = currentWord;
+
+  currentWordEl.classList.remove("pop");
+  void currentWordEl.offsetWidth;
+  currentWordEl.classList.add("pop");
 
   const elements =
-    lettersArea.querySelectorAll(
-      ".letter"
-    );
+    lettersArea.querySelectorAll(".letter");
 
-  if(elements[index]){
-
-    elements[index]
-      .classList
-      .add("selected");
-
-  }
+  if(elements[index])
+    elements[index].classList.add("selected");
 
 }
-
-
-/* =====================================================
-   CLEAR
-   ===================================================== */
 
 function clearCurrentWord(){
 
   currentWord = "";
-
   selectedIndexes = [];
-
-  currentWordEl.textContent =
-    "";
+  currentWordEl.textContent = "";
 
   const elements =
-    lettersArea.querySelectorAll(
-      ".letter"
-    );
+    lettersArea.querySelectorAll(".letter");
 
   elements.forEach(el=>{
-
-    el.classList.remove(
-      "selected"
-    );
-
+    el.classList.remove("selected");
   });
 
 }
 
-
-/* =====================================================
-   CHECK
-   ===================================================== */
-
-checkBtn.onclick =
-function(){
-
+checkBtn.onclick = function(){
   checkWord();
-
 };
-
 
 function checkWord(){
 
@@ -1563,20 +1584,16 @@ function checkWord(){
 
   }
 
-  const answers =
-    getAnswers();
+  const answers = getAnswers();
 
   if(
     answers.includes(currentWord) &&
     !foundWords.includes(currentWord)
   ){
 
-    foundWords.push(
-      currentWord
-    );
+    foundWords.push(currentWord);
 
     score += 10;
-
     coins += 1;
 
     playCorrectSound();
@@ -1588,15 +1605,16 @@ function checkWord(){
       "message correct";
 
     renderSlots();
-
     updateGameStats();
-
     clearCurrentWord();
 
-    if(
-      foundWords.length ===
-      answers.length
-    ){
+    gameScreen.classList.add("pop");
+
+    setTimeout(()=>{
+      gameScreen.classList.remove("pop");
+    },300);
+
+    if(foundWords.length === answers.length){
 
       setTimeout(
         finishStage,
@@ -1615,15 +1633,11 @@ function checkWord(){
     message.className =
       "message wrong";
 
-    lettersArea.classList.remove(
-      "shake"
-    );
+    lettersArea.classList.remove("shake");
 
     void lettersArea.offsetWidth;
 
-    lettersArea.classList.add(
-      "shake"
-    );
+    lettersArea.classList.add("shake");
 
     clearCurrentWord();
 
@@ -1632,11 +1646,6 @@ function checkWord(){
   }
 
 }
-
-
-/* =====================================================
-   LIVES
-   ===================================================== */
 
 function loseLife(){
 
@@ -1655,7 +1664,6 @@ function loseLife(){
 
 }
 
-
 function updateLives(){
 
   gameLives.textContent =
@@ -1664,44 +1672,30 @@ function updateLives(){
 
 }
 
-
 function updateGameStats(){
 
-  gameCoins.textContent =
-    coins;
+  gameCoins.textContent = coins;
 
   save();
 
 }
 
-
-/* =====================================================
-   FINISH
-   ===================================================== */
-
 function finishStage(){
 
   score += 10;
-
   coins += 5;
 
   if(
     selectedStage === unlockedStage &&
     unlockedStage < stages.length
   ){
-
     unlockedStage++;
-
   }
 
   save();
-
   updateHome();
 
-  if(
-    selectedStage <
-    stages.length
-  ){
+  if(selectedStage < stages.length){
 
     showModal(
       "Əla! 🎉",
@@ -1725,11 +1719,6 @@ function finishStage(){
 
 }
 
-
-/* =====================================================
-   GAME OVER
-   ===================================================== */
-
 function showGameOver(){
 
   gameOver = true;
@@ -1743,11 +1732,6 @@ function showGameOver(){
 
 }
 
-
-/* =====================================================
-   MODAL
-   ===================================================== */
-
 function showModal(
   title,
   text,
@@ -1755,65 +1739,37 @@ function showModal(
   actionType
 ){
 
-  modalTitle.textContent =
-    title;
+  modalTitle.textContent = title;
+  modalText.innerHTML = text;
+  modalAction.textContent = buttonText;
+  modalActionType = actionType;
 
-  modalText.innerHTML =
-    text;
-
-  modalAction.textContent =
-    buttonText;
-
-  modalActionType =
-    actionType;
-
-  modal.classList.add(
-    "show"
-  );
+  modal.classList.add("show");
 
 }
 
+modalAction.onclick = function(){
 
-modalAction.onclick =
-function(){
+  modal.classList.remove("show");
 
-  modal.classList.remove(
-    "show"
-  );
-
-  if(
-    modalActionType ===
-    "next"
-  ){
+  if(modalActionType === "next"){
 
     selectedStage++;
-
     save();
 
-    startGame(
-      selectedStage
-    );
+    startGame(selectedStage);
 
   }
 
-  else if(
-    modalActionType ===
-    "retry"
-  ){
+  else if(modalActionType === "retry"){
 
-    startGame(
-      selectedStage
-    );
+    startGame(selectedStage);
 
   }
 
-  else if(
-    modalActionType ===
-    "restart"
-  ){
+  else if(modalActionType === "restart"){
 
     selectedStage = 1;
-
     save();
 
     startGame(1);
@@ -1822,36 +1778,20 @@ function(){
 
 };
 
-
-/* =====================================================
-   CLEAR
-   ===================================================== */
-
-clearBtn.onclick =
-function(){
+clearBtn.onclick = function(){
 
   clearCurrentWord();
 
 };
 
+shuffleBtn.onclick = function(){
 
-/* =====================================================
-   SHUFFLE
-   ===================================================== */
-
-shuffleBtn.onclick =
-function(){
-
-  shuffleArray(
-    currentLetters
-  );
+  shuffleArray(currentLetters);
 
   clearCurrentWord();
-
   renderLetters();
 
 };
-
 
 function shuffleArray(array){
 
@@ -1863,30 +1803,17 @@ function shuffleArray(array){
 
     const j =
       Math.floor(
-        Math.random() *
-        (i+1)
+        Math.random() * (i+1)
       );
 
-    [
-      array[i],
-      array[j]
-    ] =
-    [
-      array[j],
-      array[i]
-    ];
+    [array[i],array[j]] =
+    [array[j],array[i]];
 
   }
 
 }
 
-
-/* =====================================================
-   HINT
-   ===================================================== */
-
-hintBtn.onclick =
-function(){
+hintBtn.onclick = function(){
 
   if(coins < 10){
 
@@ -1911,23 +1838,16 @@ function(){
 
   coins -= 10;
 
-  gameCoins.textContent =
-    coins;
+  gameCoins.textContent = coins;
 
   save();
 
   message.textContent =
     `İpucu: ${remaining[0].charAt(0)}...`;
 
-  message.className =
-    "message";
+  message.className = "message";
 
 };
-
-
-/* =====================================================
-   MUSIC
-   ===================================================== */
 
 async function startMusic(){
 
@@ -1937,21 +1857,17 @@ async function startMusic(){
 
     await music.play();
 
-    musicBtn.textContent =
-      "🔊";
+    musicBtn.textContent = "🔊";
 
   }catch(err){
 
-    musicBtn.textContent =
-      "🔇";
+    musicBtn.textContent = "🔇";
 
   }
 
 }
 
-
-musicBtn.onclick =
-async function(){
+musicBtn.onclick = async function(){
 
   if(music.paused){
 
@@ -1959,13 +1875,11 @@ async function(){
 
       await music.play();
 
-      musicBtn.textContent =
-        "🔊";
+      musicBtn.textContent = "🔊";
 
     }catch(err){
 
-      musicBtn.textContent =
-        "🔇";
+      musicBtn.textContent = "🔇";
 
     }
 
@@ -1973,17 +1887,11 @@ async function(){
 
     music.pause();
 
-    musicBtn.textContent =
-      "🔇";
+    musicBtn.textContent = "🔇";
 
   }
 
 };
-
-
-/* =====================================================
-   SOUNDS
-   ===================================================== */
 
 function playCorrectSound(){
 
@@ -1995,14 +1903,10 @@ function playCorrectSound(){
         window.webkitAudioContext
       )();
 
-    const osc =
-      ctx.createOscillator();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
 
-    const gain =
-      ctx.createGain();
-
-    osc.frequency.value =
-      720;
+    osc.frequency.value = 720;
 
     gain.gain.setValueAtTime(
       .001,
@@ -2020,10 +1924,7 @@ function playCorrectSound(){
     );
 
     osc.connect(gain);
-
-    gain.connect(
-      ctx.destination
-    );
+    gain.connect(ctx.destination);
 
     osc.start();
 
@@ -2035,7 +1936,6 @@ function playCorrectSound(){
 
 }
 
-
 function playWrongSound(){
 
   try{
@@ -2046,14 +1946,10 @@ function playWrongSound(){
         window.webkitAudioContext
       )();
 
-    const osc =
-      ctx.createOscillator();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
 
-    const gain =
-      ctx.createGain();
-
-    osc.frequency.value =
-      180;
+    osc.frequency.value = 180;
 
     gain.gain.setValueAtTime(
       .001,
@@ -2071,10 +1967,7 @@ function playWrongSound(){
     );
 
     osc.connect(gain);
-
-    gain.connect(
-      ctx.destination
-    );
+    gain.connect(ctx.destination);
 
     osc.start();
 
@@ -2086,15 +1979,8 @@ function playWrongSound(){
 
 }
 
-
-/* =====================================================
-   INIT
-   ===================================================== */
-
 setMode(mode);
-
 updateHome();
-
 renderStages();
 
 </script>
