@@ -1046,20 +1046,15 @@ function renderSlots(){
     const slot = document.createElement("div");
 
     slot.className = "answer-slot";
-
-    if(foundWords.includes(answer)){
-
-      slot.classList.add("found");
-
-      slot.textContent = answer;
-
-    }else{
-
-      slot.textContent = "•".repeat(
-        Math.max(2,answer.length)
-      );
-
+if(foundWords.includes(answer)){
+  slot.classList.add("found");
+  slot.textContent = answer;
+}else{
+  slot.textContent = "•".repeat(
+    Math.max(2,answer.length)
+  );
     }
+  
 
     wordSlots.appendChild(slot);
 
