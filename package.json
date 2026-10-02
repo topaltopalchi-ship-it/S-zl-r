@@ -1,23 +1,16 @@
 {
-  "name": "sozler",
-  "private": true,
+  "name": "heydarbaba",
   "version": "1.0.0",
-  "type": "module",
+  "description": "حیدربابا - بازی واژه‌های ترکی آذربایجانی",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "echo Build ready",
+    "cap:sync": "cap sync"
   },
   "dependencies": {
-    "lucide-react": "^0.468.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "@capacitor/core": "^7.4.0"
   },
   "devDependencies": {
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react": "^4.3.4",
-    "typescript": "^5.7.2",
-    "vite": "^6.0.5"
+    "@capacitor/cli": "^7.4.0"
   }
 }
