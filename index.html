@@ -26,8 +26,6 @@ body{
   position:relative;
 }
 
-/* BACKGROUND */
-
 body::before,
 body::after{
   content:"";
@@ -248,8 +246,6 @@ button{
 
 .start-btn:active{
   transform:scale(.97);
-  box-shadow:
-    0 5px 15px rgba(190,125,25,.22);
 }
 
 /* STATS */
@@ -267,11 +263,6 @@ button{
   border-radius:16px;
   background:rgba(255,255,255,.07);
   border:1px solid rgba(255,255,255,.05);
-  transition:transform .2s ease;
-}
-
-.stat:hover{
-  transform:translateY(-2px);
 }
 
 .stat small{
@@ -323,21 +314,16 @@ button{
   transform:scale(.91);
 }
 
-.stage-btn.open{
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.11),
-      rgba(255,255,255,.035)
-    );
-}
-
 .stage-btn.current{
   border:2px solid #efbd5a;
   box-shadow:
     0 0 18px rgba(235,177,70,.22),
     inset 0 0 15px rgba(235,177,70,.06);
   animation:stagePulse 2s ease-in-out infinite;
+}
+
+.stage-btn.locked{
+  opacity:.32;
 }
 
 @keyframes stagePulse{
@@ -349,10 +335,6 @@ button{
   }
 }
 
-.stage-btn.locked{
-  opacity:.32;
-}
-
 .stage-info{
   text-align:center;
   margin-top:12px;
@@ -360,7 +342,7 @@ button{
   opacity:.65;
 }
 
-/* GAME */
+/* GAME TOP */
 
 .game-top{
   display:grid;
@@ -375,11 +357,6 @@ button{
   border-radius:15px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.06);
-  transition:transform .2s ease;
-}
-
-.top-box:hover{
-  transform:translateY(-2px);
 }
 
 .top-box small{
@@ -440,10 +417,6 @@ button{
     inset 0 1px 0 rgba(255,255,255,.06);
   font-size:20px;
   font-weight:900;
-  transition:
-    transform .25s ease,
-    background .25s ease,
-    box-shadow .25s ease;
 }
 
 .answer-slot.found{
@@ -485,7 +458,16 @@ button{
   font-weight:900;
   letter-spacing:2px;
   text-shadow:0 3px 15px rgba(0,0,0,.3);
-  transition:transform .15s ease;
+}
+
+.pop{
+  animation:pop .3s ease;
+}
+
+@keyframes pop{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.04)}
+  100%{transform:scale(1)}
 }
 
 /* LETTER AREA */
@@ -500,8 +482,6 @@ button{
   -webkit-touch-callout:none;
   overscroll-behavior:none;
 }
-
-/* LETTER */
 
 .letter{
   aspect-ratio:1;
@@ -568,7 +548,7 @@ button{
     inset 0 1px 0 rgba(255,255,255,.28);
 }
 
-/* ACTION BUTTONS */
+/* ACTIONS */
 
 .game-actions{
   display:grid;
@@ -590,9 +570,6 @@ button{
     );
   font-weight:900;
   touch-action:manipulation;
-  transition:
-    transform .15s ease,
-    box-shadow .15s ease;
 }
 
 .action-btn:active{
@@ -601,8 +578,6 @@ button{
 
 .check-btn{
   background:linear-gradient(135deg,#efbd58,#b97618);
-  box-shadow:
-    0 8px 20px rgba(190,125,25,.20);
 }
 
 .hint-btn{
@@ -616,7 +591,6 @@ button{
   margin-top:12px;
   text-align:center;
   font-weight:800;
-  transition:opacity .2s ease;
 }
 
 .correct{
@@ -650,39 +624,11 @@ button{
 }
 
 @keyframes shake{
-  0%,100%{
-    transform:translateX(0);
-  }
-  20%{
-    transform:translateX(-7px);
-  }
-  40%{
-    transform:translateX(6px);
-  }
-  60%{
-    transform:translateX(-5px);
-  }
-  80%{
-    transform:translateX(4px);
-  }
-}
-
-/* POP */
-
-.pop{
-  animation:pop .3s ease;
-}
-
-@keyframes pop{
-  0%{
-    transform:scale(1);
-  }
-  50%{
-    transform:scale(1.04);
-  }
-  100%{
-    transform:scale(1);
-  }
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-7px)}
+  40%{transform:translateX(6px)}
+  60%{transform:translateX(-5px)}
+  80%{transform:translateX(4px)}
 }
 
 /* MUSIC */
@@ -709,9 +655,6 @@ button{
     inset 0 1px 0 rgba(255,255,255,.10);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
-  transition:
-    transform .15s ease,
-    box-shadow .15s ease;
 }
 
 .music-btn:active{
@@ -791,12 +734,6 @@ button{
   color:#fff;
   background:linear-gradient(135deg,#e0a53d,#b87818);
   font-weight:900;
-  touch-action:manipulation;
-  transition:transform .15s ease;
-}
-
-.modal-card button:active{
-  transform:scale(.96);
 }
 
 /* MOBILE */
@@ -885,7 +822,6 @@ button{
 
 </section>
 
-
 <section id="gameScreen" class="screen">
 
   <div class="logo" style="font-size:30px;">
@@ -973,6 +909,7 @@ button{
 
 const stages = [
 
+  /* 1 */
   {
     latinLetters:["a","t","a","n"],
     arabicLetters:["ا","ت","ا","ن"],
@@ -980,6 +917,7 @@ const stages = [
     arabicAnswers:["اتا","انا"]
   },
 
+  /* 2 */
   {
     latinLetters:["a","l","m","a"],
     arabicLetters:["ا","ل","م","ا"],
@@ -987,6 +925,7 @@ const stages = [
     arabicAnswers:["الما","ال"]
   },
 
+  /* 3 */
   {
     latinLetters:["g","ü","n"],
     arabicLetters:["گ","و","ن"],
@@ -994,6 +933,7 @@ const stages = [
     arabicAnswers:["گون"]
   },
 
+  /* 4 */
   {
     latinLetters:["g","ü","n","ə","ş"],
     arabicLetters:["گ","و","ن","ش"],
@@ -1001,6 +941,7 @@ const stages = [
     arabicAnswers:["گون","گونش"]
   },
 
+  /* 5 */
   {
     latinLetters:["ç","ö","r","ə","k"],
     arabicLetters:["چ","و","ر","ک"],
@@ -1008,6 +949,7 @@ const stages = [
     arabicAnswers:["چورک"]
   },
 
+  /* 6 */
   {
     latinLetters:["g","ü","l"],
     arabicLetters:["گ","و","ل"],
@@ -1015,6 +957,7 @@ const stages = [
     arabicAnswers:["گول"]
   },
 
+  /* 7 */
   {
     latinLetters:["a","ğ","a","c"],
     arabicLetters:["ا","غ","ا","ج"],
@@ -1022,13 +965,15 @@ const stages = [
     arabicAnswers:["اغاج","اغ"]
   },
 
+  /* 8 */
   {
-    latinLetters:["g","ö","z"],
+    latinLetters:["g","ö","z","a"],
     arabicLetters:["گ","و","ز","ا"],
     latinAnswers:["göz","öz"],
     arabicAnswers:["گوز","اوز"]
   },
 
+  /* 9 */
   {
     latinLetters:["q","a","r","a"],
     arabicLetters:["ق","ا","ر","ا"],
@@ -1036,6 +981,7 @@ const stages = [
     arabicAnswers:["قارا","قار","ارا"]
   },
 
+  /* 10 */
   {
     latinLetters:["d","a","ş"],
     arabicLetters:["د","ا","ش"],
@@ -1043,6 +989,7 @@ const stages = [
     arabicAnswers:["داش","اش"]
   },
 
+  /* 11 */
   {
     latinLetters:["s","u"],
     arabicLetters:["س","و"],
@@ -1050,6 +997,7 @@ const stages = [
     arabicAnswers:["سو"]
   },
 
+  /* 12 */
   {
     latinLetters:["a","y"],
     arabicLetters:["آ","ی"],
@@ -1057,6 +1005,7 @@ const stages = [
     arabicAnswers:["آی"]
   },
 
+  /* 13 */
   {
     latinLetters:["d","o","s","t"],
     arabicLetters:["د","و","س","ت"],
@@ -1064,13 +1013,15 @@ const stages = [
     arabicAnswers:["دوست"]
   },
 
+  /* 14 */
   {
     latinLetters:["g","e","c","ə"],
-    arabicLetters:[گ","ئ","ج","ه"],
+    arabicLetters:["گ","ئ","ج","ه"],
     latinAnswers:["gecə"],
     arabicAnswers:["گئجه"]
   },
 
+  /* 15 */
   {
     latinLetters:["s","e","v"],
     arabicLetters:["س","ئ","و"],
@@ -1078,13 +1029,15 @@ const stages = [
     arabicAnswers:["سئو"]
   },
 
+  /* 16 */
   {
     latinLetters:["s","e","v","g","i"],
-    arabicLetters:["س","ئ","و","گ"،"ی"],
+    arabicLetters:["س","ئ","و","گ","ی"],
     latinAnswers:["sevgi"],
     arabicAnswers:["سئوگی"]
   },
 
+  /* 17 */
   {
     latinLetters:["b","a","l"],
     arabicLetters:["ب","ا","ل"],
@@ -1092,6 +1045,7 @@ const stages = [
     arabicAnswers:["بال"]
   },
 
+  /* 18 */
   {
     latinLetters:["d","a","ğ"],
     arabicLetters:["د","ا","غ"],
@@ -1099,6 +1053,7 @@ const stages = [
     arabicAnswers:["داغ"]
   },
 
+  /* 19 */
   {
     latinLetters:["y","o","l"],
     arabicLetters:["ی","و","ل"],
@@ -1106,14 +1061,17 @@ const stages = [
     arabicAnswers:["یول"]
   },
 
+  /* 20 */
   {
     latinLetters:["e","l"],
-    arabicLetters:["ا"،"ئ","ل"],
+    arabicLetters:["ا","ئ","ل"],
     latinAnswers:["el"],
     arabicAnswers:["ائل"]
   }
 
 ];
+
+/* STATE */
 
 let mode =
   localStorage.getItem("hb_mode") || "latin";
@@ -1131,14 +1089,24 @@ let selectedStage =
   Number(localStorage.getItem("hb_selectedStage") || 1);
 
 let lives = 3;
+
 let currentLetters = [];
+
 let currentWord = "";
+
 let selectedIndexes = [];
+
 let foundWords = [];
+
 let dragging = false;
+
 let activePointerId = null;
+
 let gameOver = false;
+
 let modalActionType = "";
+
+/* SAFE VALUES */
 
 if(unlockedStage < 1)
   unlockedStage = 1;
@@ -1152,43 +1120,121 @@ if(selectedStage < 1)
 if(selectedStage > unlockedStage)
   selectedStage = unlockedStage;
 
-const music = document.getElementById("music");
-const homeScreen = document.getElementById("homeScreen");
-const gameScreen = document.getElementById("gameScreen");
-const latinBtn = document.getElementById("latinBtn");
-const arabicBtn = document.getElementById("arabicBtn");
-const continueBtn = document.getElementById("continueBtn");
-const stageGrid = document.getElementById("stageGrid");
-const stageInfo = document.getElementById("stageInfo");
-const homeStage = document.getElementById("homeStage");
-const homeCoins = document.getElementById("homeCoins");
-const homeScore = document.getElementById("homeScore");
-const gameStage = document.getElementById("gameStage");
-const gameCoins = document.getElementById("gameCoins");
-const gameLives = document.getElementById("gameLives");
-const wordSlots = document.getElementById("wordSlots");
-const currentWordEl = document.getElementById("currentWord");
-const lettersArea = document.getElementById("lettersArea");
-const message = document.getElementById("message");
-const clearBtn = document.getElementById("clearBtn");
-const checkBtn = document.getElementById("checkBtn");
-const shuffleBtn = document.getElementById("shuffleBtn");
-const hintBtn = document.getElementById("hintBtn");
-const modal = document.getElementById("modal");
-const modalTitle = document.getElementById("modalTitle");
-const modalText = document.getElementById("modalText");
-const modalAction = document.getElementById("modalAction");
-const musicBtn = document.getElementById("musicBtn");
+/* ELEMENTS */
+
+const music =
+  document.getElementById("music");
+
+const homeScreen =
+  document.getElementById("homeScreen");
+
+const gameScreen =
+  document.getElementById("gameScreen");
+
+const latinBtn =
+  document.getElementById("latinBtn");
+
+const arabicBtn =
+  document.getElementById("arabicBtn");
+
+const continueBtn =
+  document.getElementById("continueBtn");
+
+const stageGrid =
+  document.getElementById("stageGrid");
+
+const stageInfo =
+  document.getElementById("stageInfo");
+
+const homeStage =
+  document.getElementById("homeStage");
+
+const homeCoins =
+  document.getElementById("homeCoins");
+
+const homeScore =
+  document.getElementById("homeScore");
+
+const gameStage =
+  document.getElementById("gameStage");
+
+const gameCoins =
+  document.getElementById("gameCoins");
+
+const gameLives =
+  document.getElementById("gameLives");
+
+const wordSlots =
+  document.getElementById("wordSlots");
+
+const currentWordEl =
+  document.getElementById("currentWord");
+
+const lettersArea =
+  document.getElementById("lettersArea");
+
+const message =
+  document.getElementById("message");
+
+const clearBtn =
+  document.getElementById("clearBtn");
+
+const checkBtn =
+  document.getElementById("checkBtn");
+
+const shuffleBtn =
+  document.getElementById("shuffleBtn");
+
+const hintBtn =
+  document.getElementById("hintBtn");
+
+const modal =
+  document.getElementById("modal");
+
+const modalTitle =
+  document.getElementById("modalTitle");
+
+const modalText =
+  document.getElementById("modalText");
+
+const modalAction =
+  document.getElementById("modalAction");
+
+const musicBtn =
+  document.getElementById("musicBtn");
+
+/* SAVE */
 
 function save(){
 
-  localStorage.setItem("hb_mode",mode);
-  localStorage.setItem("hb_coins",coins);
-  localStorage.setItem("hb_score",score);
-  localStorage.setItem("hb_unlockedStage",unlockedStage);
-  localStorage.setItem("hb_selectedStage",selectedStage);
+  localStorage.setItem(
+    "hb_mode",
+    mode
+  );
+
+  localStorage.setItem(
+    "hb_coins",
+    coins
+  );
+
+  localStorage.setItem(
+    "hb_score",
+    score
+  );
+
+  localStorage.setItem(
+    "hb_unlockedStage",
+    unlockedStage
+  );
+
+  localStorage.setItem(
+    "hb_selectedStage",
+    selectedStage
+  );
 
 }
+
+/* MODE */
 
 function setMode(newMode){
 
@@ -1209,53 +1255,86 @@ function setMode(newMode){
 }
 
 latinBtn.onclick = function(){
+
   setMode("latin");
+
 };
 
 arabicBtn.onclick = function(){
+
   setMode("arabic");
+
 };
+
+/* HOME */
 
 function updateHome(){
 
-  homeStage.textContent = selectedStage;
-  homeCoins.textContent = coins;
-  homeScore.textContent = score;
+  homeStage.textContent =
+    selectedStage;
+
+  homeCoins.textContent =
+    coins;
+
+  homeScore.textContent =
+    score;
 
 }
+
+/* STAGES */
 
 function renderStages(){
 
   stageGrid.innerHTML = "";
 
-  for(let i=0;i<stages.length;i++){
+  for(
+    let i = 0;
+    i < stages.length;
+    i++
+  ){
 
     const number = i + 1;
-    const btn = document.createElement("button");
 
-    btn.className = "stage-btn";
+    const btn =
+      document.createElement("button");
+
+    btn.className =
+      "stage-btn";
 
     if(number <= unlockedStage){
 
-      btn.classList.add("open");
-      btn.textContent = number;
+      btn.textContent =
+        number;
 
-      if(number === selectedStage)
-        btn.classList.add("current");
+      if(number === selectedStage){
+
+        btn.classList.add(
+          "current"
+        );
+
+      }
 
       btn.onclick = function(){
 
-        selectedStage = number;
+        selectedStage =
+          number;
+
         save();
+
         updateHome();
+
         renderStages();
 
       };
 
     }else{
 
-      btn.classList.add("locked");
-      btn.textContent = "🔒";
+      btn.classList.add(
+        "locked"
+      );
+
+      btn.textContent =
+        "🔒";
 
     }
 
@@ -1268,63 +1347,101 @@ function renderStages(){
 
 }
 
+/* START */
+
 continueBtn.onclick = function(){
 
-  startGame(selectedStage);
+  startGame(
+    selectedStage
+  );
 
 };
 
 function startGame(stageNumber){
 
-  if(stageNumber > unlockedStage)
+  if(
+    stageNumber < 1 ||
+    stageNumber > unlockedStage
+  ){
     return;
+  }
 
-  selectedStage = stageNumber;
+  selectedStage =
+    stageNumber;
+
   lives = 3;
+
   foundWords = [];
+
   currentWord = "";
+
   selectedIndexes = [];
+
   dragging = false;
+
   activePointerId = null;
+
   gameOver = false;
 
   message.textContent = "";
-  message.className = "message";
 
-  homeScreen.classList.remove("active");
-  gameScreen.classList.add("active");
+  message.className =
+    "message";
+
+  homeScreen.classList.remove(
+    "active"
+  );
+
+  gameScreen.classList.add(
+    "active"
+  );
 
   loadStage();
+
   startMusic();
+
   save();
 
 }
 
+/* LOAD STAGE */
+
 function loadStage(){
 
-  const stage = stages[selectedStage - 1];
+  const stage =
+    stages[selectedStage - 1];
 
   currentLetters =
     mode === "latin"
       ? [...stage.latinLetters]
       : [...stage.arabicLetters];
 
-  shuffleArray(currentLetters);
+  shuffleArray(
+    currentLetters
+  );
 
-  gameStage.textContent = selectedStage;
+  gameStage.textContent =
+    selectedStage;
 
-  gameCoins.textContent = coins;
+  gameCoins.textContent =
+    coins;
 
   updateLives();
+
   renderSlots();
+
   renderLetters();
+
   clearCurrentWord();
 
 }
 
+/* ANSWERS */
+
 function getAnswers(){
 
-  const stage = stages[selectedStage - 1];
+  const stage =
+    stages[selectedStage - 1];
 
   return mode === "latin"
     ? stage.latinAnswers
@@ -1332,72 +1449,129 @@ function getAnswers(){
 
 }
 
+/* ANSWER SLOTS */
+
 function renderSlots(){
 
   wordSlots.innerHTML = "";
 
-  const answers = getAnswers();
+  const answers =
+    getAnswers();
 
-  answers.forEach(answer=>{
+  answers.forEach(
+    answer => {
 
-    const word = document.createElement("div");
+      const word =
+        document.createElement(
+          "div"
+        );
 
-    word.className = "answer-word";
+      word.className =
+        "answer-word";
 
-    if(mode === "arabic")
-      word.classList.add("arabic");
+      if(mode === "arabic"){
 
-    if(foundWords.includes(answer)){
+        word.classList.add(
+          "arabic"
+        );
 
-      [...answer].forEach(letter=>{
+      }
 
-        const slot = document.createElement("div");
+      if(
+        foundWords.includes(
+          answer
+        )
+      ){
 
-        slot.className = "answer-slot found";
-        slot.textContent = letter;
+        [...answer].forEach(
+          letter => {
 
-        word.appendChild(slot);
+            const slot =
+              document.createElement(
+                "div"
+              );
 
-      });
+            slot.className =
+              "answer-slot found";
 
-    }else{
+            slot.textContent =
+              letter;
 
-      [...answer].forEach(()=>{
+            word.appendChild(
+              slot
+            );
 
-        const slot = document.createElement("div");
+          }
+        );
 
-        slot.className = "answer-slot";
-        slot.textContent = "";
+      }else{
 
-        word.appendChild(slot);
+        [...answer].forEach(
+          () => {
 
-      });
+            const slot =
+              document.createElement(
+                "div"
+              );
+
+            slot.className =
+              "answer-slot";
+
+            slot.textContent =
+              "";
+
+            word.appendChild(
+              slot
+            );
+
+          }
+        );
+
+      }
+
+      wordSlots.appendChild(
+        word
+      );
 
     }
-
-    wordSlots.appendChild(word);
-
-  });
+  );
 
 }
+
+/* LETTERS */
 
 function renderLetters(){
 
-  lettersArea.innerHTML = "";
+  lettersArea.innerHTML =
+    "";
 
-  currentLetters.forEach((letter,index)=>{
+  currentLetters.forEach(
+    (letter,index) => {
 
-    const el = document.createElement("div");
+      const el =
+        document.createElement(
+          "div"
+        );
 
-    el.className = "letter";
-    el.dataset.index = index;
-    el.textContent = letter;
+      el.className =
+        "letter";
 
-    lettersArea.appendChild(el);
+      el.dataset.index =
+        index;
 
-  });
+      el.textContent =
+        letter;
+
+      lettersArea.appendChild(
+        el
+      );
+
+    }
+  );
 
 }
+
+/* TOUCH / DRAG */
 
 lettersArea.addEventListener(
   "pointerdown",
@@ -1409,10 +1583,14 @@ lettersArea.addEventListener(
     if(
       e.pointerType === "mouse" &&
       e.button !== 0
-    )
+    ){
       return;
+    }
 
-    const letter = e.target.closest(".letter");
+    const letter =
+      e.target.closest(
+        ".letter"
+      );
 
     if(!letter)
       return;
@@ -1420,15 +1598,24 @@ lettersArea.addEventListener(
     e.preventDefault();
 
     dragging = true;
-    activePointerId = e.pointerId;
+
+    activePointerId =
+      e.pointerId;
 
     clearCurrentWord();
 
     try{
-      lettersArea.setPointerCapture(e.pointerId);
+
+      lettersArea.setPointerCapture(
+        e.pointerId
+      );
+
     }catch(err){}
 
-    const index = Number(letter.dataset.index);
+    const index =
+      Number(
+        letter.dataset.index
+      );
 
     addLetter(index);
 
@@ -1443,8 +1630,12 @@ lettersArea.addEventListener(
     if(!dragging)
       return;
 
-    if(activePointerId !== e.pointerId)
+    if(
+      activePointerId !==
+      e.pointerId
+    ){
       return;
+    }
 
     e.preventDefault();
 
@@ -1458,13 +1649,17 @@ lettersArea.addEventListener(
       return;
 
     const letter =
-      element.closest(".letter");
+      element.closest(
+        ".letter"
+      );
 
     if(!letter)
       return;
 
     const index =
-      Number(letter.dataset.index);
+      Number(
+        letter.dataset.index
+      );
 
     addLetter(index);
 
@@ -1476,8 +1671,12 @@ lettersArea.addEventListener(
   "pointerup",
   function(e){
 
-    if(activePointerId !== e.pointerId)
+    if(
+      activePointerId !==
+      e.pointerId
+    ){
       return;
+    }
 
     e.preventDefault();
 
@@ -1490,9 +1689,11 @@ lettersArea.addEventListener(
           e.pointerId
         )
       ){
+
         lettersArea.releasePointerCapture(
           e.pointerId
         );
+
       }
 
     }catch(err){}
@@ -1508,6 +1709,7 @@ lettersArea.addEventListener(
   function(e){
 
     dragging = false;
+
     activePointerId = null;
 
     try{
@@ -1517,9 +1719,11 @@ lettersArea.addEventListener(
           e.pointerId
         )
       ){
+
         lettersArea.releasePointerCapture(
           e.pointerId
         );
+
       }
 
     }catch(err){}
@@ -1528,47 +1732,89 @@ lettersArea.addEventListener(
   {passive:false}
 );
 
+/* ADD LETTER */
+
 function addLetter(index){
 
-  if(selectedIndexes.includes(index))
+  if(
+    selectedIndexes.includes(
+      index
+    )
+  ){
     return;
+  }
 
-  selectedIndexes.push(index);
+  selectedIndexes.push(
+    index
+  );
 
-  currentWord += currentLetters[index];
+  currentWord +=
+    currentLetters[index];
 
-  currentWordEl.textContent = currentWord;
+  currentWordEl.textContent =
+    currentWord;
 
-  currentWordEl.classList.remove("pop");
+  currentWordEl.classList.remove(
+    "pop"
+  );
+
   void currentWordEl.offsetWidth;
-  currentWordEl.classList.add("pop");
+
+  currentWordEl.classList.add(
+    "pop"
+  );
 
   const elements =
-    lettersArea.querySelectorAll(".letter");
+    lettersArea.querySelectorAll(
+      ".letter"
+    );
 
-  if(elements[index])
-    elements[index].classList.add("selected");
+  if(elements[index]){
+
+    elements[index].classList.add(
+      "selected"
+    );
+
+  }
 
 }
+
+/* CLEAR */
 
 function clearCurrentWord(){
 
   currentWord = "";
+
   selectedIndexes = [];
-  currentWordEl.textContent = "";
+
+  currentWordEl.textContent =
+    "";
 
   const elements =
-    lettersArea.querySelectorAll(".letter");
+    lettersArea.querySelectorAll(
+      ".letter"
+    );
 
-  elements.forEach(el=>{
-    el.classList.remove("selected");
-  });
+  elements.forEach(
+    el => {
+
+      el.classList.remove(
+        "selected"
+      );
+
+    }
+  );
 
 }
 
-checkBtn.onclick = function(){
-  checkWord();
-};
+/* CHECK */
+
+checkBtn.onclick =
+  function(){
+
+    checkWord();
+
+  };
 
 function checkWord(){
 
@@ -1584,16 +1830,24 @@ function checkWord(){
 
   }
 
-  const answers = getAnswers();
+  const answers =
+    getAnswers();
 
   if(
-    answers.includes(currentWord) &&
-    !foundWords.includes(currentWord)
+    answers.includes(
+      currentWord
+    ) &&
+    !foundWords.includes(
+      currentWord
+    )
   ){
 
-    foundWords.push(currentWord);
+    foundWords.push(
+      currentWord
+    );
 
     score += 10;
+
     coins += 1;
 
     playCorrectSound();
@@ -1605,16 +1859,30 @@ function checkWord(){
       "message correct";
 
     renderSlots();
+
     updateGameStats();
+
     clearCurrentWord();
 
-    gameScreen.classList.add("pop");
+    gameScreen.classList.add(
+      "pop"
+    );
 
-    setTimeout(()=>{
-      gameScreen.classList.remove("pop");
-    },300);
+    setTimeout(
+      () => {
 
-    if(foundWords.length === answers.length){
+        gameScreen.classList.remove(
+          "pop"
+        );
+
+      },
+      300
+    );
+
+    if(
+      foundWords.length ===
+      answers.length
+    ){
 
       setTimeout(
         finishStage,
@@ -1633,11 +1901,15 @@ function checkWord(){
     message.className =
       "message wrong";
 
-    lettersArea.classList.remove("shake");
+    lettersArea.classList.remove(
+      "shake"
+    );
 
     void lettersArea.offsetWidth;
 
-    lettersArea.classList.add("shake");
+    lettersArea.classList.add(
+      "shake"
+    );
 
     clearCurrentWord();
 
@@ -1646,6 +1918,8 @@ function checkWord(){
   }
 
 }
+
+/* LIFE */
 
 function loseLife(){
 
@@ -1668,34 +1942,52 @@ function updateLives(){
 
   gameLives.textContent =
     "❤️".repeat(lives) +
-    "🖤".repeat(3-lives);
+    "🖤".repeat(
+      3 - lives
+    );
 
 }
 
+/* GAME STATS */
+
 function updateGameStats(){
 
-  gameCoins.textContent = coins;
+  gameCoins.textContent =
+    coins;
 
   save();
 
 }
+
+/* FINISH */
 
 function finishStage(){
 
   score += 10;
+
   coins += 5;
 
   if(
-    selectedStage === unlockedStage &&
-    unlockedStage < stages.length
+    selectedStage ===
+    unlockedStage &&
+    unlockedStage <
+    stages.length
   ){
+
     unlockedStage++;
+
   }
 
   save();
+
   updateHome();
 
-  if(selectedStage < stages.length){
+  renderStages();
+
+  if(
+    selectedStage <
+    stages.length
+  ){
 
     showModal(
       "Əla! 🎉",
@@ -1719,6 +2011,8 @@ function finishStage(){
 
 }
 
+/* GAME OVER */
+
 function showGameOver(){
 
   gameOver = true;
@@ -1732,6 +2026,8 @@ function showGameOver(){
 
 }
 
+/* MODAL */
+
 function showModal(
   title,
   text,
@@ -1739,174 +2035,243 @@ function showModal(
   actionType
 ){
 
-  modalTitle.textContent = title;
-  modalText.innerHTML = text;
-  modalAction.textContent = buttonText;
-  modalActionType = actionType;
+  modalTitle.textContent =
+    title;
 
-  modal.classList.add("show");
+  modalText.innerHTML =
+    text;
+
+  modalAction.textContent =
+    buttonText;
+
+  modalActionType =
+    actionType;
+
+  modal.classList.add(
+    "show"
+  );
 
 }
 
-modalAction.onclick = function(){
+modalAction.onclick =
+  function(){
 
-  modal.classList.remove("show");
+    modal.classList.remove(
+      "show"
+    );
 
-  if(modalActionType === "next"){
+    if(
+      modalActionType ===
+      "next"
+    ){
 
-    selectedStage++;
-    save();
+      selectedStage++;
 
-    startGame(selectedStage);
+      save();
 
-  }
+      startGame(
+        selectedStage
+      );
 
-  else if(modalActionType === "retry"){
+    }
 
-    startGame(selectedStage);
+    else if(
+      modalActionType ===
+      "retry"
+    ){
 
-  }
+      startGame(
+        selectedStage
+      );
 
-  else if(modalActionType === "restart"){
+    }
 
-    selectedStage = 1;
-    save();
+    else if(
+      modalActionType ===
+      "restart"
+    ){
 
-    startGame(1);
+      selectedStage = 1;
 
-  }
+      save();
 
-};
+      startGame(1);
 
-clearBtn.onclick = function(){
+    }
 
-  clearCurrentWord();
+  };
 
-};
+/* BUTTONS */
 
-shuffleBtn.onclick = function(){
+clearBtn.onclick =
+  function(){
 
-  shuffleArray(currentLetters);
+    clearCurrentWord();
 
-  clearCurrentWord();
-  renderLetters();
+  };
 
-};
+shuffleBtn.onclick =
+  function(){
+
+    shuffleArray(
+      currentLetters
+    );
+
+    clearCurrentWord();
+
+    renderLetters();
+
+  };
+
+/* SHUFFLE */
 
 function shuffleArray(array){
 
   for(
-    let i=array.length-1;
-    i>0;
+    let i =
+      array.length - 1;
+    i > 0;
     i--
   ){
 
     const j =
       Math.floor(
-        Math.random() * (i+1)
+        Math.random() *
+        (i + 1)
       );
 
-    [array[i],array[j]] =
-    [array[j],array[i]];
+    [
+      array[i],
+      array[j]
+    ] = [
+      array[j],
+      array[i]
+    ];
 
   }
 
 }
 
-hintBtn.onclick = function(){
+/* HINT */
 
-  if(coins < 10){
+hintBtn.onclick =
+  function(){
+
+    if(coins < 10){
+
+      message.textContent =
+        "İpucu üçün 10 sikkə lazımdır.";
+
+      message.className =
+        "message wrong";
+
+      return;
+
+    }
+
+    const remaining =
+      getAnswers().filter(
+        word =>
+          !foundWords.includes(
+            word
+          )
+      );
+
+    if(!remaining.length)
+      return;
+
+    coins -= 10;
+
+    gameCoins.textContent =
+      coins;
+
+    save();
 
     message.textContent =
-      "İpucu üçün 10 sikkə lazımdır.";
+      `İpucu: ${remaining[0].charAt(0)}...`;
 
     message.className =
-      "message wrong";
+      "message";
 
-    return;
+  };
 
-  }
-
-  const remaining =
-    getAnswers().filter(
-      word =>
-        !foundWords.includes(word)
-    );
-
-  if(!remaining.length)
-    return;
-
-  coins -= 10;
-
-  gameCoins.textContent = coins;
-
-  save();
-
-  message.textContent =
-    `İpucu: ${remaining[0].charAt(0)}...`;
-
-  message.className = "message";
-
-};
+/* MUSIC */
 
 async function startMusic(){
 
   try{
 
-    music.volume = 0.75;
+    music.volume =
+      0.75;
 
     await music.play();
 
-    musicBtn.textContent = "🔊";
+    musicBtn.textContent =
+      "🔊";
 
   }catch(err){
 
-    musicBtn.textContent = "🔇";
+    musicBtn.textContent =
+      "🔇";
 
   }
 
 }
 
-musicBtn.onclick = async function(){
+musicBtn.onclick =
+  async function(){
 
-  if(music.paused){
+    if(music.paused){
 
-    try{
+      try{
 
-      await music.play();
+        await music.play();
 
-      musicBtn.textContent = "🔊";
+        musicBtn.textContent =
+          "🔊";
 
-    }catch(err){
+      }catch(err){
 
-      musicBtn.textContent = "🔇";
+        musicBtn.textContent =
+          "🔇";
+
+      }
+
+    }else{
+
+      music.pause();
+
+      musicBtn.textContent =
+        "🔇";
 
     }
 
-  }else{
+  };
 
-    music.pause();
-
-    musicBtn.textContent = "🔇";
-
-  }
-
-};
+/* CORRECT SOUND */
 
 function playCorrectSound(){
 
   try{
 
+    const AudioContext =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+    if(!AudioContext)
+      return;
+
     const ctx =
-      new (
-        window.AudioContext ||
-        window.webkitAudioContext
-      )();
+      new AudioContext();
 
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    const osc =
+      ctx.createOscillator();
 
-    osc.frequency.value = 720;
+    const gain =
+      ctx.createGain();
+
+    osc.frequency.value =
+      720;
 
     gain.gain.setValueAtTime(
       .001,
@@ -1924,7 +2289,10 @@ function playCorrectSound(){
     );
 
     osc.connect(gain);
-    gain.connect(ctx.destination);
+
+    gain.connect(
+      ctx.destination
+    );
 
     osc.start();
 
@@ -1936,20 +2304,30 @@ function playCorrectSound(){
 
 }
 
+/* WRONG SOUND */
+
 function playWrongSound(){
 
   try{
 
+    const AudioContext =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+    if(!AudioContext)
+      return;
+
     const ctx =
-      new (
-        window.AudioContext ||
-        window.webkitAudioContext
-      )();
+      new AudioContext();
 
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    const osc =
+      ctx.createOscillator();
 
-    osc.frequency.value = 180;
+    const gain =
+      ctx.createGain();
+
+    osc.frequency.value =
+      180;
 
     gain.gain.setValueAtTime(
       .001,
@@ -1967,7 +2345,10 @@ function playWrongSound(){
     );
 
     osc.connect(gain);
-    gain.connect(ctx.destination);
+
+    gain.connect(
+      ctx.destination
+    );
 
     osc.start();
 
@@ -1979,8 +2360,12 @@ function playWrongSound(){
 
 }
 
+/* INITIAL */
+
 setMode(mode);
+
 updateHome();
+
 renderStages();
 
 </script>
