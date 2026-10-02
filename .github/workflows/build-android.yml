@@ -1,171 +1,46 @@
-name: Build Heydarbaba Release
-
-on:
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-jobs:
-  build-android:
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Java 21
-        uses: actions/setup-java@v6
-        with:
-          distribution: temurin
-          java-version: '21'
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Prepare web files
-        run: |
-          rm -rf www
-          mkdir -p www
-          cp index.html www/index.html
-          cp "aysəl.mp3" "www/aysəl.mp3"
-
-      - name: Prepare app icon
-        run: |
-          mkdir -p resources
-          cp "file_0000000098808210b95a759be7dd5505.png" resources/icon.png
-
-      - name: Add Android platform
-        run: npx cap add android
-
-      - name: Generate Android icon
-        run: |
-          npm install -D @capacitor/assets
-          npx capacitor-assets generate --android
-
-      - name: Create or restore release keystore
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: |
-          if [ -f release-key.jks.enc ]; then
-            openssl enc -d -aes-256-cbc -pbkdf2 \
-              -in release-key.jks.enc \
-              -out release-key.jks \
-              -pass env:KEYSTORE_PASSWORD
-          else
-            keytool -genkeypair -v \
-              -keystore release-key.jks \
-              -storepass "$KEYSTORE_PASSWORD" \
-              -keypass "$KEY_PASSWORD" \
-              -alias heydarbaba \
-              -keyalg RSA \
-              -keysize 2048 \
-              -validity 10000 \
-              -dname "CN=Heydarbaba, OU=Game, O=Heydarbaba, L=Iran, C=IR"
-
-            openssl enc -aes-256-cbc -pbkdf2 -salt \
-              -in release-key.jks \
-              -out release-key.jks.enc \
-              -pass env:KEYSTORE_PASSWORD
-
-            rm -f release-key.jks
-
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add release-key.jks.enc
-            git commit -m "Add encrypted Android release keystore"
-            git push
-          fi
-
-      - name: Create keystore properties
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: |
-          cat > android/keystore.properties <<EOF
-          storeFile=../release-key.jks
-          storePassword=$KEYSTORE_PASSWORD
-          keyAlias=heydarbaba
-          keyPassword=$KEY_PASSWORD
-          EOF
-
       - name: Configure Android release signing
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
           path = Path("android/app/build.gradle")
-          lines = path.read_text().splitlines()
+          text = path.read_text()
 
-          result = []
-          added_signing_configs = False
-          inside_build_types = False
-          release_found = False
+          header = """def keystoreProperties = new Properties()
+          def keystorePropertiesFile = rootProject.file("keystore.properties")
+          if (keystorePropertiesFile.exists()) {
+              keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+          }
 
-          for line in lines:
+          """
 
-              if not added_signing_configs and line.strip() == "buildTypes {":
-                  result.append("""    signingConfigs {
+          if "def keystoreProperties = new Properties()" not in text:
+              text = header + text
+
+          signing_block = """    signingConfigs {
               release {
-                  storeFile file(keystoreProperties['storeFile'])
-                  storePassword keystoreProperties['storePassword']
-                  keyAlias keystoreProperties['keyAlias']
-                  keyPassword keystoreProperties['keyPassword']
+                  storeFile rootProject.file("../release-key.jks")
+                  storePassword keystoreProperties["storePassword"]
+                  keyAlias keystoreProperties["keyAlias"]
+                  keyPassword keystoreProperties["keyPassword"]
               }
           }
 
-          """.rstrip())
+          """
 
-                  added_signing_configs = True
-                  inside_build_types = True
+          if "signingConfigs {" not in text:
+              text = text.replace(
+                  "    buildTypes {",
+                  signing_block + "    buildTypes {",
+                  1
+              )
 
-              result.append(line)
+          if "signingConfig signingConfigs.release" not in text:
+              text = text.replace(
+                  "        release {",
+                  "        release {\n            signingConfig signingConfigs.release",
+                  1
+              )
 
-              if inside_build_types and not release_found:
-                  if line.strip() == "release {":
-                      result.append("        signingConfig signingConfigs.release")
-                      release_found = True
-
-          if not added_signing_configs:
-              raise SystemExit("ERROR: buildTypes block not found")
-
-          if not release_found:
-              raise SystemExit("ERROR: release build type not found")
-
-          path.write_text("\n".join(result) + "\n")
+          path.write_text(text)
           PY
-
-      - name: Sync Capacitor
-        run: npx cap sync android
-
-      - name: Make Gradle executable
-        run: chmod +x android/gradlew
-
-      - name: Build signed APK
-        run: |
-          cd android
-          ./gradlew assembleRelease
-
-      - name: Build signed AAB
-        run: |
-          cd android
-          ./gradlew bundleRelease
-
-      - name: Upload Release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: Heydarbaba-Release-APK
-          path: android/app/build/outputs/apk/release/app-release.apk
-
-      - name: Upload Release AAB
-        uses: actions/upload-artifact@v4
-        with:
-          name: Heydarbaba-Release-AAB
-          path: android/app/build/outputs/bundle/release/app-release.aab
