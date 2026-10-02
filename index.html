@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="az">
+
 <head>
 
 <meta charset="UTF-8">
@@ -16,8 +17,13 @@
 }
 
 body {
+
     margin: 0;
-    font-family: Arial, sans-serif;
+
+    font-family:
+        Arial,
+        Tahoma,
+        sans-serif;
 
     background:
         linear-gradient(
@@ -29,14 +35,19 @@ body {
     min-height: 100vh;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     color: #222;
 }
 
+
 .game {
+
     width: 95%;
+
     max-width: 500px;
 
     background: white;
@@ -46,12 +57,15 @@ body {
     padding: 22px;
 
     box-shadow:
-        0 10px 35px rgba(0,0,0,0.15);
+        0 10px 35px
+        rgba(0,0,0,0.15);
 
     text-align: center;
 }
 
+
 h1 {
+
     margin: 5px 0 3px;
 
     font-size: 42px;
@@ -59,19 +73,24 @@ h1 {
     letter-spacing: 5px;
 }
 
+
 .subtitle {
+
     color: #666;
 
     margin-bottom: 18px;
 }
 
+
 .language {
+
     display: flex;
 
     gap: 10px;
 
     margin-bottom: 18px;
 }
+
 
 .language button {
 
@@ -90,12 +109,14 @@ h1 {
     background: #e5e7eb;
 }
 
+
 .language button.active {
 
     background: #2563eb;
 
     color: white;
 }
+
 
 .stats {
 
@@ -109,6 +130,7 @@ h1 {
     margin-bottom: 18px;
 }
 
+
 .stat {
 
     background: #f3f4f6;
@@ -118,12 +140,14 @@ h1 {
     padding: 9px 4px;
 }
 
+
 .stat-title {
 
     font-size: 12px;
 
     color: #777;
 }
+
 
 .stat-value {
 
@@ -134,20 +158,91 @@ h1 {
     margin-top: 3px;
 }
 
-#word {
 
-    font-size: 48px;
+.timer-container {
+
+    margin-top: 10px;
+
+    font-size: 15px;
+}
+
+
+.timer {
 
     font-weight: bold;
 
-    margin: 25px 0;
-
-    min-height: 60px;
+    font-size: 18px;
 }
 
-/* حالت عربی */
 
-#word.arabic {
+.progress-container {
+
+    height: 10px;
+
+    background: #e5e7eb;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    margin-top: 15px;
+}
+
+
+.progress {
+
+    height: 100%;
+
+    width: 0%;
+
+    background: #2563eb;
+
+    transition:
+        width 0.3s;
+}
+
+
+/*
+   حروف به هم ریخته
+*/
+
+#scrambled {
+
+    min-height: 100px;
+
+    margin: 25px 0;
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    background: #f8fafc;
+
+    border: 2px dashed #cbd5e1;
+
+    font-size: 38px;
+
+    font-weight: bold;
+
+    letter-spacing: 10px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+
+/*
+   حالت عربی
+*/
+
+#scrambled.arabic {
 
     direction: rtl;
 
@@ -155,7 +250,12 @@ h1 {
         Tahoma,
         Arial,
         sans-serif;
+
+    letter-spacing: 0;
+
+    gap: 12px;
 }
+
 
 #answer {
 
@@ -175,10 +275,23 @@ h1 {
     outline: none;
 }
 
+
 #answer:focus {
 
     border-color: #2563eb;
 }
+
+
+#answer.arabic {
+
+    direction: rtl;
+
+    font-family:
+        Tahoma,
+        Arial,
+        sans-serif;
+}
+
 
 .buttons {
 
@@ -191,6 +304,7 @@ h1 {
 
     margin-top: 12px;
 }
+
 
 .buttons button,
 .main-button {
@@ -206,6 +320,7 @@ h1 {
     cursor: pointer;
 }
 
+
 .check {
 
     background: #2563eb;
@@ -213,12 +328,14 @@ h1 {
     color: white;
 }
 
+
 .hint {
 
     background: #f59e0b;
 
     color: white;
 }
+
 
 .restart {
 
@@ -231,6 +348,7 @@ h1 {
     margin-top: 10px;
 }
 
+
 .home {
 
     background: #6b7280;
@@ -241,6 +359,7 @@ h1 {
 
     margin-top: 10px;
 }
+
 
 .message {
 
@@ -253,47 +372,24 @@ h1 {
     font-weight: bold;
 }
 
-.progress-container {
 
-    height: 10px;
+#hintText {
 
-    background: #e5e7eb;
+    min-height: 25px;
 
-    border-radius: 20px;
+    margin-top: 8px;
 
-    overflow: hidden;
-
-    margin-top: 15px;
-}
-
-.progress {
-
-    height: 100%;
-
-    width: 0%;
-
-    background: #2563eb;
-
-    transition:
-        width 0.3s;
-}
-
-.timer-container {
-
-    margin-top: 10px;
-
-    font-size: 15px;
-}
-
-.timer {
+    color: #b45309;
 
     font-weight: bold;
 }
+
 
 .game-over {
 
     display: none;
 }
+
 
 .final-score {
 
@@ -304,6 +400,7 @@ h1 {
     margin: 20px 0;
 }
 
+
 .record {
 
     color: #b45309;
@@ -311,33 +408,89 @@ h1 {
     font-weight: bold;
 }
 
-#hintText {
 
-    min-height: 25px;
+/*
+   صفحه شروع
+*/
 
-    margin-top: 8px;
+.start-screen {
 
-    color: #b45309;
+    display: none;
+}
+
+
+.start-button {
+
+    width: 100%;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+
+/*
+   موبایل
+*/
+
+@media (max-width: 400px) {
+
+    h1 {
+        font-size: 36px;
+    }
+
+    #scrambled {
+        font-size: 30px;
+        letter-spacing: 6px;
+    }
+
+    .stats {
+        gap: 4px;
+    }
+
+    .stat-value {
+        font-size: 15px;
+    }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="game">
 
+
     <h1>SÖZLƏR</h1>
 
+
     <div class="subtitle">
+
         Azərbaycan söz oyunu
+
     </div>
 
 
-    <!-- زبان -->
+    <!-- =========================
+         انتخاب زبان
+    ========================== -->
 
     <div class="language">
+
 
         <button
             id="latinBtn"
@@ -347,6 +500,7 @@ h1 {
 
         </button>
 
+
         <button
             id="arabicBtn">
 
@@ -354,17 +508,21 @@ h1 {
 
         </button>
 
+
     </div>
 
 
-    <!-- صفحه بازی -->
+    <!-- =========================
+         بازی
+    ========================== -->
 
     <div id="gameScreen">
 
 
-        <!-- اطلاعات -->
+        <!-- اطلاعات بازی -->
 
         <div class="stats">
+
 
             <div class="stat">
 
@@ -433,6 +591,7 @@ h1 {
 
             </div>
 
+
         </div>
 
 
@@ -468,14 +627,18 @@ h1 {
         </div>
 
 
-        <!-- کلمه -->
+        <!-- =========================
+             حروف به هم ریخته
+        ========================== -->
 
-        <div id="word">
-            Günəş
+        <div id="scrambled">
+
+            گونش
+
         </div>
 
 
-        <!-- جواب -->
+        <!-- جواب بازیکن -->
 
         <input
             id="answer"
@@ -494,6 +657,7 @@ h1 {
 
         <div class="buttons">
 
+
             <button
                 class="check"
                 onclick="checkAnswer()">
@@ -511,6 +675,7 @@ h1 {
 
             </button>
 
+
         </div>
 
 
@@ -522,17 +687,23 @@ h1 {
 
         </div>
 
+
     </div>
 
 
-    <!-- پایان بازی -->
+    <!-- =========================
+         پایان بازی
+    ========================== -->
 
     <div
         class="game-over"
         id="gameOver">
 
+
         <h2>
+
             🎉 Oyun bitdi!
+
         </h2>
 
 
@@ -569,7 +740,9 @@ h1 {
 
         </button>
 
+
     </div>
+
 
 </div>
 
@@ -577,9 +750,17 @@ h1 {
 <script>
 
 
-/* ===================================
+/* ==========================================
    کلمات بازی
-=================================== */
+
+   نکته:
+   latin = جواب لاتین
+   arabic = جواب عربی
+
+   این جواب‌ها فقط داخل JavaScript هستند
+   و روی صفحه نمایش داده نمی‌شوند.
+========================================== */
+
 
 const words = [
 
@@ -754,11 +935,6 @@ const words = [
     },
 
     {
-        latin: "Stol",
-        arabic: "ستول"
-    },
-
-    {
         latin: "Otaq",
         arabic: "اوتاق"
     },
@@ -785,7 +961,7 @@ const words = [
 
     {
         latin: "Balıq",
-        arabic: "بالıq"
+        arabic: "بالق"
     },
 
     {
@@ -831,9 +1007,9 @@ const words = [
 ];
 
 
-/* ===================================
+/* ==========================================
    متغیرها
-=================================== */
+========================================== */
 
 let currentIndex = 0;
 
@@ -856,25 +1032,107 @@ let hintUsed = false;
 
 let bestScore =
     Number(
-        localStorage.getItem("sozlerBest")
+        localStorage.getItem(
+            "sozlerBest"
+        )
     ) || 0;
 
 
-document.getElementById("best")
+document
+    .getElementById("best")
     .textContent = bestScore;
 
 
-/* ===================================
-   نمایش کلمه
-=================================== */
+/* ==========================================
+   تابع مخلوط کردن حروف
+========================================== */
 
-function showWord() {
+function shuffleLetters(text) {
 
-    if (currentIndex >= words.length) {
+    /*
+       تبدیل متن به آرایه حروف
+    */
+
+    const letters =
+        Array.from(text);
+
+
+    /*
+       اگر فقط یک حرف بود
+    */
+
+    if (letters.length <= 1) {
+
+        return text;
+
+    }
+
+
+    /*
+       Fisher-Yates
+    */
+
+    for (
+        let i = letters.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+
+        [
+            letters[i],
+            letters[j]
+        ] =
+        [
+            letters[j],
+            letters[i]
+        ];
+
+    }
+
+
+    /*
+       اگر اتفاقاً همان کلمه اصلی شد،
+       دوباره مخلوط کن.
+    */
+
+    const result =
+        letters.join("");
+
+
+    if (result === text) {
+
+        return shuffleLetters(text);
+
+    }
+
+
+    return result;
+}
+
+
+/* ==========================================
+   نمایش حروف به هم ریخته
+========================================== */
+
+function showScrambled() {
+
+
+    if (
+        currentIndex >=
+        words.length
+    ) {
 
         finishGame();
 
         return;
+
     }
 
 
@@ -882,20 +1140,47 @@ function showWord() {
         words[currentIndex];
 
 
-    const wordElement =
-        document.getElementById("word");
+    const scrambled =
+        document
+            .getElementById(
+                "scrambled"
+            );
 
-
-    /*
-       حالت عربی
-    */
 
     if (language === "arabic") {
 
-        wordElement.textContent =
-            word.arabic;
 
-        wordElement.classList.add(
+        /*
+           فقط حروف عربی
+        */
+
+        scrambled.textContent =
+            shuffleLetters(
+                word.arabic
+            );
+
+
+        scrambled.classList.add(
+            "arabic"
+        );
+
+    }
+
+
+    else {
+
+
+        /*
+           فقط حروف لاتین
+        */
+
+        scrambled.textContent =
+            shuffleLetters(
+                word.latin
+            );
+
+
+        scrambled.classList.remove(
             "arabic"
         );
 
@@ -903,34 +1188,68 @@ function showWord() {
 
 
     /*
-       حالت لاتین
+       پاک کردن جواب قبلی
     */
 
-    else {
-
-        wordElement.textContent =
-            word.latin;
-
-        wordElement.classList.remove(
-            "arabic"
-        );
-
-    }
-
-
-    document.getElementById("answer")
+    document
+        .getElementById("answer")
         .value = "";
 
 
-    document.getElementById("message")
+    document
+        .getElementById("message")
         .textContent = "";
 
 
-    document.getElementById("hintText")
+    document
+        .getElementById("hintText")
         .textContent = "";
 
 
     hintUsed = false;
+
+
+    /*
+       حالت نوشتن
+    */
+
+    const input =
+        document.getElementById(
+            "answer"
+        );
+
+
+    if (language === "arabic") {
+
+        input.classList.add(
+            "arabic"
+        );
+
+        input.setAttribute(
+            "dir",
+            "rtl"
+        );
+
+        input.placeholder =
+            "Cavabı yaz...";
+
+    }
+
+    else {
+
+        input.classList.remove(
+            "arabic"
+        );
+
+        input.setAttribute(
+            "dir",
+            "ltr"
+        );
+
+        input.placeholder =
+            "Cavabı yaz...";
+
+    }
 
 
     updateStage();
@@ -940,21 +1259,21 @@ function showWord() {
     startTimer();
 
 
-    document.getElementById("answer")
-        .focus();
+    input.focus();
 
 }
 
 
-/* ===================================
+/* ==========================================
    دکمه لاتین
-=================================== */
+========================================== */
 
 document
     .getElementById("latinBtn")
     .addEventListener(
         "click",
         function() {
+
 
             language = "latin";
 
@@ -973,21 +1292,22 @@ document
                 );
 
 
-            showWord();
+            showScrambled();
 
         }
     );
 
 
-/* ===================================
+/* ==========================================
    دکمه عربی
-=================================== */
+========================================== */
 
 document
     .getElementById("arabicBtn")
     .addEventListener(
         "click",
         function() {
+
 
             language = "arabic";
 
@@ -1006,33 +1326,46 @@ document
                 );
 
 
-            showWord();
+            showScrambled();
 
         }
     );
 
 
-/* ===================================
+/* ==========================================
+   نرمال‌سازی جواب
+========================================== */
+
+function normalizeAnswer(text) {
+
+    return text
+        .trim()
+        .normalize("NFC");
+
+}
+
+
+/* ==========================================
    بررسی جواب
-=================================== */
+========================================== */
 
 function checkAnswer() {
 
 
     const input =
-        document
-            .getElementById("answer")
-            .value
-            .trim();
+        normalizeAnswer(
+            document
+                .getElementById(
+                    "answer"
+                )
+                .value
+        );
 
-
-    /*
-       اگر چیزی نوشته نشده
-    */
 
     if (!input) {
 
         return;
+
     }
 
 
@@ -1040,32 +1373,34 @@ function checkAnswer() {
 
 
     /*
-       اگر حالت عربی است،
-       جواب عربی بررسی می‌شود.
+       جواب حالت عربی
     */
 
-    if (language === "arabic") {
+    if (
+        language === "arabic"
+    ) {
 
         correctAnswer =
-            words[currentIndex]
-                .arabic
-                .trim();
+            normalizeAnswer(
+                words[currentIndex]
+                    .arabic
+            );
 
     }
 
 
     /*
-       اگر حالت لاتین است،
-       جواب لاتین بررسی می‌شود.
+       جواب حالت لاتین
     */
 
     else {
 
         correctAnswer =
-            words[currentIndex]
-                .latin
-                .trim()
-                .toLowerCase();
+            normalizeAnswer(
+                words[currentIndex]
+                    .latin
+            )
+            .toLowerCase();
 
     }
 
@@ -1073,12 +1408,9 @@ function checkAnswer() {
     let userAnswer = input;
 
 
-    /*
-       فقط در حالت لاتین
-       حروف کوچک و بزرگ مهم نیست.
-    */
-
-    if (language === "latin") {
+    if (
+        language === "latin"
+    ) {
 
         userAnswer =
             userAnswer.toLowerCase();
@@ -1101,36 +1433,31 @@ function checkAnswer() {
     ) {
 
 
-        let points;
-
-
-        if (hintUsed) {
-
-            points = 5;
-
-        }
-
-        else {
-
-            points = 10;
-
-        }
+        const points =
+            hintUsed
+            ? 5
+            : 10;
 
 
         score += points;
 
 
         document
-            .getElementById("score")
-            .textContent = score;
+            .getElementById(
+                "score"
+            )
+            .textContent =
+            score;
 
 
         document
-            .getElementById("message")
+            .getElementById(
+                "message"
+            )
             .textContent =
-                "✅ Düzdür! +" +
-                points +
-                " xal";
+            "✅ Düzdür! +" +
+            points +
+            " xal";
 
 
         currentIndex++;
@@ -1139,7 +1466,7 @@ function checkAnswer() {
         setTimeout(
             function() {
 
-                showWord();
+                showScrambled();
 
             },
             700
@@ -1154,6 +1481,7 @@ function checkAnswer() {
 
     else {
 
+
         loseLife(
             "❌ Səhv cavab!"
         );
@@ -1163,9 +1491,9 @@ function checkAnswer() {
 }
 
 
-/* ===================================
+/* ==========================================
    کم شدن جان
-=================================== */
+========================================== */
 
 function loseLife(message) {
 
@@ -1177,8 +1505,11 @@ function loseLife(message) {
 
 
     document
-        .getElementById("message")
-        .textContent = message;
+        .getElementById(
+            "message"
+        )
+        .textContent =
+        message;
 
 
     /*
@@ -1213,7 +1544,7 @@ function loseLife(message) {
     setTimeout(
         function() {
 
-            showWord();
+            showScrambled();
 
         },
         700
@@ -1222,9 +1553,9 @@ function loseLife(message) {
 }
 
 
-/* ===================================
+/* ==========================================
    تایمر
-=================================== */
+========================================== */
 
 function startTimer() {
 
@@ -1238,8 +1569,11 @@ function startTimer() {
 
 
     document
-        .getElementById("timer")
-        .textContent = timer;
+        .getElementById(
+            "timer"
+        )
+        .textContent =
+        timer;
 
 
     timerInterval =
@@ -1251,16 +1585,16 @@ function startTimer() {
 
 
                 document
-                    .getElementById("timer")
+                    .getElementById(
+                        "timer"
+                    )
                     .textContent =
                     timer;
 
 
-                /*
-                   زمان تمام شد
-                */
-
-                if (timer <= 0) {
+                if (
+                    timer <= 0
+                ) {
 
 
                     clearInterval(
@@ -1281,9 +1615,9 @@ function startTimer() {
 }
 
 
-/* ===================================
-   نمایش جان‌ها
-=================================== */
+/* ==========================================
+   نمایش جان
+========================================== */
 
 function updateLives() {
 
@@ -1314,15 +1648,18 @@ function updateLives() {
 
 
     document
-        .getElementById("lives")
-        .textContent = hearts;
+        .getElementById(
+            "lives"
+        )
+        .textContent =
+        hearts;
 
 }
 
 
-/* ===================================
+/* ==========================================
    مرحله
-=================================== */
+========================================== */
 
 function updateStage() {
 
@@ -1341,15 +1678,18 @@ function updateStage() {
 
 
     document
-        .getElementById("stage")
-        .textContent = stage;
+        .getElementById(
+            "stage"
+        )
+        .textContent =
+        stage;
 
 }
 
 
-/* ===================================
-   نوار پیشرفت
-=================================== */
+/* ==========================================
+   پیشرفت
+========================================== */
 
 function updateProgress() {
 
@@ -1362,16 +1702,18 @@ function updateProgress() {
 
 
     document
-        .getElementById("progress")
+        .getElementById(
+            "progress"
+        )
         .style.width =
         percent + "%";
 
 }
 
 
-/* ===================================
+/* ==========================================
    راهنما
-=================================== */
+========================================== */
 
 function showHint() {
 
@@ -1390,22 +1732,50 @@ function showHint() {
         words[currentIndex];
 
 
-    const firstLetter =
-        word.latin.charAt(0);
+    let firstLetter;
+
+
+    /*
+       در حالت عربی،
+       اولین حرف عربی نشان داده می‌شود.
+    */
+
+    if (
+        language === "arabic"
+    ) {
+
+        firstLetter =
+            Array.from(
+                word.arabic
+            )[0];
+
+    }
+
+
+    else {
+
+        firstLetter =
+            Array.from(
+                word.latin
+            )[0];
+
+    }
 
 
     document
-        .getElementById("hintText")
+        .getElementById(
+            "hintText"
+        )
         .textContent =
-            "💡 İlk hərf: " +
-            firstLetter;
+        "💡 İlk hərf: " +
+        firstLetter;
 
 }
 
 
-/* ===================================
+/* ==========================================
    پایان بازی
-=================================== */
+========================================== */
 
 function finishGame() {
 
@@ -1416,26 +1786,36 @@ function finishGame() {
 
 
     document
-        .getElementById("gameScreen")
-        .style.display = "none";
+        .getElementById(
+            "gameScreen"
+        )
+        .style.display =
+        "none";
 
 
     document
-        .getElementById("gameOver")
-        .style.display = "block";
+        .getElementById(
+            "gameOver"
+        )
+        .style.display =
+        "block";
 
 
     document
-        .getElementById("finalScore")
+        .getElementById(
+            "finalScore"
+        )
         .textContent =
-            score + " xal";
+        score + " xal";
 
 
     /*
        رکورد جدید
     */
 
-    if (score > bestScore) {
+    if (
+        score > bestScore
+    ) {
 
 
         bestScore = score;
@@ -1448,7 +1828,9 @@ function finishGame() {
 
 
         document
-            .getElementById("best")
+            .getElementById(
+                "best"
+            )
             .textContent =
             bestScore;
 
@@ -1480,9 +1862,9 @@ function finishGame() {
 }
 
 
-/* ===================================
+/* ==========================================
    شروع دوباره
-=================================== */
+========================================== */
 
 function restartGame() {
 
@@ -1502,31 +1884,40 @@ function restartGame() {
 
 
     document
-        .getElementById("score")
-        .textContent = "0";
+        .getElementById(
+            "score"
+        )
+        .textContent =
+        "0";
 
 
     updateLives();
 
 
     document
-        .getElementById("gameOver")
-        .style.display = "none";
+        .getElementById(
+            "gameOver"
+        )
+        .style.display =
+        "none";
 
 
     document
-        .getElementById("gameScreen")
-        .style.display = "block";
+        .getElementById(
+            "gameScreen"
+        )
+        .style.display =
+        "block";
 
 
-    showWord();
+    showScrambled();
 
 }
 
 
-/* ===================================
-   صفحه اصلی
-=================================== */
+/* ==========================================
+   خانه
+========================================== */
 
 function goHome() {
 
@@ -1535,17 +1926,23 @@ function goHome() {
 }
 
 
-/* ===================================
-   کلید Enter
-=================================== */
+/* ==========================================
+   Enter
+========================================== */
 
 document
-    .getElementById("answer")
+    .getElementById(
+        "answer"
+    )
     .addEventListener(
         "keydown",
         function(event) {
 
-            if (event.key === "Enter") {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
 
                 checkAnswer();
 
@@ -1555,13 +1952,15 @@ document
     );
 
 
-/* ===================================
+/* ==========================================
    شروع بازی
-=================================== */
+========================================== */
 
-showWord();
+showScrambled();
+
 
 </script>
 
 </body>
+
 </html>
