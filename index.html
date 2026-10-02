@@ -2,195 +2,843 @@
 <html lang="az">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 <title>SÖZLƏR</title>
 
 <style>
 
+/* =====================================================
+   SÖZLƏR — FINAL DESIGN
+   ===================================================== */
+
 *{
-box-sizing:border-box;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
 }
 
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:linear-gradient(135deg,#fff8e7,#e8f5e9);
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-color:#222;
+  font-family:
+    Arial,
+    "Segoe UI",
+    sans-serif;
+
+  background:
+    radial-gradient(circle at 15% 10%,rgba(255,255,255,.95),transparent 28%),
+    radial-gradient(circle at 90% 15%,rgba(255,220,120,.28),transparent 25%),
+    linear-gradient(145deg,#f7f4ea 0%,#e9f4ee 48%,#edf1f8 100%);
+
+  color:#17202a;
+  min-height:100vh;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  padding:14px;
 }
 
-.game{
-width:min(95%,600px);
-background:white;
-border-radius:25px;
-padding:22px;
-box-shadow:0 10px 35px rgba(0,0,0,.15);
-text-align:center;
+
+/* =========================
+   MAIN APP
+   ========================= */
+
+.app{
+  width:100%;
+  max-width:620px;
+  min-height:650px;
+
+  position:relative;
+  overflow:hidden;
+
+  border-radius:32px;
+
+  background:
+    rgba(255,255,255,.88);
+
+  border:1px solid rgba(255,255,255,.8);
+
+  box-shadow:
+    0 25px 70px rgba(25,45,65,.16),
+    0 5px 20px rgba(25,45,65,.08);
+
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+
+  padding:20px;
 }
 
-h1{
-margin:5px 0 15px;
-font-size:42px;
-letter-spacing:4px;
+
+/* decorative circles */
+
+.app:before,
+.app:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:0;
 }
 
-button{
-border:0;
-border-radius:14px;
-padding:12px 18px;
-margin:5px;
-font-size:17px;
-cursor:pointer;
-background:#1976d2;
-color:white;
+.app:before{
+  width:190px;
+  height:190px;
+  background:rgba(255,193,7,.09);
+  top:-100px;
+  right:-70px;
 }
 
-button:active{
-transform:scale(.95);
+.app:after{
+  width:160px;
+  height:160px;
+  background:rgba(33,150,243,.07);
+  bottom:-90px;
+  left:-70px;
 }
 
-button.secondary{
-background:#757575;
-}
-
-button.music{
-background:#8e24aa;
+.screen{
+  position:relative;
+  z-index:1;
 }
 
 .hidden{
-display:none!important;
+  display:none!important;
+}
+
+
+/* =========================
+   LOGO
+   ========================= */
+
+.logo{
+  margin-top:8px;
+  text-align:center;
+}
+
+.logoMain{
+  font-size:46px;
+  font-weight:900;
+  letter-spacing:5px;
+
+  background:
+    linear-gradient(135deg,#17202a,#455a64);
+
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+
+  text-shadow:
+    0 4px 20px rgba(0,0,0,.08);
+}
+
+.logoLine{
+  width:72px;
+  height:5px;
+  border-radius:20px;
+  margin:9px auto 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      #d32f2f,
+      #f9a825,
+      #2e7d32
+    );
+}
+
+.subtitle{
+  margin:10px 0 0;
+  font-size:14px;
+  color:#66727d;
+}
+
+
+/* =========================
+   HOME
+   ========================= */
+
+.homeCard{
+  margin-top:28px;
+  padding:24px 18px;
+
+  border-radius:26px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.96),
+      rgba(247,250,249,.9)
+    );
+
+  border:1px solid rgba(255,255,255,.9);
+
+  box-shadow:
+    0 12px 35px rgba(30,50,60,.08);
+}
+
+.welcomeIcon{
+  width:86px;
+  height:86px;
+  margin:0 auto 14px;
+
+  border-radius:28px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:42px;
+
+  background:
+    linear-gradient(135deg,#fff3cd,#fff);
+
+  box-shadow:
+    0 10px 25px rgba(255,179,0,.15);
+}
+
+.homeTitle{
+  font-size:25px;
+  font-weight:800;
+  margin:5px 0;
+}
+
+.homeText{
+  color:#6b747c;
+  line-height:1.7;
+  font-size:15px;
+  margin:8px auto 20px;
+  max-width:430px;
+}
+
+
+/* =========================
+   MODE BUTTONS
+   ========================= */
+
+.modeTitle{
+  font-size:14px;
+  font-weight:bold;
+  color:#65717b;
+  margin-bottom:8px;
 }
 
 .modeButtons{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-margin:15px 0;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
-.modeButtons button{
-min-width:130px;
+.modeBtn{
+  min-height:70px;
+
+  border:1px solid #e5e9ec;
+  border-radius:18px;
+
+  background:#fff;
+
+  color:#263238;
+
+  box-shadow:
+    0 7px 18px rgba(30,50,60,.07);
+
+  font-size:17px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:
+    transform .15s,
+    box-shadow .15s,
+    background .15s;
 }
 
-.info{
-display:flex;
-justify-content:space-around;
-flex-wrap:wrap;
-gap:8px;
-margin:10px 0;
-font-size:18px;
+.modeBtn:active{
+  transform:scale(.96);
 }
 
-.info span{
-background:#f1f1f1;
-padding:8px 12px;
-border-radius:10px;
+.modeFlag{
+  display:block;
+  font-size:25px;
+  margin-bottom:4px;
 }
 
-.word{
-font-size:42px;
-font-weight:bold;
-margin:25px 0;
-min-height:55px;
+.modeHint{
+  display:block;
+  font-size:11px;
+  font-weight:normal;
+  color:#8a949c;
+  margin-top:3px;
 }
 
-input{
-width:90%;
-max-width:450px;
-padding:14px;
-font-size:22px;
-text-align:center;
-border:2px solid #bbb;
-border-radius:13px;
-outline:none;
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+.btn{
+  border:0;
+  border-radius:15px;
+
+  min-height:48px;
+
+  padding:11px 18px;
+
+  font-size:16px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:
+    transform .12s,
+    box-shadow .12s;
 }
 
-input:focus{
-border-color:#1976d2;
+.btn:active{
+  transform:scale(.95);
 }
 
-.message{
-min-height:35px;
-font-size:21px;
-font-weight:bold;
-margin:12px 0;
+.btnPrimary{
+  color:white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1976d2,
+      #1565c0
+    );
+
+  box-shadow:
+    0 8px 18px rgba(25,118,210,.22);
 }
 
-.correct{
-animation:correctAnim .45s;
+.btnPurple{
+  color:white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #8e24aa,
+      #6a1b9a
+    );
+
+  box-shadow:
+    0 8px 18px rgba(142,36,170,.2);
 }
 
-.wrong{
-animation:wrongAnim .45s;
+.btnGray{
+  color:white;
+  background:#68727b;
+
+  box-shadow:
+    0 7px 16px rgba(50,60,70,.15);
 }
 
-@keyframes correctAnim{
-
-0%{
-transform:scale(1);
+.btnHint{
+  color:#37474f;
+  background:#fff;
+  border:1px solid #e1e6e9;
 }
 
-50%{
-transform:scale(1.15);
-color:#2e7d32;
+.fullBtn{
+  width:100%;
+  margin-top:12px;
 }
 
-100%{
-transform:scale(1);
+
+/* =========================
+   MUSIC
+   ========================= */
+
+.musicBox{
+  margin-top:15px;
+
+  padding:13px;
+
+  border-radius:18px;
+
+  background:#faf7ff;
+
+  border:1px solid #eee3f7;
 }
 
-}
-
-@keyframes wrongAnim{
-
-0%{
-transform:translateX(0);
-}
-
-25%{
-transform:translateX(-12px);
-}
-
-50%{
-transform:translateX(12px);
-}
-
-75%{
-transform:translateX(-8px);
-}
-
-100%{
-transform:translateX(0);
-}
-
+.musicButton{
+  width:100%;
 }
 
 .musicStatus{
-font-size:14px;
-min-height:22px;
-margin-top:5px;
-color:#666;
+  min-height:20px;
+
+  margin-top:7px;
+
+  font-size:12px;
+
+  color:#777f86;
 }
 
-.lives{
-color:#d32f2f;
+
+/* =========================
+   GAME TOP
+   ========================= */
+
+.gameHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+
+  margin-bottom:12px;
 }
 
-.score{
-color:#1565c0;
+.miniLogo{
+  font-weight:900;
+  letter-spacing:2px;
+  font-size:21px;
 }
 
-.timer{
-color:#ef6c00;
+.homeSmall{
+  width:44px;
+  height:44px;
+  padding:0;
+
+  border-radius:14px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:20px;
+
+  color:white;
+  background:#68727b;
 }
 
-.small{
-font-size:14px;
-color:#777;
+
+/* =========================
+   SCORE CARDS
+   ========================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+}
+
+.stat{
+  min-width:0;
+
+  padding:10px 4px;
+
+  border-radius:15px;
+
+  background:#f7f8f9;
+
+  border:1px solid #edf0f2;
+
+  text-align:center;
+}
+
+.statIcon{
+  display:block;
+  font-size:17px;
+  margin-bottom:3px;
+}
+
+.statLabel{
+  display:block;
+  font-size:10px;
+  color:#8a9299;
+}
+
+.statValue{
+  display:block;
+  font-size:16px;
+  font-weight:900;
+  margin-top:2px;
+}
+
+.livesValue{
+  color:#d32f2f;
+}
+
+.scoreValue{
+  color:#1565c0;
+}
+
+.timerValue{
+  color:#ef6c00;
+}
+
+
+/* =========================
+   STAGE
+   ========================= */
+
+.stageRow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin:17px 2px 7px;
+
+  font-size:13px;
+  color:#737d84;
+}
+
+.stageNumber{
+  font-weight:900;
+  color:#263238;
+}
+
+.progress{
+  height:7px;
+  border-radius:20px;
+  background:#edf0f2;
+  overflow:hidden;
+}
+
+.progressBar{
+  height:100%;
+  width:10%;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1976d2,
+      #42a5f5
+    );
+
+  transition:width .3s;
+}
+
+
+/* =========================
+   WORD CARD
+   ========================= */
+
+.wordCard{
+  margin-top:17px;
+
+  padding:28px 15px 24px;
+
+  border-radius:25px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f7faf9
+    );
+
+  border:1px solid #edf0f2;
+
+  box-shadow:
+    0 12px 30px rgba(30,50,60,.08);
+
+  text-align:center;
+}
+
+.wordCaption{
+  font-size:12px;
+  color:#8b949b;
+  margin-bottom:11px;
+}
+
+.word{
+  min-height:62px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:44px;
+  font-weight:900;
+
+  letter-spacing:1px;
+
+  direction:auto;
+
+  color:#182127;
+
+  word-break:normal;
+}
+
+.wordArabic{
+  font-size:43px;
+}
+
+
+/* =========================
+   ANSWER
+   ========================= */
+
+.answerBox{
+  margin-top:14px;
+}
+
+.answerInput{
+  width:100%;
+
+  height:57px;
+
+  border:2px solid #e0e5e8;
+
+  border-radius:17px;
+
+  background:#fff;
+
+  outline:none;
+
+  text-align:center;
+
+  font-size:20px;
+
+  color:#263238;
+
+  transition:
+    border .15s,
+    box-shadow .15s;
+}
+
+.answerInput:focus{
+  border-color:#1976d2;
+
+  box-shadow:
+    0 0 0 4px rgba(25,118,210,.09);
+}
+
+.answerInput::placeholder{
+  color:#a4acb1;
+}
+
+
+/* =========================
+   GAME ACTIONS
+   ========================= */
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+
+  margin-top:10px;
+}
+
+.actions .btn{
+  width:100%;
+}
+
+
+/* =========================
+   MESSAGE
+   ========================= */
+
+.message{
+  min-height:38px;
+
+  margin-top:10px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  border-radius:14px;
+
+  font-size:15px;
+  font-weight:800;
+
+  color:#667078;
+}
+
+.message.correct{
+  color:#2e7d32;
+  background:#edf8ef;
+}
+
+.message.wrong{
+  color:#c62828;
+  background:#fff0f0;
+}
+
+.correctAnim{
+  animation:correctAnim .45s ease;
+}
+
+.wrongAnim{
+  animation:wrongAnim .4s ease;
+}
+
+@keyframes correctAnim{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.12)}
+  100%{transform:scale(1)}
+}
+
+@keyframes wrongAnim{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-10px)}
+  50%{transform:translateX(10px)}
+  75%{transform:translateX(-6px)}
+  100%{transform:translateX(0)}
+}
+
+
+/* =========================
+   GAME MUSIC BAR
+   ========================= */
+
+.gameBottom{
+  display:flex;
+  gap:8px;
+  margin-top:11px;
+}
+
+.gameBottom .btn{
+  flex:1;
+  min-height:43px;
+  font-size:14px;
+}
+
+
+/* =========================
+   END SCREEN
+   ========================= */
+
+.endCard{
+  margin-top:25px;
+
+  padding:30px 18px;
+
+  border-radius:28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff,
+      #f6faf8
+    );
+
+  box-shadow:
+    0 15px 35px rgba(30,50,60,.09);
+
+  text-align:center;
+}
+
+.endIcon{
+  font-size:58px;
+  margin-bottom:8px;
+}
+
+.endTitle{
+  font-size:27px;
+  font-weight:900;
+  margin:4px 0 18px;
+}
+
+.finalStats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.finalStat{
+  padding:17px 8px;
+  border-radius:18px;
+  background:#f7f8f9;
+}
+
+.finalStat small{
+  display:block;
+  color:#8a9299;
+  margin-bottom:5px;
+}
+
+.finalStat strong{
+  font-size:26px;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media(max-width:430px){
+
+  body{
+    padding:8px;
+  }
+
+  .app{
+    min-height:calc(100vh - 16px);
+    border-radius:27px;
+    padding:14px;
+  }
+
+  .logoMain{
+    font-size:39px;
+  }
+
+  .homeCard{
+    margin-top:20px;
+    padding:19px 13px;
+  }
+
+  .word{
+    font-size:38px;
+  }
+
+  .wordArabic{
+    font-size:38px;
+  }
+
+  .stats{
+    gap:5px;
+  }
+
+  .stat{
+    padding:8px 2px;
+  }
+
+  .statValue{
+    font-size:14px;
+  }
+
+  .statLabel{
+    font-size:9px;
+  }
+
+}
+
+
+/* very small phones */
+
+@media(max-width:350px){
+
+  .logoMain{
+    font-size:34px;
+  }
+
+  .word{
+    font-size:33px;
+  }
+
+  .wordArabic{
+    font-size:33px;
+  }
+
+  .btn{
+    font-size:14px;
+    padding:10px;
+  }
+
 }
 
 </style>
@@ -200,38 +848,105 @@ color:#777;
 <body>
 
 
-<div class="game">
+<div class="app">
 
 
-<!-- HOME -->
+<!-- =====================================================
+     HOME SCREEN
+     ===================================================== -->
 
-<div id="homeScreen">
-
-<h1>SÖZLƏR</h1>
-
-<p>دۆز آذەربایجان تورکجه سؤزلری</p>
+<section id="homeScreen" class="screen">
 
 
-<div class="modeButtons">
+<div class="logo">
 
-<button onclick="chooseMode('latin')">
-🇮🇷 لاتین
-</button>
+<div class="logoMain">
+SÖZLƏR
+</div>
 
-<button onclick="chooseMode('arabic')">
-🇮🇷 عربی
-</button>
+<div class="logoLine"></div>
+
+<div class="subtitle">
+آذربایجان تورکجه سؤزلری
+</div>
 
 </div>
 
 
+
+<div class="homeCard">
+
+
+<div class="welcomeIcon">
+🧩
+</div>
+
+
+<div class="homeTitle">
+کلمه را پیدا کن!
+</div>
+
+
+<div class="homeText">
+حروف درهم‌ریخته را مرتب کن،
+جواب درست را بنویس و امتیاز بگیر.
+هر مرحله سخت‌تر می‌شود.
+</div>
+
+
+
+<div class="modeTitle">
+حالت نوشتاری را انتخاب کن
+</div>
+
+
+<div class="modeButtons">
+
+
 <button
-class="music"
+class="modeBtn"
+onclick="chooseMode('latin')">
+
+<span class="modeFlag">🇮🇷</span>
+
+لاتین
+
+<span class="modeHint">
+A B C
+</span>
+
+</button>
+
+
+
+<button
+class="modeBtn"
+onclick="chooseMode('arabic')">
+
+<span class="modeFlag">🇮🇷</span>
+
+عربی
+
+<span class="modeHint">
+ا ب پ
+</span>
+
+</button>
+
+
+</div>
+
+
+
+<div class="musicBox">
+
+
+<button
+id="homeMusicButton"
+class="btn btnPurple musicButton"
 onclick="toggleMusic()">
 
-<span id="homeMusicText">
 ▶️ پخش موسیقی
-</span>
 
 </button>
 
@@ -240,96 +955,177 @@ onclick="toggleMusic()">
 id="homeMusicStatus"
 class="musicStatus">
 
-موسیقی آماده است
+🎵 موسیقی آماده است
+
+</div>
+
+</div>
+
 
 </div>
 
 
 <p class="small">
-
-برای شروع، یکی از دو حالت نوشتاری را انتخاب کن.
-
+۳ جان • امتیاز • رکورد • راهنما • مراحل
 </p>
 
+
+</section>
+
+
+
+<!-- =====================================================
+     GAME SCREEN
+     ===================================================== -->
+
+<section
+id="gameScreen"
+class="screen hidden">
+
+
+<div class="gameHeader">
+
+
+<div class="miniLogo">
+SÖZLƏR
+</div>
+
+
+<button
+class="homeSmall"
+onclick="goHome()"
+aria-label="خانه">
+
+🏠
+
+</button>
+
+
 </div>
 
 
 
-<!-- GAME -->
-
-<div
-id="gameScreen"
-class="hidden">
+<div class="stats">
 
 
-<div class="info">
+<div class="stat">
 
-<span class="lives">
-❤️ جان:
-<b id="lives">3</b>
+<span class="statIcon">❤️</span>
+
+<span class="statLabel">
+جان
 </span>
 
-<span class="score">
-⭐ امتیاز:
-<b id="score">0</b>
+<span
+id="lives"
+class="statValue livesValue">
+
+3
+
 </span>
+
+</div>
+
+
+
+<div class="stat">
+
+<span class="statIcon">⭐</span>
+
+<span class="statLabel">
+امتیاز
+</span>
+
+<span
+id="score"
+class="statValue scoreValue">
+
+0
+
+</span>
+
+</div>
+
+
+
+<div class="stat">
+
+<span class="statIcon">🏆</span>
+
+<span class="statLabel">
+رکورد
+</span>
+
+<span
+id="bestScore"
+class="statValue">
+
+0
+
+</span>
+
+</div>
+
+
+
+<div class="stat">
+
+<span class="statIcon">⏱️</span>
+
+<span class="statLabel">
+زمان
+</span>
+
+<span
+id="timer"
+class="statValue timerValue">
+
+30
+
+</span>
+
+</div>
+
+
+</div>
+
+
+
+<div class="stageRow">
 
 <span>
-🏆 رکورد:
-<b id="bestScore">0</b>
+مرحله
+<strong
+id="stage"
+class="stageNumber">
+1
+</strong>
 </span>
 
-<span class="timer">
-⏱️
-<b id="timer">30</b>
+<span id="difficultyText">
+آسان
 </span>
 
 </div>
 
 
-
-<div>
-
-<button
-class="music"
-onclick="toggleMusic()">
-
-<span id="gameMusicText">
-⏸️ توقف موسیقی
-</span>
-
-</button>
-
-
-<button
-class="secondary"
-onclick="goHome()">
-
-🏠 خانه
-
-</button>
-
-</div>
-
-
+<div class="progress">
 
 <div
-id="musicStatus"
-class="musicStatus">
-
-موسیقی آماده است
+id="progressBar"
+class="progressBar">
+</div>
 
 </div>
 
 
 
-<div>
+<div class="wordCard">
 
-مرحله:
-<b id="stage">1</b>
 
+<div class="wordCaption">
+حروف درهم‌ریخته
 </div>
-
 
 
 <div
@@ -339,9 +1135,15 @@ class="word">
 </div>
 
 
+</div>
+
+
+
+<div class="answerBox">
 
 <input
 id="answerInput"
+class="answerInput"
 type="text"
 autocomplete="off"
 autocorrect="off"
@@ -351,10 +1153,16 @@ placeholder="جواب را بنویس..."
 >
 
 
+</div>
 
-<div>
 
-<button onclick="checkAnswer()">
+
+<div class="actions">
+
+
+<button
+class="btn btnPrimary"
+onclick="checkAnswer()">
 
 ✅ بررسی
 
@@ -362,12 +1170,13 @@ placeholder="جواب را بنویس..."
 
 
 <button
-onclick="useHint()"
-class="secondary">
+class="btn btnHint"
+onclick="useHint()">
 
-💡 راهنما -۵
+💡 راهنما −۵
 
 </button>
+
 
 </div>
 
@@ -379,44 +1188,116 @@ class="message">
 
 </div>
 
+
+
+<div class="gameBottom">
+
+
+<button
+id="gameMusicButton"
+class="btn btnPurple"
+onclick="toggleMusic()">
+
+⏸️ توقف موسیقی
+
+</button>
+
+
+<button
+class="btn btnGray"
+onclick="goHome()">
+
+🏠 خانه
+
+</button>
+
+
+</div>
+
+
+<div
+id="musicStatus"
+class="musicStatus">
+
+🎵 موسیقی آماده است
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     END SCREEN
+     ===================================================== -->
+
+<section
+id="endScreen"
+class="screen hidden">
+
+
+<div class="logo">
+
+<div class="logoMain">
+SÖZLƏR
+</div>
+
+<div class="logoLine"></div>
+
 </div>
 
 
 
-<!-- END -->
-
-<div
-id="endScreen"
-class="hidden">
-
-<h2>
-🎉 بازی تمام شد!
-</h2>
+<div class="endCard">
 
 
-<p>
+<div class="endIcon">
+🏆
+</div>
 
-امتیاز شما:
 
-<b id="finalScore">
+<div class="endTitle">
+بازی تمام شد!
+</div>
+
+
+<div class="finalStats">
+
+
+<div class="finalStat">
+
+<small>
+امتیاز شما
+</small>
+
+<strong id="finalScore">
 0
-</b>
+</strong>
 
-</p>
+</div>
 
 
-<p>
+<div class="finalStat">
 
-رکورد:
+<small>
+رکورد
+</small>
 
-<b id="finalBest">
+<strong id="finalBest">
 0
-</b>
+</strong>
 
-</p>
+</div>
 
 
-<button onclick="restartGame()">
+</div>
+
+
+
+<button
+class="btn btnPrimary fullBtn"
+onclick="restartGame()">
 
 🔄 دوباره بازی کن
 
@@ -424,25 +1305,33 @@ class="hidden">
 
 
 <button
-onclick="goHome()"
-class="secondary">
+class="btn btnGray fullBtn"
+onclick="goHome()">
 
-🏠 خانه
+🏠 برگشت به خانه
 
 </button>
 
-</div>
-
 
 </div>
 
 
+</section>
 
-<!-- MUSIC -->
+
+</div>
+
+
+
+<!-- =====================================================
+     BACKGROUND MUSIC
+     فایل واقعی در GitHub:
+     aysəl.mp3
+     ===================================================== -->
 
 <audio
 id="bgMusic"
-src="https://raw.githubusercontent.com/topaltopalchi-ship-it/S-zl-r/main/ays%C9%99l.mp3"
+src="https://topaltopalchi-ship-it.github.io/S-zl-r/ays%C9%99l.mp3"
 loop
 preload="auto">
 
@@ -452,287 +1341,72 @@ preload="auto">
 
 <script>
 
-
-/* =========================
-   WORDS
-========================= */
-
+/* =====================================================
+   WORD LIST
+   ===================================================== */
 
 const words = [
 
-{
-latin:"su",
-arabic:"سو"
-},
-
-{
-latin:"ev",
-arabic:"ائو"
-},
-
-{
-latin:"at",
-arabic:"آت"
-},
-
-{
-latin:"ay",
-arabic:"آی"
-},
-
-{
-latin:"əl",
-arabic:"ال"
-},
-
-{
-latin:"gül",
-arabic:"گول"
-},
-
-{
-latin:"gün",
-arabic:"گون"
-},
-
-{
-latin:"göy",
-arabic:"گوی"
-},
-
-{
-latin:"çay",
-arabic:"چای"
-},
-
-{
-latin:"daş",
-arabic:"داش"
-},
-
-{
-latin:"baş",
-arabic:"باش"
-},
-
-{
-latin:"quş",
-arabic:"قوش"
-},
-
-{
-latin:"od",
-arabic:"اود"
-},
-
-{
-latin:"yol",
-arabic:"یول"
-},
-
-{
-latin:"qapı",
-arabic:"قاپی"
-},
-
-{
-latin:"ana",
-arabic:"آنا"
-},
-
-{
-latin:"ata",
-arabic:"آتا"
-},
-
-{
-latin:"dost",
-arabic:"دوست"
-},
-
-{
-latin:"göz",
-arabic:"گؤز"
-},
-
-{
-latin:"söz",
-arabic:"سؤز"
-},
-
-{
-latin:"günəş",
-arabic:"گونش"
-},
-
-{
-latin:"çörək",
-arabic:"چورک"
-},
-
-{
-latin:"torpaq",
-arabic:"تورپاق"
-},
-
-{
-latin:"uşaq",
-arabic:"اوشاق"
-},
-
-{
-latin:"qardaş",
-arabic:"قارداش"
-},
-
-{
-latin:"bacı",
-arabic:"باجی"
-},
-
-{
-latin:"məktəb",
-arabic:"مکتب"
-},
-
-{
-latin:"kitab",
-arabic:"کیتاب"
-},
-
-{
-latin:"qələm",
-arabic:"قلم"
-},
-
-{
-latin:"ağac",
-arabic:"آغاج"
-},
-
-{
-latin:"çiçək",
-arabic:"چیچک"
-},
-
-{
-latin:"göyərti",
-arabic:"گویرتی"
-},
-
-{
-latin:"yağış",
-arabic:"یاغیش"
-},
-
-{
-latin:"külək",
-arabic:"کولک"
-},
-
-{
-latin:"dəniz",
-arabic:"دنیز"
-},
-
-{
-latin:"dağ",
-arabic:"داغ"
-},
-
-{
-latin:"göl",
-arabic:"گؤل"
-},
-
-{
-latin:"şəhər",
-arabic:"شهر"
-},
-
-{
-latin:"kənd",
-arabic:"کند"
-},
-
-{
-latin:"Azərbaycan",
-arabic:"آذربایجان"
-},
-
-{
-latin:"türk",
-arabic:"تورک"
-},
-
-{
-latin:"dil",
-arabic:"دیل"
-},
-
-{
-latin:"salam",
-arabic:"سلام"
-},
-
-{
-latin:"sağ ol",
-arabic:"ساغ اول"
-},
-
-{
-latin:"gözəl",
-arabic:"گؤزل"
-},
-
-{
-latin:"böyük",
-arabic:"بؤیوک"
-},
-
-{
-latin:"kiçik",
-arabic:"کیچیک"
-},
-
-{
-latin:"yaxşı",
-arabic:"یاخشی"
-},
-
-{
-latin:"ağıllı",
-arabic:"آغیللی"
-},
-
-{
-latin:"ürək",
-arabic:"اورک"
-},
-
-{
-latin:"sevgi",
-arabic:"سئویگی"
-},
-
-{
-latin:"dostluq",
-arabic:"دوستلوغ"
-},
-
-{
-latin:"azadlıq",
-arabic:"آزادلیق"
-}
+  {latin:"su",arabic:"سو"},
+  {latin:"ev",arabic:"ائو"},
+  {latin:"at",arabic:"آت"},
+  {latin:"ay",arabic:"آی"},
+  {latin:"əl",arabic:"ال"},
+  {latin:"gül",arabic:"گول"},
+  {latin:"gün",arabic:"گون"},
+  {latin:"göy",arabic:"گوی"},
+  {latin:"çay",arabic:"چای"},
+  {latin:"daş",arabic:"داش"},
+  {latin:"baş",arabic:"باش"},
+  {latin:"quş",arabic:"قوش"},
+  {latin:"od",arabic:"اود"},
+  {latin:"yol",arabic:"یول"},
+  {latin:"qapı",arabic:"قاپی"},
+  {latin:"ana",arabic:"آنا"},
+  {latin:"ata",arabic:"آتا"},
+  {latin:"dost",arabic:"دوست"},
+  {latin:"göz",arabic:"گؤز"},
+  {latin:"söz",arabic:"سؤز"},
+  {latin:"günəş",arabic:"گونش"},
+  {latin:"çörək",arabic:"چورک"},
+  {latin:"torpaq",arabic:"تورپاق"},
+  {latin:"uşaq",arabic:"اوشاق"},
+  {latin:"qardaş",arabic:"قارداش"},
+  {latin:"bacı",arabic:"باجی"},
+  {latin:"məktəb",arabic:"مکتب"},
+  {latin:"kitab",arabic:"کیتاب"},
+  {latin:"qələm",arabic:"قلم"},
+  {latin:"ağac",arabic:"آغاج"},
+  {latin:"çiçək",arabic:"چیچک"},
+  {latin:"göyərti",arabic:"گویَرْتی"},
+  {latin:"yağış",arabic:"یاغیش"},
+  {latin:"külək",arabic:"کولک"},
+  {latin:"dəniz",arabic:"دنیز"},
+  {latin:"dağ",arabic:"داغ"},
+  {latin:"göl",arabic:"گؤل"},
+  {latin:"şəhər",arabic:"شهر"},
+  {latin:"kənd",arabic:"کند"},
+  {latin:"Azərbaycan",arabic:"آذربایجان"},
+  {latin:"türk",arabic:"تورک"},
+  {latin:"dil",arabic:"دیل"},
+  {latin:"salam",arabic:"سلام"},
+  {latin:"sağ ol",arabic:"ساغ اول"},
+  {latin:"gözəl",arabic:"گؤزل"},
+  {latin:"böyük",arabic:"بؤیوک"},
+  {latin:"kiçik",arabic:"کیچیک"},
+  {latin:"yaxşı",arabic:"یاخشی"},
+  {latin:"ağıllı",arabic:"آغیللی"},
+  {latin:"ürək",arabic:"اورک"},
+  {latin:"sevgi",arabic:"سئویگی"},
+  {latin:"dostluq",arabic:"دوستلوغ"},
+  {latin:"azadlıq",arabic:"آزادلیق"}
 
 ];
 
 
-
-/* =========================
+/* =====================================================
    VARIABLES
-========================= */
-
+   ===================================================== */
 
 let mode = "latin";
 
@@ -752,12 +1426,12 @@ let musicOn = true;
 
 let usedWords = [];
 
+let audioContext = null;
 
 
-/* =========================
+/* =====================================================
    ELEMENTS
-========================= */
-
+   ===================================================== */
 
 const homeScreen =
 document.getElementById("homeScreen");
@@ -794,6 +1468,12 @@ document.getElementById("timer");
 const stageElement =
 document.getElementById("stage");
 
+const difficultyText =
+document.getElementById("difficultyText");
+
+const progressBar =
+document.getElementById("progressBar");
+
 
 const finalScoreElement =
 document.getElementById("finalScore");
@@ -806,11 +1486,11 @@ const bgMusic =
 document.getElementById("bgMusic");
 
 
-const homeMusicText =
-document.getElementById("homeMusicText");
+const homeMusicButton =
+document.getElementById("homeMusicButton");
 
-const gameMusicText =
-document.getElementById("gameMusicText");
+const gameMusicButton =
+document.getElementById("gameMusicButton");
 
 
 const homeMusicStatus =
@@ -820,1073 +1500,1087 @@ const musicStatus =
 document.getElementById("musicStatus");
 
 
-
-/* =========================
+/* =====================================================
    MUSIC
-========================= */
-
+   ===================================================== */
 
 bgMusic.volume = 0.35;
 
 
 function updateMusicButtons(){
 
-if(musicOn){
+  if(musicOn){
 
-homeMusicText.textContent =
-"⏸️ توقف موسیقی";
+    homeMusicButton.textContent =
+      "⏸️ توقف موسیقی";
 
-gameMusicText.textContent =
-"⏸️ توقف موسیقی";
+    gameMusicButton.textContent =
+      "⏸️ توقف موسیقی";
 
-}
+  }else{
 
-else{
+    homeMusicButton.textContent =
+      "▶️ پخش موسیقی";
 
-homeMusicText.textContent =
-"▶️ پخش موسیقی";
+    gameMusicButton.textContent =
+      "▶️ پخش موسیقی";
 
-gameMusicText.textContent =
-"▶️ پخش موسیقی";
-
-}
+  }
 
 }
-
 
 
 function setMusicStatus(text){
 
-homeMusicStatus.textContent = text;
+  homeMusicStatus.textContent = text;
 
-musicStatus.textContent = text;
+  musicStatus.textContent = text;
 
 }
-
 
 
 function startMusic(){
 
-if(!musicOn){
+  if(!musicOn){
+    return;
+  }
 
-return;
+  bgMusic.volume = 0.35;
 
-}
+  const promise = bgMusic.play();
 
+  if(promise !== undefined){
 
-bgMusic.volume = 0.35;
+    promise.then(function(){
 
+      setMusicStatus(
+        "🎵 موسیقی در حال پخش است"
+      );
 
-const promise =
-bgMusic.play();
+    }).catch(function(){
 
+      setMusicStatus(
+        "👆 برای پخش موسیقی دکمه موسیقی را بزن"
+      );
 
-if(promise !== undefined){
+    });
 
-promise.then(
-
-function(){
-
-setMusicStatus(
-"🎵 موسیقی در حال پخش است"
-);
-
-},
-
-function(){
-
-setMusicStatus(
-"⚠️ برای پخش موسیقی دکمه موسیقی را بزن."
-);
+  }
 
 }
-
-);
-
-}
-
-}
-
 
 
 function stopMusic(){
 
-bgMusic.pause();
+  bgMusic.pause();
 
 }
-
 
 
 function toggleMusic(){
 
-if(bgMusic.paused){
+  if(bgMusic.paused){
 
-musicOn = true;
+    musicOn = true;
 
-bgMusic.volume = 0.35;
+    bgMusic.volume = 0.35;
+
+    const promise = bgMusic.play();
+
+    if(promise !== undefined){
+
+      promise.then(function(){
+
+        setMusicStatus(
+          "🎵 موسیقی در حال پخش است"
+        );
+
+      }).catch(function(){
+
+        setMusicStatus(
+          "⚠️ موسیقی پخش نشد؛ دوباره بزن"
+        );
+
+      });
+
+    }
+
+  }else{
+
+    musicOn = false;
+
+    bgMusic.pause();
+
+    setMusicStatus(
+      "⏸️ موسیقی متوقف شد"
+    );
+
+  }
+
+  updateMusicButtons();
+
+}
 
 
-const promise =
-bgMusic.play();
+/* Music file events */
 
+bgMusic.addEventListener(
+  "loadeddata",
+  function(){
 
-if(promise !== undefined){
+    setMusicStatus(
+      "🎵 موسیقی آماده است"
+    );
 
-promise.then(
-
-function(){
-
-setMusicStatus(
-"🎵 موسیقی در حال پخش است"
+  }
 );
-
-},
-
-function(){
-
-setMusicStatus(
-"⚠️ موسیقی اجرا نشد؛ دوباره دکمه را بزن."
-);
-
-}
-
-);
-
-}
-
-}
-
-else{
-
-musicOn = false;
-
-stopMusic();
-
-setMusicStatus(
-"⏸️ موسیقی متوقف شد"
-);
-
-}
-
-
-updateMusicButtons();
-
-}
-
 
 
 bgMusic.addEventListener(
-"error",
+  "error",
+  function(){
 
-function(){
+    setMusicStatus(
+      "❌ فایل موسیقی پیدا نشد"
+    );
 
-musicOn = false;
-
-setMusicStatus(
-"❌ فایل موسیقی پیدا نشد."
-);
-
-updateMusicButtons();
-
-}
-
+  }
 );
 
 
-
-bgMusic.addEventListener(
-"loadeddata",
-
-function(){
-
-setMusicStatus(
-"🎵 موسیقی آماده است"
-);
-
-}
-
-);
-
-
-
-/* =========================
+/* =====================================================
    SOUND EFFECTS
-========================= */
-
-
-let audioContext = null;
-
-
+   ===================================================== */
 
 function getAudioContext(){
 
-if(!audioContext){
+  if(!audioContext){
 
-audioContext =
-new (
-window.AudioContext ||
-window.webkitAudioContext
-)();
+    audioContext =
+      new(
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
 
-}
+  }
 
+  if(
+    audioContext.state === "suspended"
+  ){
 
-if(
-audioContext.state === "suspended"
-){
+    audioContext.resume();
 
-audioContext.resume();
+  }
 
-}
-
-
-return audioContext;
+  return audioContext;
 
 }
-
-
-
-function playTone(
-type,
-frequency1,
-frequency2,
-duration
-){
-
-const ctx =
-getAudioContext();
-
-
-const oscillator =
-ctx.createOscillator();
-
-
-const gain =
-ctx.createGain();
-
-
-oscillator.type = type;
-
-
-oscillator.frequency.setValueAtTime(
-frequency1,
-ctx.currentTime
-);
-
-
-oscillator.frequency.exponentialRampToValueAtTime(
-frequency2,
-ctx.currentTime + duration * 0.7
-);
-
-
-gain.gain.setValueAtTime(
-0.001,
-ctx.currentTime
-);
-
-
-gain.gain.exponentialRampToValueAtTime(
-0.22,
-ctx.currentTime + 0.02
-);
-
-
-gain.gain.exponentialRampToValueAtTime(
-0.001,
-ctx.currentTime + duration
-);
-
-
-oscillator.connect(gain);
-
-gain.connect(ctx.destination);
-
-
-oscillator.start();
-
-oscillator.stop(
-ctx.currentTime + duration
-);
-
-}
-
 
 
 function playCorrectSound(){
 
-playTone(
-"sine",
-523.25,
-659.25,
-0.35
-);
+  const ctx =
+    getAudioContext();
+
+  const oscillator =
+    ctx.createOscillator();
+
+  const gain =
+    ctx.createGain();
+
+
+  oscillator.type = "sine";
+
+
+  oscillator.frequency.setValueAtTime(
+    523.25,
+    ctx.currentTime
+  );
+
+
+  oscillator.frequency.setValueAtTime(
+    659.25,
+    ctx.currentTime + 0.12
+  );
+
+
+  gain.gain.setValueAtTime(
+    0.001,
+    ctx.currentTime
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    0.22,
+    ctx.currentTime + 0.02
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    0.001,
+    ctx.currentTime + 0.35
+  );
+
+
+  oscillator.connect(gain);
+
+  gain.connect(ctx.destination);
+
+
+  oscillator.start();
+
+  oscillator.stop(
+    ctx.currentTime + 0.35
+  );
 
 }
-
 
 
 function playWrongSound(){
 
-playTone(
-"sawtooth",
-220,
-110,
-0.30
-);
+  const ctx =
+    getAudioContext();
+
+  const oscillator =
+    ctx.createOscillator();
+
+  const gain =
+    ctx.createGain();
+
+
+  oscillator.type = "sawtooth";
+
+
+  oscillator.frequency.setValueAtTime(
+    220,
+    ctx.currentTime
+  );
+
+
+  oscillator.frequency.exponentialRampToValueAtTime(
+    110,
+    ctx.currentTime + 0.22
+  );
+
+
+  gain.gain.setValueAtTime(
+    0.001,
+    ctx.currentTime
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    0.18,
+    ctx.currentTime + 0.02
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    0.001,
+    ctx.currentTime + 0.30
+  );
+
+
+  oscillator.connect(gain);
+
+  gain.connect(ctx.destination);
+
+
+  oscillator.start();
+
+  oscillator.stop(
+    ctx.currentTime + 0.30
+  );
 
 }
 
 
-
-/* =========================
+/* =====================================================
    MODE
-========================= */
-
+   ===================================================== */
 
 function chooseMode(selectedMode){
 
-mode = selectedMode;
+  mode = selectedMode;
 
-startGame();
+  startGame();
 
 }
 
 
-
-/* =========================
-   START GAME
-========================= */
-
+/* =====================================================
+   GAME START
+   ===================================================== */
 
 function startGame(){
 
-homeScreen.classList.add("hidden");
+  homeScreen.classList.add(
+    "hidden"
+  );
 
-endScreen.classList.add("hidden");
+  endScreen.classList.add(
+    "hidden"
+  );
 
-gameScreen.classList.remove("hidden");
-
-
-lives = 3;
-
-score = 0;
-
-stage = 1;
-
-usedWords = [];
+  gameScreen.classList.remove(
+    "hidden"
+  );
 
 
-updateInfo();
+  lives = 3;
+
+  score = 0;
+
+  stage = 1;
+
+  usedWords = [];
 
 
-messageElement.textContent = "";
+  updateInfo();
 
 
-startMusic();
+  messageElement.textContent =
+    "";
 
 
-nextWord();
+  /*
+    چون startGame از لمس دکمه اجرا شده،
+    مرورگر اجازه پخش موسیقی را دارد.
+  */
+
+  startMusic();
+
+
+  nextWord();
 
 }
 
 
-
-/* =========================
+/* =====================================================
    DIFFICULTY
-========================= */
-
+   ===================================================== */
 
 function getDifficulty(){
 
-if(stage <= 5){
+  if(stage <= 5){
 
-return {
+    return {
 
-minLength:2,
+      minLength:2,
+      maxLength:4,
+      time:30,
+      points:10,
+      name:"آسان"
 
-maxLength:4,
+    };
 
-time:30,
+  }
 
-points:10
 
-};
+  if(stage <= 10){
+
+    return {
+
+      minLength:4,
+      maxLength:6,
+      time:24,
+      points:15,
+      name:"متوسط"
+
+    };
+
+  }
+
+
+  return {
+
+    minLength:6,
+    maxLength:20,
+
+    time:
+      Math.max(
+        14,
+        24 -
+        Math.floor(
+          (stage - 10) / 3
+        )
+      ),
+
+    points:20,
+
+    name:"سخت"
+
+  };
 
 }
 
 
-if(stage <= 10){
-
-return {
-
-minLength:4,
-
-maxLength:6,
-
-time:24,
-
-points:15
-
-};
-
-}
-
-
-return {
-
-minLength:6,
-
-maxLength:20,
-
-time:Math.max(
-14,
-24 - Math.floor(
-(stage - 10) / 3
-)
-),
-
-points:20
-
-};
-
-}
-
-
-
-/* =========================
+/* =====================================================
    NEXT WORD
-========================= */
-
+   ===================================================== */
 
 function nextWord(){
 
-clearInterval(
-timerInterval
-);
+  clearInterval(
+    timerInterval
+  );
 
 
-const difficulty =
-getDifficulty();
+  const difficulty =
+    getDifficulty();
 
 
-let available =
-words.filter(
+  let available =
+    words.filter(function(word){
 
-function(word){
-
-const length =
-Array.from(
-word.latin
-).length;
+      const length =
+        Array.from(
+          word.latin
+        ).length;
 
 
-return (
+      return(
+        length >=
+          difficulty.minLength
+        &&
+        length <=
+          difficulty.maxLength
+      );
 
-length >= difficulty.minLength &&
+    });
 
-length <= difficulty.maxLength
 
-);
+  if(
+    available.length === 0
+  ){
+
+    available = words;
+
+  }
+
+
+  let notUsed =
+    available.filter(function(word){
+
+      return !usedWords.includes(
+        word.latin
+      );
+
+    });
+
+
+  if(
+    notUsed.length === 0
+  ){
+
+    usedWords = [];
+
+    notUsed = available;
+
+  }
+
+
+  currentWord =
+    notUsed[
+      Math.floor(
+        Math.random() *
+        notUsed.length
+      )
+    ];
+
+
+  usedWords.push(
+    currentWord.latin
+  );
+
+
+  const shuffled =
+    mode === "latin"
+      ?
+      shuffle(currentWord.latin)
+      :
+      shuffle(currentWord.arabic);
+
+
+  wordElement.textContent =
+    shuffled;
+
+
+  if(mode === "arabic"){
+
+    wordElement.classList.add(
+      "wordArabic"
+    );
+
+  }else{
+
+    wordElement.classList.remove(
+      "wordArabic"
+    );
+
+  }
+
+
+  timer =
+    difficulty.time;
+
+
+  timerElement.textContent =
+    timer;
+
+
+  stageElement.textContent =
+    stage;
+
+
+  difficultyText.textContent =
+    difficulty.name;
+
+
+  updateProgress();
+
+
+  answerInput.value =
+    "";
+
+
+  messageElement.textContent =
+    "";
+
+
+  messageElement.className =
+    "message";
+
+
+  answerInput.focus();
+
+
+  startTimer();
 
 }
 
-);
 
-
-if(available.length === 0){
-
-available = words;
-
-}
-
-
-let notUsed =
-available.filter(
-
-function(word){
-
-return !usedWords.includes(
-word.latin
-);
-
-}
-
-);
-
-
-if(notUsed.length === 0){
-
-usedWords = [];
-
-notUsed = available;
-
-}
-
-
-currentWord =
-notUsed[
-Math.floor(
-Math.random() *
-notUsed.length
-)
-];
-
-
-usedWords.push(
-currentWord.latin
-);
-
-
-if(mode === "latin"){
-
-wordElement.textContent =
-shuffle(currentWord.latin);
-
-}
-
-else{
-
-wordElement.textContent =
-shuffle(currentWord.arabic);
-
-}
-
-
-timer =
-difficulty.time;
-
-
-timerElement.textContent =
-timer;
-
-
-stageElement.textContent =
-stage;
-
-
-answerInput.value = "";
-
-
-answerInput.focus();
-
-
-messageElement.textContent = "";
-
-
-startTimer();
-
-}
-
-
-
-/* =========================
+/* =====================================================
    SHUFFLE
-========================= */
-
+   ===================================================== */
 
 function shuffle(word){
 
-const letters =
-Array.from(word);
+  const letters =
+    Array.from(word);
 
 
-for(
-let i = letters.length - 1;
-i > 0;
-i--
-){
+  for(
+    let i =
+      letters.length - 1;
+    i > 0;
+    i--
+  ){
 
-const j =
-Math.floor(
-Math.random() *
-(i + 1)
-);
+    const j =
+      Math.floor(
+        Math.random() *
+        (i + 1)
+      );
 
 
-[
-letters[i],
-letters[j]
-] =
-[
-letters[j],
-letters[i]
-];
+    [
+      letters[i],
+      letters[j]
+    ] =
+    [
+      letters[j],
+      letters[i]
+    ];
+
+  }
+
+
+  return letters.join("");
 
 }
 
 
-return letters.join("");
-
-}
-
-
-
-/* =========================
+/* =====================================================
    TIMER
-========================= */
-
+   ===================================================== */
 
 function startTimer(){
 
-timerInterval =
-setInterval(
+  timerInterval =
+    setInterval(function(){
 
-function(){
+      timer--;
 
-timer--;
-
-timerElement.textContent =
-timer;
+      timerElement.textContent =
+        timer;
 
 
-if(timer <= 0){
+      if(timer <= 0){
 
-clearInterval(
-timerInterval
-);
-
-
-messageElement.textContent =
-"⏰ زمان تمام شد!";
+        clearInterval(
+          timerInterval
+        );
 
 
-messageElement.className =
-"message wrong";
+        messageElement.textContent =
+          "⏰ زمان تمام شد!";
 
 
-loseLife();
+        messageElement.className =
+          "message wrong wrongAnim";
 
-}
 
-},
+        loseLife();
 
-1000
+      }
 
-);
+    },1000);
 
 }
 
 
-
-/* =========================
+/* =====================================================
    CHECK ANSWER
-========================= */
-
+   ===================================================== */
 
 function checkAnswer(){
 
-const answer =
-answerInput.value.trim();
+  const answer =
+    answerInput.value.trim();
 
 
-if(answer === ""){
+  if(answer === ""){
+    return;
+  }
 
-return;
+
+  let isCorrect = false;
+
+
+  /*
+    Latin:
+    حروف بزرگ و کوچک مهم نیست.
+  */
+
+  if(mode === "latin"){
+
+    const userAnswer =
+      answer.toLocaleLowerCase(
+        "az-AZ"
+      );
+
+
+    const correctAnswer =
+      currentWord.latin
+      .toLocaleLowerCase(
+        "az-AZ"
+      );
+
+
+    isCorrect =
+      userAnswer ===
+      correctAnswer;
+
+  }
+
+  /*
+    Arabic:
+    جواب باید دقیقاً مطابق
+    شکل عربی ثبت‌شده باشد.
+  */
+
+  else{
+
+    isCorrect =
+      answer ===
+      currentWord.arabic;
+
+  }
+
+
+  if(isCorrect){
+
+    clearInterval(
+      timerInterval
+    );
+
+
+    playCorrectSound();
+
+
+    messageElement.textContent =
+      "✅ درست است!";
+
+
+    messageElement.className =
+      "message correct correctAnim";
+
+
+    score +=
+      getDifficulty().points;
+
+
+    stage++;
+
+
+    updateInfo();
+
+
+    setTimeout(
+      function(){
+
+        nextWord();
+
+      },
+      550
+    );
+
+  }
+
+  else{
+
+    messageElement.textContent =
+      "❌ اشتباه است!";
+
+
+    messageElement.className =
+      "message wrong wrongAnim";
+
+
+    /*
+      فقط loseLife صدای اشتباه
+      را پخش می‌کند تا صدا دوبار
+      اجرا نشود.
+    */
+
+    loseLife();
+
+  }
 
 }
 
 
-let isCorrect = false;
-
-
-
-if(mode === "latin"){
-
-const userAnswer =
-answer.toLocaleLowerCase(
-"az-AZ"
-);
-
-
-const correctAnswer =
-currentWord.latin.toLocaleLowerCase(
-"az-AZ"
-);
-
-
-isCorrect =
-userAnswer === correctAnswer;
-
-}
-
-else{
-
-isCorrect =
-answer === currentWord.arabic;
-
-}
-
-
-
-if(isCorrect){
-
-clearInterval(
-timerInterval
-);
-
-
-playCorrectSound();
-
-
-messageElement.textContent =
-"✅ درست است!";
-
-
-messageElement.className =
-"message correct";
-
-
-score +=
-getDifficulty().points;
-
-
-stage++;
-
-
-updateInfo();
-
-
-setTimeout(
-
-function(){
-
-nextWord();
-
-},
-
-500
-
-);
-
-}
-
-else{
-
-messageElement.textContent =
-"❌ اشتباه است!";
-
-
-messageElement.className =
-"message wrong";
-
-
-loseLife();
-
-}
-
-}
-
-
-
-/* =========================
+/* =====================================================
    LOSE LIFE
-========================= */
-
+   ===================================================== */
 
 function loseLife(){
 
-clearInterval(
-timerInterval
-);
+  clearInterval(
+    timerInterval
+  );
 
 
-playWrongSound();
+  playWrongSound();
 
 
-lives--;
+  lives--;
 
 
-updateInfo();
+  updateInfo();
 
 
-if(lives <= 0){
+  if(lives <= 0){
 
-finishGame();
+    finishGame();
 
-return;
+    return;
 
-}
+  }
 
 
-setTimeout(
+  setTimeout(
+    function(){
 
-function(){
+      nextWord();
 
-nextWord();
-
-},
-
-650
-
-);
+    },
+    700
+  );
 
 }
 
 
-
-/* =========================
+/* =====================================================
    HINT
-========================= */
-
+   ===================================================== */
 
 function useHint(){
 
-if(!currentWord){
+  if(!currentWord){
+    return;
+  }
 
-return;
+
+  if(score <= 5){
+
+    messageElement.textContent =
+      "❗ برای راهنما حداقل ۵ امتیاز لازم است.";
+
+    messageElement.className =
+      "message";
+
+
+    return;
+
+  }
+
+
+  score -= 5;
+
+
+  updateInfo();
+
+
+  const answer =
+    mode === "latin"
+      ?
+      currentWord.latin
+      :
+      currentWord.arabic;
+
+
+  const letters =
+    Array.from(answer);
+
+
+  if(letters.length){
+
+    messageElement.textContent =
+      "💡 راهنما: با «"
+      +
+      letters[0]
+      +
+      "» شروع می‌شود.";
+
+  }
 
 }
 
 
-if(score <= 5){
-
-messageElement.textContent =
-"❗ برای راهنما حداقل ۵ امتیاز لازم است.";
-
-return;
-
-}
-
-
-score -= 5;
-
-
-updateInfo();
-
-
-const answer =
-mode === "latin"
-?
-currentWord.latin
-:
-currentWord.arabic;
-
-
-const letters =
-Array.from(answer);
-
-
-if(letters.length > 0){
-
-messageElement.textContent =
-"💡 راهنما: با «"
-+
-letters[0]
-+
-"» شروع می‌شود.";
-
-}
-
-}
-
-
-
-/* =========================
-   INFO
-========================= */
-
+/* =====================================================
+   UPDATE INFO
+   ===================================================== */
 
 function updateInfo(){
 
-livesElement.textContent =
-lives;
+  livesElement.textContent =
+    lives;
 
-scoreElement.textContent =
-score;
 
-stageElement.textContent =
-stage;
+  scoreElement.textContent =
+    score;
 
-updateBestScore();
+
+  stageElement.textContent =
+    stage;
+
+
+  updateBestScore();
+
+  updateProgress();
 
 }
 
 
+/* =====================================================
+   PROGRESS BAR
+   ===================================================== */
+
+function updateProgress(){
+
+  let progress =
+    ((stage - 1) % 10) + 1;
+
+
+  let width =
+    progress * 10;
+
+
+  progressBar.style.width =
+    width + "%";
+
+}
+
+
+/* =====================================================
+   BEST SCORE
+   ===================================================== */
 
 function updateBestScore(){
 
-const best =
-Number(
-localStorage.getItem(
-"sozlerBest"
-) || 0
-);
+  const best =
+    Number(
+      localStorage.getItem(
+        "sozlerBest"
+      ) || 0
+    );
 
 
-bestScoreElement.textContent =
-best;
+  bestScoreElement.textContent =
+    best;
 
 }
 
 
-
-/* =========================
+/* =====================================================
    FINISH
-========================= */
-
+   ===================================================== */
 
 function finishGame(){
 
-clearInterval(
-timerInterval
-);
+  clearInterval(
+    timerInterval
+  );
 
 
-stopMusic();
+  stopMusic();
 
 
-const oldBest =
-Number(
-localStorage.getItem(
-"sozlerBest"
-) || 0
-);
+  const oldBest =
+    Number(
+      localStorage.getItem(
+        "sozlerBest"
+      ) || 0
+    );
 
 
-if(score > oldBest){
+  if(score > oldBest){
 
-localStorage.setItem(
-"sozlerBest",
-score
-);
+    localStorage.setItem(
+      "sozlerBest",
+      score
+    );
+
+  }
+
+
+  const best =
+    Math.max(
+      score,
+      oldBest
+    );
+
+
+  finalScoreElement.textContent =
+    score;
+
+
+  finalBestElement.textContent =
+    best;
+
+
+  gameScreen.classList.add(
+    "hidden"
+  );
+
+
+  endScreen.classList.remove(
+    "hidden"
+  );
 
 }
 
 
-const best =
-Math.max(
-score,
-oldBest
-);
-
-
-finalScoreElement.textContent =
-score;
-
-
-finalBestElement.textContent =
-best;
-
-
-gameScreen.classList.add(
-"hidden"
-);
-
-
-endScreen.classList.remove(
-"hidden"
-);
-
-}
-
-
-
-/* =========================
+/* =====================================================
    RESTART
-========================= */
-
+   ===================================================== */
 
 function restartGame(){
 
-endScreen.classList.add(
-"hidden"
-);
+  endScreen.classList.add(
+    "hidden"
+  );
 
 
-gameScreen.classList.remove(
-"hidden"
-);
+  gameScreen.classList.remove(
+    "hidden"
+  );
 
 
-lives = 3;
+  lives = 3;
 
-score = 0;
+  score = 0;
 
-stage = 1;
+  stage = 1;
 
-usedWords = [];
-
-
-updateInfo();
+  usedWords = [];
 
 
-startMusic();
+  updateInfo();
 
 
-nextWord();
+  startMusic();
+
+
+  nextWord();
 
 }
 
 
-
-/* =========================
+/* =====================================================
    HOME
-========================= */
-
+   ===================================================== */
 
 function goHome(){
 
-clearInterval(
-timerInterval
-);
+  clearInterval(
+    timerInterval
+  );
 
 
-stopMusic();
+  stopMusic();
 
 
-gameScreen.classList.add(
-"hidden"
-);
+  gameScreen.classList.add(
+    "hidden"
+  );
 
 
-endScreen.classList.add(
-"hidden"
-);
+  endScreen.classList.add(
+    "hidden"
+  );
 
 
-homeScreen.classList.remove(
-"hidden"
-);
+  homeScreen.classList.remove(
+    "hidden"
+  );
 
 
-setMusicStatus(
-"⏸️ موسیقی متوقف شد"
-);
+  setMusicStatus(
+    "⏸️ موسیقی متوقف شد"
+  );
 
 }
 
 
-
-/* =========================
+/* =====================================================
    ENTER KEY
-========================= */
-
+   ===================================================== */
 
 answerInput.addEventListener(
+  "keydown",
+  function(event){
 
-"keydown",
+    if(
+      event.key ===
+      "Enter"
+    ){
 
-function(event){
+      event.preventDefault();
 
-if(event.key === "Enter"){
+      checkAnswer();
 
-event.preventDefault();
+    }
 
-checkAnswer();
-
-}
-
-}
-
+  }
 );
 
 
-
-/* =========================
+/* =====================================================
    INITIAL
-========================= */
-
+   ===================================================== */
 
 updateMusicButtons();
 
