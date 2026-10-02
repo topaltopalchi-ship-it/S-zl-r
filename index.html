@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>SÖZLƏR</title>
 
@@ -15,198 +18,310 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #eef2ff, #dbeafe);
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #dbeafe
+        );
+
     min-height: 100vh;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     color: #222;
 }
 
 .game {
     width: 95%;
     max-width: 500px;
+
     background: white;
+
     border-radius: 25px;
+
     padding: 22px;
-    box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.15);
+
     text-align: center;
 }
 
 h1 {
     margin: 5px 0 3px;
+
     font-size: 42px;
+
     letter-spacing: 5px;
 }
 
 .subtitle {
     color: #666;
+
     margin-bottom: 18px;
 }
 
 .language {
     display: flex;
+
     gap: 10px;
+
     margin-bottom: 18px;
 }
 
 .language button {
+
     flex: 1;
+
     border: none;
+
     padding: 12px;
+
     border-radius: 12px;
+
     font-size: 16px;
+
     cursor: pointer;
+
     background: #e5e7eb;
 }
 
 .language button.active {
+
     background: #2563eb;
+
     color: white;
 }
 
 .stats {
+
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
     gap: 7px;
+
     margin-bottom: 18px;
 }
 
 .stat {
+
     background: #f3f4f6;
+
     border-radius: 12px;
+
     padding: 9px 4px;
 }
 
 .stat-title {
+
     font-size: 12px;
+
     color: #777;
 }
 
 .stat-value {
+
     font-size: 18px;
+
     font-weight: bold;
+
     margin-top: 3px;
 }
 
 #word {
+
     font-size: 48px;
+
     font-weight: bold;
+
     margin: 25px 0;
+
     min-height: 60px;
 }
 
+/* حالت عربی */
+
+#word.arabic {
+
+    direction: rtl;
+
+    font-family:
+        Tahoma,
+        Arial,
+        sans-serif;
+}
+
 #answer {
+
     width: 100%;
+
     padding: 15px;
+
     font-size: 20px;
-    border: 2px solid #ddd;
+
+    border:
+        2px solid #ddd;
+
     border-radius: 14px;
+
     text-align: center;
+
     outline: none;
 }
 
 #answer:focus {
+
     border-color: #2563eb;
 }
 
 .buttons {
+
     display: grid;
-    grid-template-columns: 1fr 1fr;
+
+    grid-template-columns:
+        1fr 1fr;
+
     gap: 10px;
+
     margin-top: 12px;
 }
 
 .buttons button,
 .main-button {
+
     border: none;
+
     border-radius: 13px;
+
     padding: 13px;
+
     font-size: 17px;
+
     cursor: pointer;
 }
 
 .check {
+
     background: #2563eb;
+
     color: white;
 }
 
 .hint {
+
     background: #f59e0b;
+
     color: white;
 }
 
 .restart {
+
     background: #16a34a;
+
     color: white;
+
     width: 100%;
+
     margin-top: 10px;
 }
 
 .home {
+
     background: #6b7280;
+
     color: white;
+
     width: 100%;
+
     margin-top: 10px;
 }
 
 .message {
+
     min-height: 30px;
+
     margin-top: 14px;
+
     font-size: 17px;
+
     font-weight: bold;
 }
 
 .progress-container {
+
     height: 10px;
+
     background: #e5e7eb;
+
     border-radius: 20px;
+
     overflow: hidden;
+
     margin-top: 15px;
 }
 
 .progress {
+
     height: 100%;
+
     width: 0%;
+
     background: #2563eb;
-    transition: width 0.3s;
+
+    transition:
+        width 0.3s;
 }
 
 .timer-container {
+
     margin-top: 10px;
+
     font-size: 15px;
 }
 
 .timer {
+
     font-weight: bold;
 }
 
 .game-over {
+
     display: none;
 }
 
 .final-score {
+
     font-size: 32px;
+
     font-weight: bold;
+
     margin: 20px 0;
 }
 
 .record {
+
     color: #b45309;
+
     font-weight: bold;
 }
 
 #hintText {
+
     min-height: 25px;
+
     margin-top: 8px;
+
     color: #b45309;
 }
 
-.arabic {
-    direction: rtl;
-}
-
 </style>
+
 </head>
 
 <body>
@@ -219,55 +334,148 @@ h1 {
         Azərbaycan söz oyunu
     </div>
 
+
+    <!-- زبان -->
+
     <div class="language">
 
-        <button id="latinBtn" class="active">
+        <button
+            id="latinBtn"
+            class="active">
+
             🇮🇷 Latın
+
         </button>
 
-        <button id="arabicBtn">
+        <button
+            id="arabicBtn">
+
             🇮🇷 Ərəb
+
         </button>
 
     </div>
 
+
+    <!-- صفحه بازی -->
+
     <div id="gameScreen">
+
+
+        <!-- اطلاعات -->
 
         <div class="stats">
 
             <div class="stat">
-                <div class="stat-title">Xal</div>
-                <div class="stat-value" id="score">0</div>
+
+                <div class="stat-title">
+                    Xal
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="score">
+
+                    0
+
+                </div>
+
             </div>
 
-            <div class="stat">
-                <div class="stat-title">Rekord</div>
-                <div class="stat-value" id="best">0</div>
-            </div>
 
             <div class="stat">
-                <div class="stat-title">Can</div>
-                <div class="stat-value" id="lives">❤️❤️❤️</div>
+
+                <div class="stat-title">
+                    Rekord
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="best">
+
+                    0
+
+                </div>
+
             </div>
 
+
             <div class="stat">
-                <div class="stat-title">Mərhələ</div>
-                <div class="stat-value" id="stage">1</div>
+
+                <div class="stat-title">
+                    Can
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="lives">
+
+                    ❤️❤️❤️
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    Mərhələ
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="stage">
+
+                    1
+
+                </div>
+
             </div>
 
         </div>
+
+
+        <!-- زمان -->
 
         <div class="timer-container">
-            Vaxt: <span class="timer" id="timer">30</span> saniyə
+
+            Vaxt:
+
+            <span
+                class="timer"
+                id="timer">
+
+                30
+
+            </span>
+
+            saniyə
+
         </div>
 
+
+        <!-- پیشرفت -->
+
         <div class="progress-container">
-            <div class="progress" id="progress"></div>
+
+            <div
+                class="progress"
+                id="progress">
+
+            </div>
+
         </div>
+
+
+        <!-- کلمه -->
 
         <div id="word">
             Günəş
         </div>
+
+
+        <!-- جواب -->
 
         <input
             id="answer"
@@ -276,157 +484,454 @@ h1 {
             autocomplete="off"
         >
 
+
+        <!-- راهنما -->
+
         <div id="hintText"></div>
+
+
+        <!-- دکمه‌ها -->
 
         <div class="buttons">
 
-            <button class="check" onclick="checkAnswer()">
+            <button
+                class="check"
+                onclick="checkAnswer()">
+
                 Yoxla
+
             </button>
 
-            <button class="hint" onclick="showHint()">
+
+            <button
+                class="hint"
+                onclick="showHint()">
+
                 💡 İpucu
+
             </button>
 
         </div>
 
-        <div class="message" id="message"></div>
+
+        <!-- پیام -->
+
+        <div
+            class="message"
+            id="message">
+
+        </div>
 
     </div>
 
-    <div class="game-over" id="gameOver">
 
-        <h2>🎉 Oyun bitdi!</h2>
+    <!-- پایان بازی -->
 
-        <div class="final-score" id="finalScore">
+    <div
+        class="game-over"
+        id="gameOver">
+
+        <h2>
+            🎉 Oyun bitdi!
+        </h2>
+
+
+        <div
+            class="final-score"
+            id="finalScore">
+
             0 xal
+
         </div>
 
-        <div class="record" id="recordMessage"></div>
 
-        <button class="main-button restart" onclick="restartGame()">
+        <div
+            class="record"
+            id="recordMessage">
+
+        </div>
+
+
+        <button
+            class="main-button restart"
+            onclick="restartGame()">
+
             🔄 Yenidən oyna
+
         </button>
 
-        <button class="main-button home" onclick="goHome()">
+
+        <button
+            class="main-button home"
+            onclick="goHome()">
+
             🏠 Əsas səhifə
+
         </button>
 
     </div>
 
 </div>
 
+
 <script>
+
+
+/* ===================================
+   کلمات بازی
+=================================== */
 
 const words = [
 
-    {latin:"Günəş", arabic:"گونش"},
-    {latin:"Çörək", arabic:"چورک"},
-    {latin:"Göy", arabic:"گوی"},
-    {latin:"Ev", arabic:"ائو"},
-    {latin:"Su", arabic:"سو"},
-    {latin:"Dağ", arabic:"داغ"},
-    {latin:"Gül", arabic:"گول"},
-    {latin:"Ay", arabic:"آی"},
-    {latin:"Ulduz", arabic:"اولدوز"},
-    {latin:"Külək", arabic:"کولک"},
+    {
+        latin: "Günəş",
+        arabic: "گونش"
+    },
 
-    {latin:"Yağış", arabic:"یاغیش"},
-    {latin:"Torpaq", arabic:"تورپاق"},
-    {latin:"Dəniz", arabic:"دنیز"},
-    {latin:"Çay", arabic:"چای"},
-    {latin:"Bulud", arabic:"بولود"},
-    {latin:"Gecə", arabic:"گجه"},
-    {latin:"Səhər", arabic:"سحر"},
-    {latin:"Axşam", arabic:"آخشام"},
-    {latin:"Ana", arabic:"آنا"},
-    {latin:"Ata", arabic:"آتا"},
+    {
+        latin: "Çörək",
+        arabic: "چورک"
+    },
 
-    {latin:"Qardaş", arabic:"قارداش"},
-    {latin:"Bacı", arabic:"باجی"},
-    {latin:"Uşaq", arabic:"اوشاق"},
-    {latin:"Dost", arabic:"دوست"},
-    {latin:"Kitab", arabic:"کیتاب"},
-    {latin:"Qələm", arabic:"قلم"},
-    {latin:"Məktəb", arabic:"مکتب"},
-    {latin:"Müəllim", arabic:"معلم"},
-    {latin:"Şəhər", arabic:"شهر"},
-    {latin:"Kənd", arabic:"کند"},
+    {
+        latin: "Göy",
+        arabic: "گوی"
+    },
 
-    {latin:"Yol", arabic:"یول"},
-    {latin:"Maşın", arabic:"ماشین"},
-    {latin:"Qapı", arabic:"قاپی"},
-    {latin:"Pəncərə", arabic:"پنجره"},
-    {latin:"Stol", arabic:"ستول"},
-    {latin:"Stul", arabic:"ستول"},
-    {latin:"Otaq", arabic:"اوتاق"},
-    {latin:"Bağ", arabic:"باغ"},
-    {latin:"Ağac", arabic:"آغاج"},
-    {latin:"Çiçək", arabic:"چیچک"},
+    {
+        latin: "Ev",
+        arabic: "ائو"
+    },
 
-    {latin:"Quş", arabic:"قوش"},
-    {latin:"Balıq", arabic:"بالıq"},
-    {latin:"At", arabic:"آت"},
-    {latin:"İt", arabic:"ایت"},
-    {latin:"Pişik", arabic:"پیشیک"},
-    {latin:"Aslan", arabic:"آسلان"},
-    {latin:"Qurd", arabic:"قورد"},
-    {latin:"Yemək", arabic:"یمک"},
-    {latin:"Alma", arabic:"آلما"},
-    {latin:"Nar", arabic:"نار"}
+    {
+        latin: "Su",
+        arabic: "سو"
+    },
+
+    {
+        latin: "Dağ",
+        arabic: "داغ"
+    },
+
+    {
+        latin: "Gül",
+        arabic: "گول"
+    },
+
+    {
+        latin: "Ay",
+        arabic: "آی"
+    },
+
+    {
+        latin: "Ulduz",
+        arabic: "اولدوز"
+    },
+
+    {
+        latin: "Külək",
+        arabic: "کولک"
+    },
+
+    {
+        latin: "Yağış",
+        arabic: "یاغیش"
+    },
+
+    {
+        latin: "Torpaq",
+        arabic: "تورپاق"
+    },
+
+    {
+        latin: "Dəniz",
+        arabic: "دنیز"
+    },
+
+    {
+        latin: "Çay",
+        arabic: "چای"
+    },
+
+    {
+        latin: "Bulud",
+        arabic: "بولود"
+    },
+
+    {
+        latin: "Gecə",
+        arabic: "گجه"
+    },
+
+    {
+        latin: "Səhər",
+        arabic: "سحر"
+    },
+
+    {
+        latin: "Axşam",
+        arabic: "آخشام"
+    },
+
+    {
+        latin: "Ana",
+        arabic: "آنا"
+    },
+
+    {
+        latin: "Ata",
+        arabic: "آتا"
+    },
+
+    {
+        latin: "Qardaş",
+        arabic: "قارداش"
+    },
+
+    {
+        latin: "Bacı",
+        arabic: "باجی"
+    },
+
+    {
+        latin: "Uşaq",
+        arabic: "اوشاق"
+    },
+
+    {
+        latin: "Dost",
+        arabic: "دوست"
+    },
+
+    {
+        latin: "Kitab",
+        arabic: "کیتاب"
+    },
+
+    {
+        latin: "Qələm",
+        arabic: "قلم"
+    },
+
+    {
+        latin: "Məktəb",
+        arabic: "مکتب"
+    },
+
+    {
+        latin: "Müəllim",
+        arabic: "معلم"
+    },
+
+    {
+        latin: "Şəhər",
+        arabic: "شهر"
+    },
+
+    {
+        latin: "Kənd",
+        arabic: "کند"
+    },
+
+    {
+        latin: "Yol",
+        arabic: "یول"
+    },
+
+    {
+        latin: "Maşın",
+        arabic: "ماشین"
+    },
+
+    {
+        latin: "Qapı",
+        arabic: "قاپی"
+    },
+
+    {
+        latin: "Pəncərə",
+        arabic: "پنجره"
+    },
+
+    {
+        latin: "Stol",
+        arabic: "ستول"
+    },
+
+    {
+        latin: "Otaq",
+        arabic: "اوتاق"
+    },
+
+    {
+        latin: "Bağ",
+        arabic: "باغ"
+    },
+
+    {
+        latin: "Ağac",
+        arabic: "آغاج"
+    },
+
+    {
+        latin: "Çiçək",
+        arabic: "چیچک"
+    },
+
+    {
+        latin: "Quş",
+        arabic: "قوش"
+    },
+
+    {
+        latin: "Balıq",
+        arabic: "بالıq"
+    },
+
+    {
+        latin: "At",
+        arabic: "آت"
+    },
+
+    {
+        latin: "İt",
+        arabic: "ایت"
+    },
+
+    {
+        latin: "Pişik",
+        arabic: "پیشیک"
+    },
+
+    {
+        latin: "Aslan",
+        arabic: "آسلان"
+    },
+
+    {
+        latin: "Qurd",
+        arabic: "قورد"
+    },
+
+    {
+        latin: "Yemək",
+        arabic: "یمک"
+    },
+
+    {
+        latin: "Alma",
+        arabic: "آلما"
+    },
+
+    {
+        latin: "Nar",
+        arabic: "نار"
+    }
 
 ];
 
+
+/* ===================================
+   متغیرها
+=================================== */
+
 let currentIndex = 0;
+
 let score = 0;
+
 let lives = 3;
+
 let stage = 1;
+
 let language = "latin";
+
 let timer = 30;
+
 let timerInterval = null;
+
 let hintUsed = false;
 
+
+/* رکورد */
+
 let bestScore =
-    Number(localStorage.getItem("sozlerBest")) || 0;
+    Number(
+        localStorage.getItem("sozlerBest")
+    ) || 0;
 
-document.getElementById("best").textContent = bestScore;
+
+document.getElementById("best")
+    .textContent = bestScore;
 
 
-/* -------------------------
+/* ===================================
    نمایش کلمه
-------------------------- */
+=================================== */
 
 function showWord() {
 
     if (currentIndex >= words.length) {
+
         finishGame();
+
         return;
     }
 
-    const word = words[currentIndex];
+
+    const word =
+        words[currentIndex];
+
 
     const wordElement =
         document.getElementById("word");
 
+
+    /*
+       حالت عربی
+    */
+
     if (language === "arabic") {
 
-        wordElement.textContent = word.arabic;
-        wordElement.classList.add("arabic");
+        wordElement.textContent =
+            word.arabic;
 
-    } else {
-
-        wordElement.textContent = word.latin;
-        wordElement.classList.remove("arabic");
+        wordElement.classList.add(
+            "arabic"
+        );
 
     }
 
-    document.getElementById("answer").value = "";
 
-    document.getElementById("message").textContent = "";
+    /*
+       حالت لاتین
+    */
 
-    document.getElementById("hintText").textContent = "";
+    else {
+
+        wordElement.textContent =
+            word.latin;
+
+        wordElement.classList.remove(
+            "arabic"
+        );
+
+    }
+
+
+    document.getElementById("answer")
+        .value = "";
+
+
+    document.getElementById("message")
+        .textContent = "";
+
+
+    document.getElementById("hintText")
+        .textContent = "";
+
 
     hintUsed = false;
+
 
     updateStage();
 
@@ -434,297 +939,558 @@ function showWord() {
 
     startTimer();
 
-    document.getElementById("answer").focus();
+
+    document.getElementById("answer")
+        .focus();
+
 }
 
 
-/* -------------------------
-   تغییر زبان
-------------------------- */
+/* ===================================
+   دکمه لاتین
+=================================== */
 
-document.getElementById("latinBtn")
-.addEventListener("click", function(){
+document
+    .getElementById("latinBtn")
+    .addEventListener(
+        "click",
+        function() {
 
-    language = "latin";
-
-    this.classList.add("active");
-
-    document
-        .getElementById("arabicBtn")
-        .classList.remove("active");
-
-    showWord();
-
-});
+            language = "latin";
 
 
-document.getElementById("arabicBtn")
-.addEventListener("click", function(){
-
-    language = "arabic";
-
-    this.classList.add("active");
-
-    document
-        .getElementById("latinBtn")
-        .classList.remove("active");
-
-    showWord();
-
-});
+            this.classList.add(
+                "active"
+            );
 
 
-/* -------------------------
-   بررسی جواب
-------------------------- */
+            document
+                .getElementById(
+                    "arabicBtn"
+                )
+                .classList.remove(
+                    "active"
+                );
 
-function checkAnswer() {
-
-    const input =
-        document
-        .getElementById("answer")
-        .value
-        .trim()
-        .toLowerCase();
-
-    if (!input) return;
-
-    const correct =
-        words[currentIndex].latin
-        .trim()
-        .toLowerCase();
-
-    clearInterval(timerInterval);
-
-    if (input === correct) {
-
-        let points = hintUsed ? 5 : 10;
-
-        score += points;
-
-        document.getElementById("score")
-            .textContent = score;
-
-        document.getElementById("message")
-            .textContent =
-            "✅ Düzdür! +" + points + " xal";
-
-        currentIndex++;
-
-        setTimeout(function(){
 
             showWord();
 
-        }, 700);
-
-    } else {
-
-        loseLife("❌ Səhv cavab!");
-
-    }
-
-}
+        }
+    );
 
 
-/* -------------------------
-   کم شدن جان
-------------------------- */
+/* ===================================
+   دکمه عربی
+=================================== */
 
-function loseLife(message) {
+document
+    .getElementById("arabicBtn")
+    .addEventListener(
+        "click",
+        function() {
 
-    lives--;
+            language = "arabic";
 
-    updateLives();
 
-    document.getElementById("message")
-        .textContent = message;
+            this.classList.add(
+                "active"
+            );
 
-    if (lives <= 0) {
 
-        setTimeout(function(){
+            document
+                .getElementById(
+                    "latinBtn"
+                )
+                .classList.remove(
+                    "active"
+                );
 
-            finishGame();
 
-        }, 700);
+            showWord();
+
+        }
+    );
+
+
+/* ===================================
+   بررسی جواب
+=================================== */
+
+function checkAnswer() {
+
+
+    const input =
+        document
+            .getElementById("answer")
+            .value
+            .trim();
+
+
+    /*
+       اگر چیزی نوشته نشده
+    */
+
+    if (!input) {
 
         return;
     }
 
-    currentIndex++;
 
-    setTimeout(function(){
+    let correctAnswer;
 
-        showWord();
 
-    }, 700);
+    /*
+       اگر حالت عربی است،
+       جواب عربی بررسی می‌شود.
+    */
+
+    if (language === "arabic") {
+
+        correctAnswer =
+            words[currentIndex]
+                .arabic
+                .trim();
+
+    }
+
+
+    /*
+       اگر حالت لاتین است،
+       جواب لاتین بررسی می‌شود.
+    */
+
+    else {
+
+        correctAnswer =
+            words[currentIndex]
+                .latin
+                .trim()
+                .toLowerCase();
+
+    }
+
+
+    let userAnswer = input;
+
+
+    /*
+       فقط در حالت لاتین
+       حروف کوچک و بزرگ مهم نیست.
+    */
+
+    if (language === "latin") {
+
+        userAnswer =
+            userAnswer.toLowerCase();
+
+    }
+
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    /*
+       جواب درست
+    */
+
+    if (
+        userAnswer ===
+        correctAnswer
+    ) {
+
+
+        let points;
+
+
+        if (hintUsed) {
+
+            points = 5;
+
+        }
+
+        else {
+
+            points = 10;
+
+        }
+
+
+        score += points;
+
+
+        document
+            .getElementById("score")
+            .textContent = score;
+
+
+        document
+            .getElementById("message")
+            .textContent =
+                "✅ Düzdür! +" +
+                points +
+                " xal";
+
+
+        currentIndex++;
+
+
+        setTimeout(
+            function() {
+
+                showWord();
+
+            },
+            700
+        );
+
+    }
+
+
+    /*
+       جواب غلط
+    */
+
+    else {
+
+        loseLife(
+            "❌ Səhv cavab!"
+        );
+
+    }
 
 }
 
 
-/* -------------------------
+/* ===================================
+   کم شدن جان
+=================================== */
+
+function loseLife(message) {
+
+
+    lives--;
+
+
+    updateLives();
+
+
+    document
+        .getElementById("message")
+        .textContent = message;
+
+
+    /*
+       اگر جان تمام شد
+    */
+
+    if (lives <= 0) {
+
+
+        setTimeout(
+            function() {
+
+                finishGame();
+
+            },
+            700
+        );
+
+
+        return;
+
+    }
+
+
+    /*
+       رفتن به کلمه بعدی
+    */
+
+    currentIndex++;
+
+
+    setTimeout(
+        function() {
+
+            showWord();
+
+        },
+        700
+    );
+
+}
+
+
+/* ===================================
    تایمر
-------------------------- */
+=================================== */
 
 function startTimer() {
 
-    clearInterval(timerInterval);
+
+    clearInterval(
+        timerInterval
+    );
+
 
     timer = 30;
 
-    document.getElementById("timer")
+
+    document
+        .getElementById("timer")
         .textContent = timer;
 
+
     timerInterval =
-        setInterval(function(){
+        setInterval(
+            function() {
 
-            timer--;
 
-            document.getElementById("timer")
-                .textContent = timer;
+                timer--;
 
-            if (timer <= 0) {
 
-                clearInterval(timerInterval);
+                document
+                    .getElementById("timer")
+                    .textContent =
+                    timer;
 
-                loseLife("⏰ Vaxt bitdi!");
 
-            }
+                /*
+                   زمان تمام شد
+                */
 
-        }, 1000);
+                if (timer <= 0) {
+
+
+                    clearInterval(
+                        timerInterval
+                    );
+
+
+                    loseLife(
+                        "⏰ Vaxt bitdi!"
+                    );
+
+                }
+
+            },
+            1000
+        );
 
 }
 
 
-/* -------------------------
-   جان‌ها
-------------------------- */
+/* ===================================
+   نمایش جان‌ها
+=================================== */
 
 function updateLives() {
 
+
     let hearts = "";
 
-    for (let i = 0; i < lives; i++) {
+
+    for (
+        let i = 0;
+        i < lives;
+        i++
+    ) {
+
         hearts += "❤️";
+
     }
 
-    for (let i = lives; i < 3; i++) {
+
+    for (
+        let i = lives;
+        i < 3;
+        i++
+    ) {
+
         hearts += "🖤";
+
     }
 
-    document.getElementById("lives")
+
+    document
+        .getElementById("lives")
         .textContent = hearts;
 
 }
 
 
-/* -------------------------
+/* ===================================
    مرحله
-------------------------- */
+=================================== */
 
 function updateStage() {
 
+
     stage =
-        Math.floor(currentIndex / 10) + 1;
+        Math.floor(
+            currentIndex / 10
+        ) + 1;
+
 
     if (stage > 5) {
+
         stage = 5;
+
     }
 
-    document.getElementById("stage")
+
+    document
+        .getElementById("stage")
         .textContent = stage;
 
 }
 
 
-/* -------------------------
+/* ===================================
    نوار پیشرفت
-------------------------- */
+=================================== */
 
 function updateProgress() {
 
-    const percent =
-        (currentIndex / words.length) * 100;
 
-    document.getElementById("progress")
-        .style.width = percent + "%";
+    const percent =
+        (
+            currentIndex /
+            words.length
+        ) * 100;
+
+
+    document
+        .getElementById("progress")
+        .style.width =
+        percent + "%";
 
 }
 
 
-/* -------------------------
+/* ===================================
    راهنما
-------------------------- */
+=================================== */
 
 function showHint() {
 
-    if (hintUsed) return;
+
+    if (hintUsed) {
+
+        return;
+
+    }
+
 
     hintUsed = true;
 
-    const word = words[currentIndex];
+
+    const word =
+        words[currentIndex];
+
 
     const firstLetter =
         word.latin.charAt(0);
 
-    document.getElementById("hintText")
+
+    document
+        .getElementById("hintText")
         .textContent =
-        "💡 İlk hərf: " + firstLetter;
+            "💡 İlk hərf: " +
+            firstLetter;
 
 }
 
 
-/* -------------------------
+/* ===================================
    پایان بازی
-------------------------- */
+=================================== */
 
 function finishGame() {
 
-    clearInterval(timerInterval);
 
-    document.getElementById("gameScreen")
+    clearInterval(
+        timerInterval
+    );
+
+
+    document
+        .getElementById("gameScreen")
         .style.display = "none";
 
-    document.getElementById("gameOver")
+
+    document
+        .getElementById("gameOver")
         .style.display = "block";
 
-    document.getElementById("finalScore")
+
+    document
+        .getElementById("finalScore")
         .textContent =
-        score + " xal";
+            score + " xal";
+
+
+    /*
+       رکورد جدید
+    */
 
     if (score > bestScore) {
 
+
         bestScore = score;
+
 
         localStorage.setItem(
             "sozlerBest",
             bestScore
         );
 
-        document.getElementById("best")
-            .textContent = bestScore;
 
-        document.getElementById("recordMessage")
+        document
+            .getElementById("best")
+            .textContent =
+            bestScore;
+
+
+        document
+            .getElementById(
+                "recordMessage"
+            )
             .textContent =
             "🏆 Yeni rekord!";
 
-    } else {
+    }
 
-        document.getElementById("recordMessage")
+
+    else {
+
+
+        document
+            .getElementById(
+                "recordMessage"
+            )
             .textContent =
-            "Rekord: " + bestScore + " xal";
+            "Rekord: " +
+            bestScore +
+            " xal";
 
     }
 
 }
 
 
-/* -------------------------
+/* ===================================
    شروع دوباره
-------------------------- */
+=================================== */
 
 function restartGame() {
 
-    clearInterval(timerInterval);
+
+    clearInterval(
+        timerInterval
+    );
+
 
     currentIndex = 0;
 
@@ -734,25 +1500,33 @@ function restartGame() {
 
     stage = 1;
 
-    document.getElementById("score")
+
+    document
+        .getElementById("score")
         .textContent = "0";
+
 
     updateLives();
 
-    document.getElementById("gameOver")
+
+    document
+        .getElementById("gameOver")
         .style.display = "none";
 
-    document.getElementById("gameScreen")
+
+    document
+        .getElementById("gameScreen")
         .style.display = "block";
+
 
     showWord();
 
 }
 
 
-/* -------------------------
-   خانه
-------------------------- */
+/* ===================================
+   صفحه اصلی
+=================================== */
 
 function goHome() {
 
@@ -761,25 +1535,29 @@ function goHome() {
 }
 
 
-/* -------------------------
-   Enter
-------------------------- */
+/* ===================================
+   کلید Enter
+=================================== */
 
-document.getElementById("answer")
-.addEventListener("keydown", function(event){
+document
+    .getElementById("answer")
+    .addEventListener(
+        "keydown",
+        function(event) {
 
-    if (event.key === "Enter") {
+            if (event.key === "Enter") {
 
-        checkAnswer();
+                checkAnswer();
 
-    }
+            }
 
-});
+        }
+    );
 
 
-/* -------------------------
+/* ===================================
    شروع بازی
-------------------------- */
+=================================== */
 
 showWord();
 
