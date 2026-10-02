@@ -215,7 +215,7 @@ button{
   flex-wrap:wrap;
   justify-content:center;
   align-items:center;
-  gap:9px;
+  gap:12px;
   margin-bottom:12px;
 }
 
@@ -225,6 +225,17 @@ button{
   align-items:center;
   gap:5px;
   min-height:48px;
+
+  /*
+    مهم:
+    ترتیب واقعی حروف همان ترتیب جواب می‌ماند،
+    ولی برای حالت عربی در JS جهت نمایش اصلاح می‌شود.
+  */
+}
+
+.answer-word.arabic{
+  direction:ltr;
+  flex-direction:row-reverse;
 }
 
 .answer-slot{
@@ -266,7 +277,6 @@ button{
   display:grid;
   grid-template-columns:repeat(5,1fr);
   gap:10px;
-
   touch-action:none;
   user-select:none;
   -webkit-user-select:none;
@@ -279,21 +289,17 @@ button{
   display:flex;
   justify-content:center;
   align-items:center;
-
   border-radius:20px;
   color:#fff;
   font-size:25px;
   font-weight:900;
-
   background:linear-gradient(
     145deg,
     rgba(255,255,255,.20),
     rgba(255,255,255,.07)
   );
-
   border:1px solid rgba(255,255,255,.22);
   box-shadow:0 8px 18px rgba(0,0,0,.2);
-
   touch-action:none;
   user-select:none;
   -webkit-user-select:none;
@@ -434,6 +440,7 @@ button{
 }
 
 @media(max-width:360px){
+
   .letter{
     font-size:21px;
     border-radius:17px;
@@ -444,6 +451,7 @@ button{
     height:39px;
     font-size:18px;
   }
+
 }
 </style>
 </head>
@@ -451,7 +459,9 @@ button{
 <body>
 
 <audio id="music" loop preload="auto">
-  <source src="https://topaltopalchi-ship-it.github.io/S-zl-r/ays%C9%99l.mp3" type="audio/mpeg">
+  <source
+    src="https://topaltopalchi.github.io/S-zl-r/ays%C9%99l.mp3"
+    type="audio/mpeg">
 </audio>
 
 <div class="app">
@@ -1140,6 +1150,16 @@ function renderSlots(){
     word.className =
       "answer-word";
 
+    /*
+      فقط نمایش را برای عربی اصلاح می‌کنیم.
+      ترتیب واقعی answer اصلاً تغییر نمی‌کند.
+    */
+    if(mode === "arabic"){
+
+      word.classList.add("arabic");
+
+    }
+
     if(foundWords.includes(answer)){
 
       [...answer].forEach(letter=>{
@@ -1225,7 +1245,10 @@ lettersArea.addEventListener(
     if(gameOver)
       return;
 
-    if(e.pointerType === "mouse" && e.button !== 0)
+    if(
+      e.pointerType === "mouse" &&
+      e.button !== 0
+    )
       return;
 
     const letter =
