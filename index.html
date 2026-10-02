@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
 <title>حیدربابا</title>
 
 <style>
@@ -49,14 +50,17 @@ button{
   flex-direction:column;
 }
 
-/* HOME */
+
+/* =========================
+   HOME
+========================= */
 
 .logo{
   text-align:center;
-  padding:32px 0 20px;
+  padding:30px 0 20px;
 }
 
-.logo .star{
+.logo .stars{
   color:#ffd166;
   font-size:25px;
 }
@@ -96,7 +100,7 @@ button{
 }
 
 .mode{
-  height:76px;
+  height:78px;
   border-radius:19px;
   background:rgba(255,255,255,.08);
   color:white;
@@ -181,7 +185,10 @@ button{
   font-size:18px;
 }
 
-/* GAME */
+
+/* =========================
+   GAME TOP
+========================= */
 
 .top{
   display:flex;
@@ -244,7 +251,7 @@ button{
 }
 
 .message{
-  height:35px;
+  min-height:38px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -252,6 +259,11 @@ button{
   font-size:13px;
   text-align:center;
 }
+
+
+/* =========================
+   ANSWERS
+========================= */
 
 .answers{
   background:rgba(255,255,255,.07);
@@ -276,9 +288,9 @@ button{
 }
 
 .answer{
-  min-width:52px;
-  height:39px;
-  padding:0 8px;
+  min-width:55px;
+  height:40px;
+  padding:0 9px;
   border-radius:12px;
   background:rgba(0,0,0,.15);
   border:1px dashed rgba(255,255,255,.2);
@@ -296,6 +308,11 @@ button{
   border-color:#55d68a;
 }
 
+
+/* =========================
+   CURRENT WORD
+========================= */
+
 .current{
   min-height:62px;
   display:flex;
@@ -306,8 +323,9 @@ button{
 }
 
 .currentLetter{
-  width:41px;
+  min-width:41px;
   height:51px;
+  padding:0 5px;
   border-bottom:3px solid #ffd166;
   display:flex;
   align-items:center;
@@ -316,19 +334,22 @@ button{
   font-weight:bold;
 }
 
-/* LETTER BOARD */
+
+/* =========================
+   LETTERS
+========================= */
 
 .board{
   position:relative;
   margin-top:auto;
-  padding-top:7px;
+  padding-top:8px;
 }
 
 .lineLayer{
   position:absolute;
   left:0;
   right:0;
-  top:7px;
+  top:8px;
   height:190px;
   pointer-events:none;
   z-index:1;
@@ -360,21 +381,44 @@ button{
   color:white;
   font-size:25px;
   font-weight:bold;
+
   background:
-    radial-gradient(circle at 30% 25%,rgba(255,255,255,.25),rgba(255,255,255,.06));
+    radial-gradient(
+      circle at 30% 25%,
+      rgba(255,255,255,.25),
+      rgba(255,255,255,.06)
+    );
+
   border:2px solid rgba(255,255,255,.18);
-  box-shadow:0 8px 18px rgba(0,0,0,.25);
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.25);
+
   user-select:none;
   touch-action:none;
+
   transition:.1s;
 }
 
 .letter.selected{
   color:#17212a;
-  background:linear-gradient(145deg,#ffe18b,#efa900);
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffe18b,
+      #efa900
+    );
+
   border-color:#ffe7a8;
+
   transform:scale(1.09);
 }
+
+
+/* =========================
+   CONTROLS
+========================= */
 
 .controls{
   display:grid;
@@ -412,7 +456,10 @@ button{
   color:#ffd166;
 }
 
-/* END */
+
+/* =========================
+   END
+========================= */
 
 .end{
   align-items:center;
@@ -488,7 +535,8 @@ button{
   color:white;
 }
 
-/* EFFECTS */
+
+/* EFFECT */
 
 .shake{
   animation:shake .3s;
@@ -508,6 +556,7 @@ button{
 }
 
 @media(max-width:370px){
+
   .letter{
     width:55px;
     height:55px;
@@ -524,15 +573,27 @@ button{
 
 <div id="app">
 
-<!-- HOME -->
+
+<!-- =========================
+     HOME
+========================= -->
 
 <section id="home" class="screen active">
 
   <div class="logo">
-    <div class="star">✦ ❖ ✦</div>
+
+    <div class="stars">
+      ✦ ❖ ✦
+    </div>
+
     <h1>حیدربابا</h1>
-    <p>بازی واژه‌های آذربایجانی</p>
+
+    <p>
+      بازی واژه‌های آذربایجانی
+    </p>
+
   </div>
+
 
   <div class="card">
 
@@ -540,48 +601,97 @@ button{
       زبان بازی را انتخاب کنید
     </div>
 
+
     <div class="modes">
 
-      <button id="latinBtn" class="mode selected">
+      <button
+        id="latinBtn"
+        class="mode selected">
+
         🇮🇷 لاتین
-        <small>A B C Ç Ş Ö Ü Ə</small>
+
+        <small>
+          A B C Ç Ş Ö Ü Ə
+        </small>
+
       </button>
 
-      <button id="arabicBtn" class="mode">
+
+      <button
+        id="arabicBtn"
+        class="mode">
+
         🇮🇷 عربی
-        <small>الفبای عربی</small>
+
+        <small>
+          الفبای عربی
+        </small>
+
       </button>
 
     </div>
 
-    <button id="startBtn" class="start">
+
+    <button
+      id="startBtn"
+      class="start">
+
       ▶ شروع بازی
+
     </button>
+
 
     <div class="homeStats">
 
       <div class="stat">
-        <b id="homeStage">۱</b>
-        <span>مرحله</span>
+
+        <b id="homeStage">
+          ۱
+        </b>
+
+        <span>
+          مرحله
+        </span>
+
       </div>
 
+
       <div class="stat">
-        <b id="homeCoins">۱۰۰</b>
-        <span>سکه</span>
+
+        <b id="homeCoins">
+          ۱۰۰
+        </b>
+
+        <span>
+          سکه
+        </span>
+
       </div>
 
     </div>
 
+
     <div class="music">
 
       <div class="musicText">
+
         🎵 موسیقی حیدربابا
+
         <br>
-        <span id="musicStatus">آماده پخش</span>
+
+        <span id="musicStatus">
+          آماده پخش
+        </span>
+
       </div>
 
-      <button id="musicBtn" class="musicButton">
+
+      <button
+        id="musicBtn"
+        class="musicButton">
+
         🔊
+
       </button>
 
     </div>
@@ -591,128 +701,269 @@ button{
 </section>
 
 
-<!-- GAME -->
+
+<!-- =========================
+     GAME
+========================= -->
 
 <section id="game" class="screen">
 
+
   <div class="top">
 
-    <button id="homeBtn" class="icon">⌂</button>
+    <button
+      id="homeBtn"
+      class="icon">
+
+      ⌂
+
+    </button>
+
 
     <div class="stage">
-      <b id="stageTitle">مرحله ۱</b>
-      <span id="foundText">۰ از ۳</span>
+
+      <b id="stageTitle">
+        مرحله ۱
+      </b>
+
+      <span id="foundText">
+        ۰ از ۴
+      </span>
+
     </div>
+
 
     <div class="coins">
-      🪙 <span id="coinCount">۱۰۰</span>
+
+      🪙
+
+      <span id="coinCount">
+        ۱۰۰
+      </span>
+
     </div>
 
   </div>
 
+
   <div class="progressBox">
-    <div id="progress" class="progress"></div>
+
+    <div
+      id="progress"
+      class="progress">
+    </div>
+
   </div>
 
-  <div id="message" class="message">
+
+  <div
+    id="message"
+    class="message">
+
     حروف را به هم وصل کن
+
   </div>
+
 
   <div class="answers">
 
     <div class="answersHeader">
-      <span>کلمات مرحله</span>
-      <span id="lives">❤️❤️❤️</span>
+
+      <span>
+        کلمات مرحله
+      </span>
+
+      <span id="lives">
+        ❤️❤️❤️
+      </span>
+
     </div>
 
-    <div id="answerList" class="answerList"></div>
+
+    <div
+      id="answerList"
+      class="answerList">
+    </div>
 
   </div>
 
-  <div id="current" class="current"></div>
+
+  <div
+    id="current"
+    class="current">
+  </div>
+
 
   <div class="board">
 
-    <svg id="lineLayer" class="lineLayer"></svg>
+    <svg
+      id="lineLayer"
+      class="lineLayer">
+    </svg>
 
-    <div id="letters" class="letters"></div>
+
+    <div
+      id="letters"
+      class="letters">
+    </div>
 
   </div>
+
 
   <div class="controls">
 
-    <button id="shuffle" class="control">
+    <button
+      id="shuffle"
+      class="control">
+
       🔀 جابه‌جایی
+
     </button>
 
-    <button id="submit" class="control primary">
+
+    <button
+      id="submit"
+      class="control primary">
+
       ✓ ثبت کلمه
+
     </button>
 
-    <button id="hint" class="control">
+
+    <button
+      id="hint"
+      class="control">
+
       💡 راهنما
+
     </button>
 
   </div>
 
+
   <div class="bonus">
+
     کلمات پنهان:
-    <b id="bonusCount">۰</b>
+
+    <b id="bonusCount">
+      ۰
+    </b>
+
     &nbsp; | &nbsp;
+
     هر کلمه:
-    <b>🪙 +۵</b>
+
+    <b>
+      🪙 +۵
+    </b>
+
   </div>
 
 </section>
 
 
-<!-- END -->
 
-<section id="end" class="screen end">
+<!-- =========================
+     END
+========================= -->
+
+<section
+  id="end"
+  class="screen end">
+
 
   <div class="endCard">
 
-    <div id="endIcon" class="endIcon">
+    <div
+      id="endIcon"
+      class="endIcon">
+
       🏆
+
     </div>
+
 
     <h2 id="endTitle">
       آفرین!
     </h2>
 
-    <div id="endScore" class="endScore">
+
+    <div
+      id="endScore"
+      class="endScore">
+
       ۰
+
     </div>
+
 
     <div class="endStats">
 
       <div class="endStat">
-        <b id="endWords">۰</b>
-        <span>کلمه</span>
+
+        <b id="endWords">
+          ۰
+        </b>
+
+        <span>
+          کلمه
+        </span>
+
       </div>
 
-      <div class="endStat">
-        <b id="endBonus">۰</b>
-        <span>پنهان</span>
-      </div>
 
       <div class="endStat">
-        <b id="endCoins">۰</b>
-        <span>سکه</span>
+
+        <b id="endBonus">
+          ۰
+        </b>
+
+        <span>
+          پنهان
+        </span>
+
+      </div>
+
+
+      <div class="endStat">
+
+        <b id="endCoins">
+          ۰
+        </b>
+
+        <span>
+          سکه
+        </span>
+
       </div>
 
     </div>
 
-    <button id="nextBtn" class="endButton next">
+
+    <button
+      id="nextBtn"
+      class="endButton next">
+
       مرحله بعد ▶
+
     </button>
 
-    <button id="againBtn" class="endButton next">
+
+    <button
+      id="againBtn"
+      class="endButton next">
+
       دوباره بازی کن
+
     </button>
 
-    <button id="endHomeBtn" class="endButton home">
+
+    <button
+      id="endHomeBtn"
+      class="endButton home">
+
       ⌂ صفحه اصلی
+
     </button>
 
   </div>
@@ -721,6 +972,8 @@ button{
 
 </div>
 
+
+<!-- MUSIC -->
 
 <audio
   id="bgMusic"
@@ -734,32 +987,51 @@ button{
 
 /* =========================================================
    حیدربابا
-   اتصال حروف - نسخه موبایل
+   نسخه اصلاح شده
 ========================================================= */
 
 
-/* STORAGE */
+/* =========================
+   STORAGE
+========================= */
 
-const KEY_STAGE = "heydarbaba_stage";
-const KEY_COINS = "heydarbaba_coins";
-const KEY_SCORE = "heydarbaba_score";
-const KEY_MODE = "heydarbaba_mode";
-const KEY_MUSIC = "heydarbaba_music";
+const KEY_STAGE =
+  "heydarbaba_stage";
+
+const KEY_COINS =
+  "heydarbaba_coins";
+
+const KEY_SCORE =
+  "heydarbaba_score";
+
+const KEY_MODE =
+  "heydarbaba_mode";
+
+const KEY_MUSIC =
+  "heydarbaba_music";
 
 
-/* STATE */
+/* =========================
+   STATE
+========================= */
 
 let mode =
   localStorage.getItem(KEY_MODE) || "latin";
 
 let stageNumber =
-  Number(localStorage.getItem(KEY_STAGE) || 1);
+  Number(
+    localStorage.getItem(KEY_STAGE) || 1
+  );
 
 let coins =
-  Number(localStorage.getItem(KEY_COINS) || 100);
+  Number(
+    localStorage.getItem(KEY_COINS) || 100
+  );
 
 let score =
-  Number(localStorage.getItem(KEY_SCORE) || 0);
+  Number(
+    localStorage.getItem(KEY_SCORE) || 0
+  );
 
 let lives = 3;
 
@@ -775,95 +1047,365 @@ let musicOn =
   localStorage.getItem(KEY_MUSIC) !== "off";
 
 
-/* STAGES */
+/* =========================================================
+   STAGES
+   بسیار مهم:
+   لاتین و عربی کاملاً جدا هستند.
+========================================================= */
 
 const stages = [
 
-  {
-    letters:["گ","ل","ا","ب"],
-    arabic:["گ","ل","ا","ب"],
-    answers:["گل","بال","گال"],
-    answersArabic:["گل","بال","گال"],
-    bonus:["لب","با","لا"],
-    bonusArabic:["لب","با","لا"]
-  },
+  /* مرحله ۱ */
 
   {
-    letters:["ن","ا","ن","د"],
-    arabic:["ن","ا","ن","د"],
-    answers:["نان","دان","ندا"],
-    answersArabic:["نان","دان","ندا"],
-    bonus:["آن","نا","نان"],
-    bonusArabic:["آن","نا","نان"]
+    latinLetters:[
+      "g","ü","n","ə","ş"
+    ],
+
+    arabicLetters:[
+      "گ","و","ن","ش","ا"
+    ],
+
+    latinAnswers:[
+      "gün",
+      "günəş",
+      "şən",
+      "ən"
+    ],
+
+    arabicAnswers:[
+      "گون",
+      "گونش",
+      "شن",
+      "ان"
+    ],
+
+    latinBonus:[
+      "şün",
+      "nə"
+    ],
+
+    arabicBonus:[
+      "شن",
+      "نه"
+    ]
   },
 
-  {
-    letters:["گ","و","ی","س"],
-    arabic:["گ","و","ی","س"],
-    answers:["گوی","سی","سو"],
-    answersArabic:["گوی","سی","سو"],
-    bonus:["گو","وی","سو"],
-    bonusArabic:["گو","وی","سو"]
-  },
+
+  /* مرحله ۲ */
 
   {
-    letters:["چ","و","ر","ک"],
-    arabic:["چ","و","ر","ک"],
-    answers:["چور","کور","روک"],
-    answersArabic:["چور","کور","روک"],
-    bonus:["ور","رو","کو"],
-    bonusArabic:["ور","رو","کو"]
+    latinLetters:[
+      "g","ö","y","a"
+    ],
+
+    arabicLetters:[
+      "گ","و","ی","ا"
+    ],
+
+    latinAnswers:[
+      "göy",
+      "ay",
+      "oy"
+    ],
+
+    arabicAnswers:[
+      "گوی",
+      "ای",
+      "اوی"
+    ],
+
+    latinBonus:[
+      "yö",
+      "ya"
+    ],
+
+    arabicBonus:[
+      "وی",
+      "یا"
+    ]
   },
 
-  {
-    letters:["گ","و","ن","ش"],
-    arabic:["گ","و","ن","ش"],
-    answers:["گونش","گون","گوش"],
-    answersArabic:["گونش","گون","گوش"],
-    bonus:["نو","شون","ون"],
-    bonusArabic:["نو","شون","ون"]
-  },
+
+  /* مرحله ۳ */
 
   {
-    letters:["ا","ئ","و"],
-    arabic:["ا","ئ","و"],
-    answers:["ائو","او"],
-    answersArabic:["ائو","او"],
-    bonus:["ئو","او"],
-    bonusArabic:["ئو","او"]
+    latinLetters:[
+      "ç","ö","r","ə","k"
+    ],
+
+    arabicLetters:[
+      "چ","و","ر","ک"
+    ],
+
+    latinAnswers:[
+      "çörək",
+      "çörə",
+      "kör",
+      "körə"
+    ],
+
+    arabicAnswers:[
+      "چورک",
+      "کور",
+      "چور"
+    ],
+
+    latinBonus:[
+      "çör",
+      "kör"
+    ],
+
+    arabicBonus:[
+      "چور",
+      "کور"
+    ]
   },
 
-  {
-    letters:["ا","غ","ا","ج"],
-    arabic:["ا","غ","ا","ج"],
-    answers:["آغا","غاج"],
-    answersArabic:["آغا","غاج"],
-    bonus:["آج","غا","گا"],
-    bonusArabic:["آج","غا","گا"]
-  },
+
+  /* مرحله ۴ */
 
   {
-    letters:["س","و","ا","ل"],
-    arabic:["س","و","ا","ل"],
-    answers:["سال","وال","سوال"],
-    answersArabic:["سال","وال","سوال"],
-    bonus:["سا","لا","سو"],
-    bonusArabic:["سا","لا","سو"]
+    latinLetters:[
+      "e","v","a"
+    ],
+
+    arabicLetters:[
+      "ا","ئ","و"
+    ],
+
+    latinAnswers:[
+      "ev",
+      "ve"
+    ],
+
+    arabicAnswers:[
+      "ائو",
+      "ئو"
+    ],
+
+    latinBonus:[
+      "av"
+    ],
+
+    arabicBonus:[
+      "او"
+    ]
   },
 
+
+  /* مرحله ۵ */
+
   {
-    letters:["ب","ا","ه","ا","ر"],
-    arabic:["ب","ا","ه","ا","ر"],
-    answers:["بهار","بار","راه"],
-    answersArabic:["بهار","بار","راه"],
-    bonus:["به","ها","راه"],
-    bonusArabic:["به","ها","راه"]
+    latinLetters:[
+      "g","ü","l","ə"
+    ],
+
+    arabicLetters:[
+      "گ","و","ل","ا"
+    ],
+
+    latinAnswers:[
+      "gül",
+      "gəl",
+      "əl"
+    ],
+
+    arabicAnswers:[
+      "گول",
+      "گل",
+      "ال"
+    ],
+
+    latinBonus:[
+      "gülə",
+      "ləl"
+    ],
+
+    arabicBonus:[
+      "گولا",
+      "لل"
+    ]
+  },
+
+
+  /* مرحله ۶ */
+
+  {
+    latinLetters:[
+      "a","n","a","s"
+    ],
+
+    arabicLetters:[
+      "ا","ن","ا","س"
+    ],
+
+    latinAnswers:[
+      "ana",
+      "asan",
+      "san"
+    ],
+
+    arabicAnswers:[
+      "آنا",
+      "آسان",
+      "سن"
+    ],
+
+    latinBonus:[
+      "nas",
+      "ana"
+    ],
+
+    arabicBonus:[
+      "ناس"
+    ]
+  },
+
+
+  /* مرحله ۷ */
+
+  {
+    latinLetters:[
+      "s","u","a","l"
+    ],
+
+    arabicLetters:[
+      "س","و","ا","ل"
+    ],
+
+    latinAnswers:[
+      "su",
+      "sal",
+      "sual"
+    ],
+
+    arabicAnswers:[
+      "سو",
+      "سال",
+      "سوال"
+    ],
+
+    latinBonus:[
+      "al",
+      "ul"
+    ],
+
+    arabicBonus:[
+      "ال",
+      "اول"
+    ]
+  },
+
+
+  /* مرحله ۸ */
+
+  {
+    latinLetters:[
+      "b","a","h","a","r"
+    ],
+
+    arabicLetters:[
+      "ب","ا","ه","ا","ر"
+    ],
+
+    latinAnswers:[
+      "bahar",
+      "bar",
+      "har"
+    ],
+
+    arabicAnswers:[
+      "بهار",
+      "بار",
+      "هر"
+    ],
+
+    latinBonus:[
+      "bah",
+      "ara"
+    ],
+
+    arabicBonus:[
+      "به",
+      "ارا"
+    ]
+  },
+
+
+  /* مرحله ۹ */
+
+  {
+    latinLetters:[
+      "a","ğ","a","c"
+    ],
+
+    arabicLetters:[
+      "ا","غ","ا","ج"
+    ],
+
+    latinAnswers:[
+      "ağaç",
+      "ağa",
+      "aç"
+    ],
+
+    arabicAnswers:[
+      "آغاج",
+      "آغا",
+      "آچ"
+    ],
+
+    latinBonus:[
+      "ağ",
+      "aç"
+    ],
+
+    arabicBonus:[
+      "آغ",
+      "آچ"
+    ]
+  },
+
+
+  /* مرحله ۱۰ */
+
+  {
+    latinLetters:[
+      "s","e","v","g","i"
+    ],
+
+    arabicLetters:[
+      "س","ئ","و","گ","ی"
+    ],
+
+    latinAnswers:[
+      "sev",
+      "ev",
+      "sevi"
+    ],
+
+    arabicAnswers:[
+      "سئو",
+      "ائو",
+      "سئوی"
+    ],
+
+    latinBonus:[
+      "sevgi"
+    ],
+
+    arabicBonus:[
+      "سئوگی"
+    ]
   }
 
 ];
 
 
-/* DOM */
+/* =========================
+   DOM
+========================= */
 
 const home =
   document.getElementById("home");
@@ -932,7 +1474,23 @@ const bonusCount =
   document.getElementById("bonusCount");
 
 
-/* SCREEN */
+/* =========================
+   NUMBER
+========================= */
+
+function faNumber(value){
+
+  return String(value).replace(
+    /\d/g,
+    d => "۰۱۲۳۴۵۶۷۸۹"[d]
+  );
+
+}
+
+
+/* =========================
+   SCREEN
+========================= */
 
 function show(screen){
 
@@ -945,23 +1503,13 @@ function show(screen){
 }
 
 
-/* NUMBERS */
+/* =========================
+   MODE
+========================= */
 
-function faNumber(value){
+function setMode(newMode){
 
-  return String(value)
-    .replace(/\d/g,
-      d => "۰۱۲۳۴۵۶۷۸۹"[d]
-    );
-
-}
-
-
-/* MODE */
-
-function setMode(value){
-
-  mode = value;
+  mode = newMode;
 
   localStorage.setItem(
     KEY_MODE,
@@ -980,14 +1528,108 @@ function setMode(value){
 
 }
 
-latinBtn.onclick = () =>
+
+latinBtn.onclick = function(){
+
   setMode("latin");
 
-arabicBtn.onclick = () =>
+};
+
+
+arabicBtn.onclick = function(){
+
   setMode("arabic");
 
+};
 
-/* MUSIC */
+
+/* =========================
+   GET CURRENT STAGE
+========================= */
+
+function getStage(){
+
+  return stages[
+    (stageNumber - 1) %
+    stages.length
+  ];
+
+}
+
+
+function getLetters(){
+
+  const stage =
+    getStage();
+
+  if(mode === "latin"){
+
+    return stage.latinLetters;
+
+  }
+
+  return stage.arabicLetters;
+
+}
+
+
+function getAnswers(){
+
+  const stage =
+    getStage();
+
+  if(mode === "latin"){
+
+    return stage.latinAnswers;
+
+  }
+
+  return stage.arabicAnswers;
+
+}
+
+
+function getBonus(){
+
+  const stage =
+    getStage();
+
+  if(mode === "latin"){
+
+    return stage.latinBonus;
+
+  }
+
+  return stage.arabicBonus;
+
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+function updateHome(){
+
+  homeStage.textContent =
+    faNumber(stageNumber);
+
+  homeCoins.textContent =
+    faNumber(coins);
+
+  musicBtn.textContent =
+    bgMusic.paused
+      ? "🔇"
+      : "🔊";
+
+}
+
+updateHome();
+
+
+/* =========================
+   MUSIC
+========================= */
 
 async function startMusic(){
 
@@ -1006,10 +1648,10 @@ async function startMusic(){
     musicBtn.textContent =
       "🔊";
 
-  }catch(e){
+  }catch(error){
 
     musicStatus.textContent =
-      "برای پخش، دوباره دکمه را بزن";
+      "برای پخش موسیقی دوباره بزنید";
 
   }
 
@@ -1054,78 +1696,22 @@ musicBtn.onclick =
   toggleMusic;
 
 
-/* HOME */
-
-function updateHome(){
-
-  homeStage.textContent =
-    faNumber(stageNumber);
-
-  homeCoins.textContent =
-    faNumber(coins);
-
-  musicBtn.textContent =
-    bgMusic.paused ? "🔇" : "🔊";
-
-}
-
-updateHome();
-
-
-/* STAGE */
-
-function getStage(){
-
-  return stages[
-    (stageNumber - 1) % stages.length
-  ];
-
-}
-
-
-function getLetters(){
-
-  const s = getStage();
-
-  return mode === "latin"
-    ? s.letters
-    : s.arabic;
-
-}
-
-
-function getAnswers(){
-
-  const s = getStage();
-
-  return mode === "latin"
-    ? s.answers
-    : s.answersArabic;
-
-}
-
-
-function getBonus(){
-
-  const s = getStage();
-
-  return mode === "latin"
-    ? s.bonus
-    : s.bonusArabic;
-
-}
-
-
-/* START */
+/* =========================
+   START GAME
+========================= */
 
 function startGame(){
 
   startMusic();
 
   lives = 3;
+
   selected = [];
+
   currentWord = "";
+
   found = [];
+
   bonusFound = [];
 
   loadStage();
@@ -1135,20 +1721,28 @@ function startGame(){
 }
 
 
-/* LOAD */
+/* =========================
+   LOAD STAGE
+========================= */
 
 function loadStage(){
 
   stageTitle.textContent =
-    "مرحله " + faNumber(stageNumber);
+    "مرحله " +
+    faNumber(stageNumber);
 
   selected = [];
+
   currentWord = "";
 
   renderAnswers();
+
   renderLetters();
+
   renderCurrent();
+
   updateStats();
+
   drawLines();
 
   message.textContent =
@@ -1157,24 +1751,31 @@ function loadStage(){
 }
 
 
-/* ANSWERS */
+/* =========================
+   ANSWER GRID
+========================= */
 
 function renderAnswers(){
 
   answerList.innerHTML = "";
 
-  getAnswers().forEach(word => {
+  const answers =
+    getAnswers();
+
+  answers.forEach(word => {
 
     const box =
       document.createElement("div");
 
-    box.className = "answer";
+    box.className =
+      "answer";
 
     if(found.includes(word)){
 
       box.classList.add("done");
 
-      box.textContent = word;
+      box.textContent =
+        word;
 
     }else{
 
@@ -1192,71 +1793,104 @@ function renderAnswers(){
 }
 
 
-/* LETTERS */
+/* =========================
+   LETTER BUTTONS
+========================= */
+
+function createLetterButton(
+  char,
+  originalIndex
+){
+
+  const btn =
+    document.createElement("button");
+
+  btn.className =
+    "letter";
+
+  btn.textContent =
+    char;
+
+  btn.dataset.index =
+    originalIndex;
+
+  /*
+    مهم:
+    index مربوط به آرایهٔ اصلی است.
+    بنابراین حتی بعد از Shuffle
+    کلمه درست ساخته می‌شود.
+  */
+
+  btn.addEventListener(
+    "pointerdown",
+    function(event){
+
+      event.preventDefault();
+
+      selectFirst(
+        originalIndex
+      );
+
+    }
+  );
+
+
+  btn.addEventListener(
+    "pointerenter",
+    function(event){
+
+      if(event.buttons === 1){
+
+        selectNext(
+          originalIndex
+        );
+
+      }
+
+    }
+  );
+
+
+  btn.addEventListener(
+    "pointerup",
+    function(event){
+
+      event.preventDefault();
+
+      currentWord =
+        makeWord();
+
+      renderCurrent();
+
+    }
+  );
+
+
+  return btn;
+
+}
+
+
+/* =========================
+   RENDER LETTERS
+========================= */
 
 function renderLetters(){
 
   lettersBox.innerHTML = "";
 
-  getLetters().forEach(
-    (letter,index) => {
+  const letters =
+    getLetters();
 
-      const btn =
-        document.createElement("button");
+  letters.forEach(
+    (char,index) => {
 
-      btn.className = "letter";
-
-      btn.textContent = letter;
-
-      btn.dataset.index = index;
-
-      btn.dataset.char = letter;
-
-      /*
-        بسیار مهم:
-        انتخاب حرف فقط انتخاب است.
-        اینجا هیچ صدای غلطی نداریم.
-      */
-
-      btn.addEventListener(
-        "pointerdown",
-        e => {
-
-          e.preventDefault();
-
-          selectFirst(index);
-
-        }
+      lettersBox.appendChild(
+        createLetterButton(
+          char,
+          index
+        )
       );
-
-      btn.addEventListener(
-        "pointerenter",
-        e => {
-
-          if(e.buttons === 1){
-
-            selectNext(index);
-
-          }
-
-        }
-      );
-
-      btn.addEventListener(
-        "pointerup",
-        e => {
-
-          e.preventDefault();
-
-          currentWord =
-            makeWord();
-
-          renderCurrent();
-
-        }
-      );
-
-      lettersBox.appendChild(btn);
 
     }
   );
@@ -1264,7 +1898,9 @@ function renderLetters(){
 }
 
 
-/* FIRST LETTER */
+/* =========================
+   SELECT FIRST
+========================= */
 
 function selectFirst(index){
 
@@ -1282,7 +1918,9 @@ function selectFirst(index){
 }
 
 
-/* NEXT LETTER */
+/* =========================
+   SELECT NEXT
+========================= */
 
 function selectNext(index){
 
@@ -1306,20 +1944,27 @@ function selectNext(index){
 }
 
 
-/* MAKE WORD */
+/* =========================
+   MAKE WORD
+========================= */
 
 function makeWord(){
 
+  const letters =
+    getLetters();
+
   return selected
     .map(index =>
-      getLetters()[index]
+      letters[index]
     )
     .join("");
 
 }
 
 
-/* SELECTED UI */
+/* =========================
+   SELECTED UI
+========================= */
 
 function updateSelected(){
 
@@ -1328,7 +1973,9 @@ function updateSelected(){
     .forEach(btn => {
 
       const index =
-        Number(btn.dataset.index);
+        Number(
+          btn.dataset.index
+        );
 
       btn.classList.toggle(
         "selected",
@@ -1340,7 +1987,9 @@ function updateSelected(){
 }
 
 
-/* CURRENT WORD */
+/* =========================
+   CURRENT WORD
+========================= */
 
 function renderCurrent(){
 
@@ -1355,7 +2004,8 @@ function renderCurrent(){
       box.className =
         "currentLetter";
 
-      box.textContent = char;
+      box.textContent =
+        char;
 
       current.appendChild(box);
 
@@ -1364,7 +2014,9 @@ function renderCurrent(){
 }
 
 
-/* CONNECTION LINES */
+/* =========================
+   DRAW CONNECTION
+========================= */
 
 function drawLines(){
 
@@ -1374,28 +2026,40 @@ function drawLines(){
     return;
 
   const board =
-    document.querySelector(".board");
+    document.querySelector(
+      ".board"
+    );
 
   const boardRect =
     board.getBoundingClientRect();
 
   const buttons =
-    [...document.querySelectorAll(".letter")];
+    [
+      ...document.querySelectorAll(
+        ".letter"
+      )
+    ];
 
-  for(let i=0;i<selected.length-1;i++){
+  for(
+    let i = 0;
+    i < selected.length - 1;
+    i++
+  ){
 
     const a =
       buttons.find(
-        b =>
-          Number(b.dataset.index)
-          === selected[i]
+        button =>
+          Number(
+            button.dataset.index
+          ) === selected[i]
       );
 
     const b =
       buttons.find(
-        x =>
-          Number(x.dataset.index)
-          === selected[i+1]
+        button =>
+          Number(
+            button.dataset.index
+          ) === selected[i + 1]
       );
 
     if(!a || !b)
@@ -1409,22 +2073,22 @@ function drawLines(){
 
     const x1 =
       ra.left +
-      ra.width/2 -
+      ra.width / 2 -
       boardRect.left;
 
     const y1 =
       ra.top +
-      ra.height/2 -
+      ra.height / 2 -
       boardRect.top;
 
     const x2 =
       rb.left +
-      rb.width/2 -
+      rb.width / 2 -
       boardRect.left;
 
     const y2 =
       rb.top +
-      rb.height/2 -
+      rb.height / 2 -
       boardRect.top;
 
     const line =
@@ -1433,10 +2097,25 @@ function drawLines(){
         "line"
       );
 
-    line.setAttribute("x1",x1);
-    line.setAttribute("y1",y1);
-    line.setAttribute("x2",x2);
-    line.setAttribute("y2",y2);
+    line.setAttribute(
+      "x1",
+      x1
+    );
+
+    line.setAttribute(
+      "y1",
+      y1
+    );
+
+    line.setAttribute(
+      "x2",
+      x2
+    );
+
+    line.setAttribute(
+      "y2",
+      y2
+    );
 
     lineLayer.appendChild(line);
 
@@ -1445,7 +2124,9 @@ function drawLines(){
 }
 
 
-/* CLEAR */
+/* =========================
+   CLEAR
+========================= */
 
 function clearSelection(){
 
@@ -1462,13 +2143,15 @@ function clearSelection(){
 }
 
 
-/* SUBMIT */
+/* =========================
+   SUBMIT
+========================= */
 
 function submitWord(){
 
   /*
-    اینجا تنها جایی است که
-    کلمه بررسی می‌شود.
+    تا این لحظه هیچ صدای غلطی نداریم.
+    فقط همین تابع کلمه را بررسی می‌کند.
   */
 
   const word =
@@ -1477,11 +2160,12 @@ function submitWord(){
   if(!word){
 
     message.textContent =
-      "اول حروف را انتخاب کن";
+      "اول چند حرف را انتخاب کن";
 
     return;
 
   }
+
 
   const answers =
     getAnswers();
@@ -1490,11 +2174,15 @@ function submitWord(){
     getBonus();
 
 
-  /* CORRECT */
+  /* درست */
 
-  if(answers.includes(word)){
+  if(
+    answers.includes(word)
+  ){
 
-    if(found.includes(word)){
+    if(
+      found.includes(word)
+    ){
 
       message.textContent =
         "این کلمه را قبلاً پیدا کردی";
@@ -1505,22 +2193,33 @@ function submitWord(){
 
     }
 
+
     found.push(word);
 
     score +=
-      10 + word.length * 2;
+      10 +
+      Array.from(word).length * 2;
+
 
     playCorrect();
+
 
     message.textContent =
       "✨ آفرین! کلمه درست است";
 
-    game.classList.add("good");
 
-    setTimeout(() =>
-      game.classList.remove("good"),
+    game.classList.add(
+      "good"
+    );
+
+    setTimeout(
+      () =>
+        game.classList.remove(
+          "good"
+        ),
       350
     );
+
 
     clearSelection();
 
@@ -1530,7 +2229,11 @@ function submitWord(){
 
     save();
 
-    if(found.length === answers.length){
+
+    if(
+      found.length ===
+      answers.length
+    ){
 
       setTimeout(
         finishStage,
@@ -1544,20 +2247,25 @@ function submitWord(){
   }
 
 
-  /* BONUS */
+  /* کلمه پنهان */
 
-  if(bonuses.includes(word)){
+  if(
+    bonuses.includes(word)
+  ){
 
-    if(bonusFound.includes(word)){
+    if(
+      bonusFound.includes(word)
+    ){
 
       message.textContent =
-        "این کلمه پنهان را قبلاً پیدا کردی";
+        "این کلمه پنهان قبلاً پیدا شده";
 
       clearSelection();
 
       return;
 
     }
+
 
     bonusFound.push(word);
 
@@ -1570,6 +2278,7 @@ function submitWord(){
     message.textContent =
       "🌟 کلمه پنهان! +۵ سکه";
 
+
     clearSelection();
 
     updateStats();
@@ -1581,11 +2290,7 @@ function submitWord(){
   }
 
 
-  /* WRONG */
-
-  /*
-    صدای غلط فقط همین‌جا اجرا می‌شود.
-  */
+  /* غلط */
 
   playWrong();
 
@@ -1596,135 +2301,95 @@ function submitWord(){
   message.textContent =
     "❌ کلمه درست نیست";
 
-  game.classList.add("shake");
 
-  setTimeout(() =>
-    game.classList.remove("shake"),
+  game.classList.add(
+    "shake"
+  );
+
+  setTimeout(
+    () =>
+      game.classList.remove(
+        "shake"
+      ),
     300
   );
 
+
   clearSelection();
+
 
   if(lives <= 0){
 
-    setTimeout(() => {
-
-      message.textContent =
-        "❤️ جان‌ها تمام شد";
-
-      setTimeout(
-        restartStage,
-        700
-      );
-
-    },200);
+    setTimeout(
+      restartStage,
+      800
+    );
 
   }
 
 }
 
 
-/* SHUFFLE */
+/* =========================
+   SHUFFLE
+========================= */
 
 function shuffle(){
 
   const letters =
     getLetters();
 
-  /*
-    برای جلوگیری از باگ شماره‌ها،
-    ترتیب حروف را با یک آرایهٔ جدید
-    و index واقعی خودشان نگه می‌داریم.
-  */
 
   const items =
     letters.map(
       (char,index) => ({
-        char,
-        original:index
+        char:char,
+        index:index
       })
     );
 
-  for(let i=items.length-1;i>0;i--){
+
+  for(
+    let i = items.length - 1;
+    i > 0;
+    i--
+  ){
 
     const j =
       Math.floor(
-        Math.random()*(i+1)
+        Math.random() *
+        (i + 1)
       );
 
-    [items[i],items[j]] =
-      [items[j],items[i]];
+    [
+      items[i],
+      items[j]
+    ] =
+    [
+      items[j],
+      items[i]
+    ];
 
   }
 
+
   lettersBox.innerHTML = "";
+
 
   items.forEach(item => {
 
-    const btn =
-      document.createElement("button");
-
-    btn.className = "letter";
-
-    btn.textContent = item.char;
-
-    /*
-      index واقعی را نگه می‌داریم.
-    */
-
-    btn.dataset.index =
-      item.original;
-
-    btn.dataset.char =
-      item.char;
-
-    btn.addEventListener(
-      "pointerdown",
-      e => {
-
-        e.preventDefault();
-
-        selectFirst(
-          item.original
-        );
-
-      }
+    lettersBox.appendChild(
+      createLetterButton(
+        item.char,
+        item.index
+      )
     );
-
-    btn.addEventListener(
-      "pointerenter",
-      e => {
-
-        if(e.buttons === 1){
-
-          selectNext(
-            item.original
-          );
-
-        }
-
-      }
-    );
-
-    btn.addEventListener(
-      "pointerup",
-      e => {
-
-        e.preventDefault();
-
-        currentWord =
-          makeWord();
-
-        renderCurrent();
-
-      }
-    );
-
-    lettersBox.appendChild(btn);
 
   });
 
+
   clearSelection();
+
 
   message.textContent =
     "🔀 حروف جابه‌جا شدند";
@@ -1732,25 +2397,30 @@ function shuffle(){
 }
 
 
-/* HINT */
+/* =========================
+   HINT
+========================= */
 
 function hint(){
 
   const remaining =
-    getAnswers()
-      .filter(
-        word =>
-          !found.includes(word)
-      );
+    getAnswers().filter(
+      word =>
+        !found.includes(word)
+    );
 
-  if(remaining.length === 0){
+
+  if(
+    remaining.length === 0
+  ){
 
     message.textContent =
-      "همهٔ کلمات را پیدا کردی";
+      "همهٔ کلمات پیدا شده‌اند";
 
     return;
 
   }
+
 
   if(coins < 10){
 
@@ -1761,8 +2431,10 @@ function hint(){
 
   }
 
+
   const word =
     remaining[0];
+
 
   coins -= 10;
 
@@ -1770,93 +2442,125 @@ function hint(){
 
   updateStats();
 
+
   message.textContent =
-    "💡 این کلمه با «"
-    + Array.from(word)[0]
-    + "» شروع می‌شود";
+    "💡 یکی از کلمات با «" +
+    Array.from(word)[0] +
+    "» شروع می‌شود";
 
 }
 
 
-/* STATS */
+/* =========================
+   STATS
+========================= */
 
 function updateStats(){
 
   const total =
     getAnswers().length;
 
+
   foundText.textContent =
     faNumber(found.length)
-    + " از "
-    + faNumber(total);
+    +
+    " از "
+    +
+    faNumber(total);
+
 
   coinCount.textContent =
     faNumber(coins);
 
+
   bonusCount.textContent =
-    faNumber(bonusFound.length);
+    faNumber(
+      bonusFound.length
+    );
+
 
   progress.style.width =
     (
-      found.length / total * 100
-    ) + "%";
+      found.length /
+      total *
+      100
+    ) +
+    "%";
+
 
   updateLives();
 
 }
 
 
-/* LIVES */
+/* =========================
+   LIVES
+========================= */
 
 function updateLives(){
 
   livesBox.textContent =
     "❤️".repeat(lives)
     +
-    "🖤".repeat(3-lives);
+    "🖤".repeat(
+      3 - lives
+    );
 
 }
 
 
-/* FINISH */
+/* =========================
+   FINISH
+========================= */
 
 function finishStage(){
 
   const reward =
-    10 + found.length * 3;
+    10 +
+    found.length * 3;
+
 
   coins += reward;
 
   score += 25;
 
-  save();
 
   document.getElementById(
     "endScore"
   ).textContent =
     faNumber(score);
 
+
   document.getElementById(
     "endWords"
   ).textContent =
-    faNumber(found.length);
+    faNumber(
+      found.length
+    );
+
 
   document.getElementById(
     "endBonus"
   ).textContent =
-    faNumber(bonusFound.length);
+    faNumber(
+      bonusFound.length
+    );
+
 
   document.getElementById(
     "endCoins"
   ).textContent =
     faNumber(reward);
 
+
   document.getElementById(
     "endTitle"
   ).textContent =
     "آفرین قهرمان!";
 
+
   stageNumber++;
+
 
   save();
 
@@ -1867,7 +2571,9 @@ function finishStage(){
 }
 
 
-/* RESTART */
+/* =========================
+   RESTART
+========================= */
 
 function restartStage(){
 
@@ -1888,7 +2594,9 @@ function restartStage(){
 }
 
 
-/* SAVE */
+/* =========================
+   SAVE
+========================= */
 
 function save(){
 
@@ -1915,9 +2623,12 @@ function save(){
 }
 
 
-/* CORRECT SOUND */
+/* =========================
+   AUDIO
+========================= */
 
 let audioContext = null;
+
 
 function getAudio(){
 
@@ -1936,6 +2647,8 @@ function getAudio(){
 }
 
 
+/* درست */
+
 function playCorrect(){
 
   try{
@@ -1943,11 +2656,19 @@ function playCorrect(){
     const ctx =
       getAudio();
 
-    if(ctx.state === "suspended")
+    if(
+      ctx.state ===
+      "suspended"
+    ){
+
       ctx.resume();
+
+    }
+
 
     const now =
       ctx.currentTime;
+
 
     const osc =
       ctx.createOscillator();
@@ -1955,38 +2676,47 @@ function playCorrect(){
     const gain =
       ctx.createGain();
 
-    osc.type = "sine";
+
+    osc.type =
+      "sine";
+
 
     osc.frequency.setValueAtTime(
       523.25,
       now
     );
 
+
     osc.frequency.exponentialRampToValueAtTime(
       659.25,
       now + .15
     );
+
 
     gain.gain.setValueAtTime(
       .001,
       now
     );
 
+
     gain.gain.exponentialRampToValueAtTime(
       .14,
       now + .02
     );
+
 
     gain.gain.exponentialRampToValueAtTime(
       .001,
       now + .28
     );
 
+
     osc.connect(gain);
 
     gain.connect(
       ctx.destination
     );
+
 
     osc.start(now);
 
@@ -1999,7 +2729,7 @@ function playCorrect(){
 }
 
 
-/* WRONG SOUND */
+/* غلط */
 
 function playWrong(){
 
@@ -2008,11 +2738,19 @@ function playWrong(){
     const ctx =
       getAudio();
 
-    if(ctx.state === "suspended")
+    if(
+      ctx.state ===
+      "suspended"
+    ){
+
       ctx.resume();
+
+    }
+
 
     const now =
       ctx.currentTime;
+
 
     const osc =
       ctx.createOscillator();
@@ -2020,38 +2758,47 @@ function playWrong(){
     const gain =
       ctx.createGain();
 
-    osc.type = "sawtooth";
+
+    osc.type =
+      "sawtooth";
+
 
     osc.frequency.setValueAtTime(
       220,
       now
     );
 
+
     osc.frequency.exponentialRampToValueAtTime(
       110,
       now + .18
     );
+
 
     gain.gain.setValueAtTime(
       .001,
       now
     );
 
+
     gain.gain.exponentialRampToValueAtTime(
       .11,
       now + .01
     );
+
 
     gain.gain.exponentialRampToValueAtTime(
       .001,
       now + .22
     );
 
+
     osc.connect(gain);
 
     gain.connect(
       ctx.destination
     );
+
 
     osc.start(now);
 
@@ -2064,15 +2811,18 @@ function playWrong(){
 }
 
 
-/* BUTTONS */
+/* =========================
+   BUTTONS
+========================= */
 
-startBtn.onclick = () => {
+startBtn.onclick =
+  function(){
 
-  getAudio();
+    getAudio();
 
-  startGame();
+    startGame();
 
-};
+  };
 
 
 document.getElementById(
@@ -2095,47 +2845,63 @@ document.getElementById(
 
 document.getElementById(
   "homeBtn"
-).onclick = () => {
+).onclick =
+  function(){
 
-  save();
+    save();
 
-  updateHome();
+    updateHome();
 
-  show(home);
+    show(home);
 
-};
+  };
 
 
 document.getElementById(
   "nextBtn"
 ).onclick =
-  startGame;
+  function(){
+
+    startGame();
+
+  };
 
 
 document.getElementById(
   "againBtn"
 ).onclick =
-  restartStage;
+  function(){
+
+    restartStage();
+
+  };
 
 
 document.getElementById(
   "endHomeBtn"
-).onclick = () => {
+).onclick =
+  function(){
 
-  updateHome();
+    updateHome();
 
-  show(home);
+    show(home);
 
-};
+  };
 
 
-/* RESIZE */
+/* =========================
+   RESIZE
+========================= */
 
 window.addEventListener(
   "resize",
-  () => {
+  function(){
 
-    if(game.classList.contains("active")){
+    if(
+      game.classList.contains(
+        "active"
+      )
+    ){
 
       setTimeout(
         drawLines,
@@ -2148,7 +2914,9 @@ window.addEventListener(
 );
 
 
-/* INITIAL */
+/* =========================
+   INITIAL
+========================= */
 
 setMode(mode);
 
