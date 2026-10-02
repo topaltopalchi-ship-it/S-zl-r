@@ -2,7 +2,7 @@
 <html lang="az">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>حیدربابا</title>
 
 <style>
@@ -11,35 +11,17 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-:root{
-  --bg1:#071b2c;
-  --bg2:#123c52;
-  --gold:#ffd166;
-  --gold2:#ffb703;
-  --white:#fff;
-  --muted:#b9d1dc;
-  --glass:rgba(255,255,255,.11);
-  --glass2:rgba(255,255,255,.17);
-  --green:#55d68a;
-  --red:#ff647c;
-  --blue:#53b8ff;
-}
-
 html,body{
   margin:0;
+  padding:0;
   min-height:100%;
-  font-family:
-    "Noto Sans Arabic",
-    "Tahoma",
-    Arial,
-    sans-serif;
-  background:
-    radial-gradient(circle at top,#245b72 0%,var(--bg1) 48%,#030d16 100%);
-  color:var(--white);
 }
 
 body{
-  min-height:100vh;
+  font-family:Tahoma,Arial,sans-serif;
+  color:#fff;
+  background:
+    radial-gradient(circle at top,#315f70 0,#102e40 42%,#06131d 100%);
   overflow-x:hidden;
 }
 
@@ -52,527 +34,477 @@ button{
 #app{
   width:100%;
   max-width:520px;
-  margin:auto;
   min-height:100vh;
-  padding:16px 14px 28px;
-  position:relative;
+  margin:auto;
+  padding:14px;
 }
 
 .screen{
   display:none;
-  min-height:calc(100vh - 44px);
-  flex-direction:column;
+  min-height:calc(100vh - 28px);
 }
 
 .screen.active{
   display:flex;
+  flex-direction:column;
 }
 
-/* ---------- HOME ---------- */
+/* HOME */
 
 .logo{
   text-align:center;
-  padding-top:30px;
+  padding:32px 0 20px;
 }
 
-.logo .ornament{
-  font-size:28px;
-  opacity:.8;
+.logo .star{
+  color:#ffd166;
+  font-size:25px;
 }
 
 .logo h1{
-  margin:4px 0;
-  font-size:54px;
-  line-height:1;
-  color:var(--gold);
-  text-shadow:
-    0 3px 0 #8d5d00,
-    0 0 25px rgba(255,209,102,.25);
+  margin:8px 0;
+  font-size:52px;
+  color:#ffd166;
+  text-shadow:0 4px 0 #8d5e00;
 }
 
 .logo p{
-  margin:12px 0 25px;
-  color:var(--muted);
-  font-size:15px;
+  margin:0;
+  color:#c5d9df;
+  font-size:14px;
 }
 
-.hero-card{
-  background:
-    linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.05));
-  border:1px solid rgba(255,255,255,.18);
-  box-shadow:
-    0 20px 50px rgba(0,0,0,.3),
-    inset 0 1px 0 rgba(255,255,255,.1);
-  border-radius:28px;
-  padding:22px;
-  backdrop-filter:blur(14px);
-}
-
-.hero-title{
-  text-align:center;
-  font-size:20px;
-  margin-bottom:18px;
-  color:#fff;
-}
-
-.mode-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.mode-btn{
-  min-height:76px;
-  border-radius:20px;
-  background:var(--glass);
+.card{
+  background:rgba(255,255,255,.09);
   border:1px solid rgba(255,255,255,.15);
-  color:white;
-  font-size:17px;
-  font-weight:bold;
-  transition:.18s;
+  border-radius:27px;
+  padding:20px;
+  box-shadow:0 20px 50px rgba(0,0,0,.28);
+  backdrop-filter:blur(12px);
 }
 
-.mode-btn:active{
-  transform:scale(.96);
+.title{
+  text-align:center;
+  margin-bottom:15px;
+  color:#d9e9ee;
 }
 
-.mode-btn.selected{
-  background:linear-gradient(135deg,#f8b84e,#d88716);
-  color:#18202a;
-  box-shadow:0 8px 25px rgba(255,183,3,.25);
-}
-
-.mode-btn small{
-  display:block;
-  margin-top:5px;
-  opacity:.75;
-  font-size:11px;
-}
-
-.start-btn{
-  width:100%;
-  margin-top:18px;
-  height:62px;
-  border-radius:20px;
-  background:linear-gradient(135deg,#ffd166,#f5a900);
-  color:#18202a;
-  font-size:21px;
-  font-weight:900;
-  box-shadow:0 10px 30px rgba(255,183,3,.25);
-}
-
-.start-btn:active{
-  transform:scale(.97);
-}
-
-.home-stats{
+.modes{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-top:15px;
 }
 
-.stat-box{
-  background:rgba(255,255,255,.07);
-  border-radius:18px;
-  padding:13px;
-  text-align:center;
-  border:1px solid rgba(255,255,255,.08);
+.mode{
+  height:76px;
+  border-radius:19px;
+  background:rgba(255,255,255,.08);
+  color:white;
+  border:1px solid rgba(255,255,255,.12);
+  font-size:17px;
+  font-weight:bold;
 }
 
-.stat-box .number{
-  color:var(--gold);
+.mode small{
+  display:block;
+  margin-top:5px;
+  font-size:10px;
+  color:#bdd0d7;
+}
+
+.mode.selected{
+  background:linear-gradient(135deg,#ffd166,#efa900);
+  color:#18222b;
+}
+
+.mode.selected small{
+  color:#263038;
+}
+
+.start{
+  width:100%;
+  height:60px;
+  margin-top:16px;
+  border-radius:19px;
+  background:linear-gradient(135deg,#ffd166,#eea900);
+  color:#17212a;
   font-size:21px;
-  font-weight:900;
+  font-weight:bold;
 }
 
-.stat-box .label{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:3px;
+.homeStats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:13px;
 }
 
-.music-box{
-  margin-top:14px;
+.stat{
+  text-align:center;
+  background:rgba(0,0,0,.15);
+  border-radius:17px;
+  padding:12px;
+}
+
+.stat b{
+  display:block;
+  color:#ffd166;
+  font-size:21px;
+}
+
+.stat span{
+  color:#b8ccd3;
+  font-size:11px;
+}
+
+.music{
+  margin-top:13px;
+  padding:12px;
+  border-radius:16px;
+  background:rgba(0,0,0,.15);
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:13px 15px;
-  border-radius:17px;
-  background:rgba(0,0,0,.18);
 }
 
-.music-info{
-  font-size:13px;
-  color:var(--muted);
+.musicText{
+  color:#bfd2d9;
+  font-size:12px;
 }
 
-.music-btn{
+.musicButton{
   width:48px;
   height:42px;
   border-radius:14px;
-  background:rgba(255,255,255,.13);
-  color:white;
-  font-size:19px;
-}
-
-/* ---------- GAME ---------- */
-
-.game-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-}
-
-.icon-btn{
-  width:43px;
-  height:43px;
-  border-radius:14px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.12);
   color:#fff;
   font-size:18px;
 }
 
-.stage-info{
-  text-align:center;
-  flex:1;
+/* GAME */
+
+.top{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-.stage-info strong{
+.icon{
+  width:43px;
+  height:43px;
+  border-radius:14px;
+  background:rgba(255,255,255,.1);
+  color:#fff;
+  font-size:19px;
+}
+
+.stage{
+  flex:1;
+  text-align:center;
+}
+
+.stage b{
   display:block;
-  color:var(--gold);
+  color:#ffd166;
   font-size:17px;
 }
 
-.stage-info span{
-  font-size:11px;
-  color:var(--muted);
+.stage span{
+  color:#a9c0c8;
+  font-size:10px;
 }
 
-.coin-box{
-  min-width:75px;
+.coins{
+  min-width:76px;
   height:43px;
-  padding:0 10px;
+  border-radius:14px;
+  background:rgba(255,255,255,.1);
+  color:#ffd166;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:5px;
-  border-radius:14px;
-  background:rgba(255,255,255,.1);
-  color:var(--gold);
+  gap:4px;
   font-weight:bold;
 }
 
-.progress-wrap{
-  margin-top:13px;
-  height:8px;
+.progressBox{
+  height:7px;
   background:rgba(255,255,255,.1);
   border-radius:99px;
+  margin-top:12px;
   overflow:hidden;
 }
 
 .progress{
   height:100%;
   width:0;
+  background:linear-gradient(90deg,#ffb703,#ffe08a);
   border-radius:99px;
-  background:linear-gradient(90deg,#ffb703,#ffd166);
-  transition:.4s;
+  transition:.3s;
 }
 
 .message{
-  min-height:34px;
-  text-align:center;
-  margin-top:12px;
-  color:var(--muted);
-  font-size:14px;
-}
-
-.answers-card{
-  margin-top:4px;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:24px;
-  padding:17px 14px;
-}
-
-.answers-title{
-  display:flex;
-  justify-content:space-between;
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:12px;
-}
-
-.answer-list{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-}
-
-.answer-slot{
-  min-width:58px;
-  height:43px;
-  padding:0 10px;
-  border-radius:13px;
-  border:1px dashed rgba(255,255,255,.2);
-  background:rgba(0,0,0,.12);
+  height:35px;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:rgba(255,255,255,.45);
-  font-size:17px;
+  color:#bed0d7;
+  font-size:13px;
+  text-align:center;
+}
+
+.answers{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:23px;
+  padding:15px;
+}
+
+.answersHeader{
+  display:flex;
+  justify-content:space-between;
+  color:#a9c0c8;
+  font-size:11px;
+  margin-bottom:11px;
+}
+
+.answerList{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:7px;
+}
+
+.answer{
+  min-width:52px;
+  height:39px;
+  padding:0 8px;
+  border-radius:12px;
+  background:rgba(0,0,0,.15);
+  border:1px dashed rgba(255,255,255,.2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#829aa4;
+  font-size:15px;
   font-weight:bold;
 }
 
-.answer-slot.done{
-  color:#082014;
-  background:var(--green);
-  border-color:var(--green);
-  animation:pop .3s ease;
+.answer.done{
+  color:#092016;
+  background:#55d68a;
+  border-color:#55d68a;
 }
 
-@keyframes pop{
-  0%{transform:scale(.7)}
-  80%{transform:scale(1.08)}
-  100%{transform:scale(1)}
-}
-
-/* current word */
-
-.current-word{
-  min-height:65px;
+.current{
+  min-height:62px;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:7px;
-  margin:13px 0;
+  gap:6px;
+  margin:8px 0;
 }
 
-.current-letter{
-  width:43px;
-  height:52px;
-  border-bottom:3px solid var(--gold);
+.currentLetter{
+  width:41px;
+  height:51px;
+  border-bottom:3px solid #ffd166;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:27px;
-  font-weight:900;
-  color:white;
+  font-size:25px;
+  font-weight:bold;
 }
 
-/* letters */
+/* LETTER BOARD */
 
-.letters-panel{
+.board{
+  position:relative;
   margin-top:auto;
-  padding-top:8px;
+  padding-top:7px;
+}
+
+.lineLayer{
+  position:absolute;
+  left:0;
+  right:0;
+  top:7px;
+  height:190px;
+  pointer-events:none;
+  z-index:1;
+}
+
+.lineLayer line{
+  stroke:#ffd166;
+  stroke-width:7;
+  stroke-linecap:round;
+  opacity:.8;
 }
 
 .letters{
+  position:relative;
+  z-index:2;
+  min-height:190px;
   display:flex;
   flex-wrap:wrap;
-  justify-content:center;
-  gap:11px;
-  min-height:105px;
   align-content:center;
+  justify-content:center;
+  gap:13px;
+  touch-action:none;
 }
 
 .letter{
-  width:62px;
-  height:62px;
+  width:63px;
+  height:63px;
   border-radius:50%;
+  color:white;
+  font-size:25px;
+  font-weight:bold;
   background:
     radial-gradient(circle at 30% 25%,rgba(255,255,255,.25),rgba(255,255,255,.06));
   border:2px solid rgba(255,255,255,.18);
-  color:white;
-  font-size:25px;
-  font-weight:900;
-  box-shadow:
-    0 7px 17px rgba(0,0,0,.22),
-    inset 0 1px 0 rgba(255,255,255,.12);
-  touch-action:none;
+  box-shadow:0 8px 18px rgba(0,0,0,.25);
   user-select:none;
-  transition:.12s;
-  position:relative;
+  touch-action:none;
+  transition:.1s;
 }
 
 .letter.selected{
-  background:linear-gradient(145deg,#ffd166,#eea900);
-  color:#15202a;
-  border-color:#ffe09a;
+  color:#17212a;
+  background:linear-gradient(145deg,#ffe18b,#efa900);
+  border-color:#ffe7a8;
   transform:scale(1.09);
-  box-shadow:
-    0 0 0 5px rgba(255,209,102,.13),
-    0 8px 25px rgba(255,183,3,.3);
-}
-
-.letter.used{
-  opacity:.38;
 }
 
 .controls{
   display:grid;
-  grid-template-columns:1fr 1.5fr 1fr;
-  gap:9px;
-  margin-top:14px;
+  grid-template-columns:1fr 1.25fr 1fr;
+  gap:8px;
+  margin-top:8px;
 }
 
-.control-btn{
-  height:51px;
-  border-radius:17px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.11);
+.control{
+  height:50px;
+  border-radius:16px;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.1);
   color:white;
-  font-size:14px;
+  font-size:12px;
   font-weight:bold;
 }
 
-.control-btn.primary{
-  background:linear-gradient(135deg,#ffd166,#f3aa09);
-  color:#16202a;
+.control.primary{
+  background:linear-gradient(135deg,#ffd166,#eda800);
+  color:#17212a;
 }
 
-.control-btn:active{
-  transform:scale(.96);
-}
-
-/* bonus */
-
-.bonus-card{
-  margin-top:10px;
-  padding:10px 13px;
-  border-radius:17px;
-  background:rgba(255,255,255,.05);
-  color:var(--muted);
-  font-size:12px;
+.bonus{
+  margin-top:8px;
   text-align:center;
+  padding:9px;
+  border-radius:15px;
+  background:rgba(0,0,0,.14);
+  color:#a9c0c8;
+  font-size:11px;
 }
 
-.bonus-card strong{
-  color:var(--gold);
+.bonus b{
+  color:#ffd166;
 }
 
-/* ---------- END ---------- */
+/* END */
 
-.end-screen{
-  justify-content:center;
+.end{
   align-items:center;
+  justify-content:center;
 }
 
-.end-card{
+.endCard{
   width:100%;
   text-align:center;
-  background:
-    linear-gradient(145deg,rgba(255,255,255,.15),rgba(255,255,255,.05));
+  background:rgba(255,255,255,.1);
   border:1px solid rgba(255,255,255,.15);
-  border-radius:30px;
-  padding:30px 20px;
+  border-radius:29px;
+  padding:27px 18px;
   box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
-.end-icon{
-  font-size:62px;
+.endIcon{
+  font-size:58px;
 }
 
-.end-card h2{
-  color:var(--gold);
-  font-size:30px;
+.endCard h2{
+  color:#ffd166;
   margin:8px 0;
+  font-size:29px;
 }
 
-.end-score{
-  font-size:42px;
-  font-weight:900;
-  color:white;
-  margin:15px 0;
+.endScore{
+  font-size:40px;
+  font-weight:bold;
+  margin:15px;
 }
 
-.end-grid{
+.endStats{
   display:grid;
-  grid-template-columns:1fr 1fr 1fr;
+  grid-template-columns:repeat(3,1fr);
   gap:8px;
-  margin:20px 0;
+  margin:15px 0 20px;
 }
 
-.end-stat{
-  background:rgba(0,0,0,.15);
-  border-radius:15px;
-  padding:12px 5px;
+.endStat{
+  background:rgba(0,0,0,.14);
+  border-radius:14px;
+  padding:10px 4px;
 }
 
-.end-stat b{
+.endStat b{
   display:block;
-  color:var(--gold);
-  font-size:19px;
+  color:#ffd166;
+  font-size:18px;
 }
 
-.end-stat span{
+.endStat span{
+  color:#9fb7c0;
   font-size:10px;
-  color:var(--muted);
 }
 
-.end-actions{
-  display:grid;
-  gap:10px;
-}
-
-.end-actions button{
-  height:55px;
-  border-radius:18px;
-  font-size:17px;
+.endButton{
+  width:100%;
+  height:54px;
+  margin-top:8px;
+  border-radius:17px;
+  font-size:16px;
   font-weight:bold;
 }
 
-.play-again{
-  background:linear-gradient(135deg,#ffd166,#f2a900);
-  color:#17202a;
+.next{
+  background:linear-gradient(135deg,#ffd166,#eea900);
+  color:#17212a;
 }
 
-.go-home{
-  background:var(--glass);
+.home{
+  background:rgba(255,255,255,.09);
   color:white;
 }
 
-/* ---------- effects ---------- */
+/* EFFECTS */
 
-.correct-flash{
-  animation:correctFlash .45s ease;
-}
-
-@keyframes correctFlash{
-  0%{box-shadow:0 0 0 rgba(85,214,138,0)}
-  50%{box-shadow:0 0 40px rgba(85,214,138,.5)}
-  100%{box-shadow:0 0 0 rgba(85,214,138,0)}
-}
-
-.wrong-shake{
-  animation:shake .35s ease;
+.shake{
+  animation:shake .3s;
 }
 
 @keyframes shake{
-  0%,100%{transform:translateX(0)}
-  25%{transform:translateX(-9px)}
-  75%{transform:translateX(9px)}
+  25%{transform:translateX(-8px)}
+  75%{transform:translateX(8px)}
 }
 
-.pulse{
-  animation:pulse .35s ease;
+.good{
+  animation:good .35s;
 }
 
-@keyframes pulse{
-  50%{transform:scale(1.06)}
-}
-
-/* ---------- RTL ---------- */
-
-html[dir="rtl"] .letter{
-  font-family:"Noto Sans Arabic",Tahoma,Arial,sans-serif;
-}
-
-.hidden{
-  display:none!important;
+@keyframes good{
+  50%{filter:brightness(1.3)}
 }
 
 @media(max-width:370px){
@@ -582,7 +514,7 @@ html[dir="rtl"] .letter{
   }
 
   .logo h1{
-    font-size:47px;
+    font-size:46px;
   }
 }
 </style>
@@ -592,196 +524,204 @@ html[dir="rtl"] .letter{
 
 <div id="app">
 
-  <!-- HOME -->
-  <section id="homeScreen" class="screen active">
+<!-- HOME -->
 
-    <div class="logo">
-      <div class="ornament">✦ ❖ ✦</div>
-      <h1>حیدربابا</h1>
-      <p>بازی واژه‌های آذربایجانی</p>
+<section id="home" class="screen active">
+
+  <div class="logo">
+    <div class="star">✦ ❖ ✦</div>
+    <h1>حیدربابا</h1>
+    <p>بازی واژه‌های آذربایجانی</p>
+  </div>
+
+  <div class="card">
+
+    <div class="title">
+      زبان بازی را انتخاب کنید
     </div>
 
-    <div class="hero-card">
+    <div class="modes">
 
-      <div class="hero-title">
-        زبان بازی را انتخاب کنید
-      </div>
-
-      <div class="mode-grid">
-
-        <button id="latinModeBtn" class="mode-btn selected">
-          🇮🇷 لاتین
-          <small>A B C Ç Ş Ö Ü Ə</small>
-        </button>
-
-        <button id="arabicModeBtn" class="mode-btn">
-          🇮🇷 عربی
-          <small>الفبای عربی</small>
-        </button>
-
-      </div>
-
-      <button id="startBtn" class="start-btn">
-        ▶ شروع بازی
+      <button id="latinBtn" class="mode selected">
+        🇮🇷 لاتین
+        <small>A B C Ç Ş Ö Ü Ə</small>
       </button>
 
-      <div class="home-stats">
+      <button id="arabicBtn" class="mode">
+        🇮🇷 عربی
+        <small>الفبای عربی</small>
+      </button>
 
-        <div class="stat-box">
-          <div id="homeStage" class="number">۱</div>
-          <div class="label">مرحله</div>
-        </div>
+    </div>
 
-        <div class="stat-box">
-          <div id="homeCoins" class="number">۱۰۰</div>
-          <div class="label">سکه</div>
-        </div>
+    <button id="startBtn" class="start">
+      ▶ شروع بازی
+    </button>
 
+    <div class="homeStats">
+
+      <div class="stat">
+        <b id="homeStage">۱</b>
+        <span>مرحله</span>
       </div>
 
-      <div class="music-box">
-
-        <div class="music-info">
-          🎵 موسیقی حیدربابا
-          <br>
-          <small id="musicStatus">آماده پخش</small>
-        </div>
-
-        <button id="musicBtnHome" class="music-btn">🔊</button>
-
+      <div class="stat">
+        <b id="homeCoins">۱۰۰</b>
+        <span>سکه</span>
       </div>
 
     </div>
 
-  </section>
+    <div class="music">
 
-
-  <!-- GAME -->
-  <section id="gameScreen" class="screen">
-
-    <div class="game-top">
-
-      <button id="homeBtn" class="icon-btn">⌂</button>
-
-      <div class="stage-info">
-        <strong id="stageTitle">مرحله ۱</strong>
-        <span id="foundText">۰ از ۳ کلمه</span>
+      <div class="musicText">
+        🎵 موسیقی حیدربابا
+        <br>
+        <span id="musicStatus">آماده پخش</span>
       </div>
 
-      <div class="coin-box">
-        🪙 <span id="coinCount">100</span>
+      <button id="musicBtn" class="musicButton">
+        🔊
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- GAME -->
+
+<section id="game" class="screen">
+
+  <div class="top">
+
+    <button id="homeBtn" class="icon">⌂</button>
+
+    <div class="stage">
+      <b id="stageTitle">مرحله ۱</b>
+      <span id="foundText">۰ از ۳</span>
+    </div>
+
+    <div class="coins">
+      🪙 <span id="coinCount">۱۰۰</span>
+    </div>
+
+  </div>
+
+  <div class="progressBox">
+    <div id="progress" class="progress"></div>
+  </div>
+
+  <div id="message" class="message">
+    حروف را به هم وصل کن
+  </div>
+
+  <div class="answers">
+
+    <div class="answersHeader">
+      <span>کلمات مرحله</span>
+      <span id="lives">❤️❤️❤️</span>
+    </div>
+
+    <div id="answerList" class="answerList"></div>
+
+  </div>
+
+  <div id="current" class="current"></div>
+
+  <div class="board">
+
+    <svg id="lineLayer" class="lineLayer"></svg>
+
+    <div id="letters" class="letters"></div>
+
+  </div>
+
+  <div class="controls">
+
+    <button id="shuffle" class="control">
+      🔀 جابه‌جایی
+    </button>
+
+    <button id="submit" class="control primary">
+      ✓ ثبت کلمه
+    </button>
+
+    <button id="hint" class="control">
+      💡 راهنما
+    </button>
+
+  </div>
+
+  <div class="bonus">
+    کلمات پنهان:
+    <b id="bonusCount">۰</b>
+    &nbsp; | &nbsp;
+    هر کلمه:
+    <b>🪙 +۵</b>
+  </div>
+
+</section>
+
+
+<!-- END -->
+
+<section id="end" class="screen end">
+
+  <div class="endCard">
+
+    <div id="endIcon" class="endIcon">
+      🏆
+    </div>
+
+    <h2 id="endTitle">
+      آفرین!
+    </h2>
+
+    <div id="endScore" class="endScore">
+      ۰
+    </div>
+
+    <div class="endStats">
+
+      <div class="endStat">
+        <b id="endWords">۰</b>
+        <span>کلمه</span>
+      </div>
+
+      <div class="endStat">
+        <b id="endBonus">۰</b>
+        <span>پنهان</span>
+      </div>
+
+      <div class="endStat">
+        <b id="endCoins">۰</b>
+        <span>سکه</span>
       </div>
 
     </div>
 
-    <div class="progress-wrap">
-      <div id="progressBar" class="progress"></div>
-    </div>
+    <button id="nextBtn" class="endButton next">
+      مرحله بعد ▶
+    </button>
 
-    <div id="message" class="message">
-      حروف را به هم وصل کن
-    </div>
+    <button id="againBtn" class="endButton next">
+      دوباره بازی کن
+    </button>
 
-    <div class="answers-card">
+    <button id="endHomeBtn" class="endButton home">
+      ⌂ صفحه اصلی
+    </button>
 
-      <div class="answers-title">
-        <span>کلمات مرحله</span>
-        <span id="lives">❤️❤️❤️</span>
-      </div>
+  </div>
 
-      <div id="answerList" class="answer-list"></div>
-
-    </div>
-
-    <div id="currentWord" class="current-word"></div>
-
-    <div class="letters-panel">
-
-      <div id="letters" class="letters"></div>
-
-      <div class="controls">
-
-        <button id="shuffleBtn" class="control-btn">
-          🔀 جابه‌جایی
-        </button>
-
-        <button id="submitBtn" class="control-btn primary">
-          ✓ ثبت کلمه
-        </button>
-
-        <button id="hintBtn" class="control-btn">
-          💡 راهنما
-        </button>
-
-      </div>
-
-      <div class="bonus-card">
-        کلمات پنهان:
-        <strong id="bonusCount">۰</strong>
-        &nbsp; | &nbsp;
-        پاداش:
-        <strong>🪙 +۵</strong>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- END -->
-  <section id="endScreen" class="screen end-screen">
-
-    <div class="end-card">
-
-      <div id="endIcon" class="end-icon">🏆</div>
-
-      <h2 id="endTitle">آفرین!</h2>
-
-      <div id="endScore" class="end-score">۰</div>
-
-      <div class="end-grid">
-
-        <div class="end-stat">
-          <b id="endWords">۰</b>
-          <span>کلمه</span>
-        </div>
-
-        <div class="end-stat">
-          <b id="endBonus">۰</b>
-          <span>پنهان</span>
-        </div>
-
-        <div class="end-stat">
-          <b id="endCoins">۰</b>
-          <span>سکه</span>
-        </div>
-
-      </div>
-
-      <div class="end-actions">
-
-        <button id="nextStageBtn" class="play-again">
-          مرحله بعد ▶
-        </button>
-
-        <button id="restartBtn" class="play-again">
-          دوباره بازی کن
-        </button>
-
-        <button id="endHomeBtn" class="go-home">
-          ⌂ صفحه اصلی
-        </button>
-
-      </div>
-
-    </div>
-
-  </section>
+</section>
 
 </div>
 
 
-<!-- BACKGROUND MUSIC -->
 <audio
   id="bgMusic"
   src="https://topaltopalchi-ship-it.github.io/S-zl-r/ays%C9%99l.mp3"
@@ -794,307 +734,296 @@ html[dir="rtl"] .letter{
 
 /* =========================================================
    حیدربابا
-   موتور بازی اتصال حروف
+   اتصال حروف - نسخه موبایل
 ========================================================= */
 
 
-/* ---------- STORAGE ---------- */
+/* STORAGE */
 
-const STORAGE = {
-  stage: "heydarbaba_stage",
-  coins: "heydarbaba_coins",
-  mode: "heydarbaba_mode",
-  score: "heydarbaba_score",
-  music: "heydarbaba_music"
-};
+const KEY_STAGE = "heydarbaba_stage";
+const KEY_COINS = "heydarbaba_coins";
+const KEY_SCORE = "heydarbaba_score";
+const KEY_MODE = "heydarbaba_mode";
+const KEY_MUSIC = "heydarbaba_music";
 
 
-/* ---------- STATE ---------- */
+/* STATE */
 
-let mode = localStorage.getItem(STORAGE.mode) || "latin";
+let mode =
+  localStorage.getItem(KEY_MODE) || "latin";
 
 let stageNumber =
-  Number(localStorage.getItem(STORAGE.stage) || 1);
+  Number(localStorage.getItem(KEY_STAGE) || 1);
 
 let coins =
-  Number(localStorage.getItem(STORAGE.coins) || 100);
+  Number(localStorage.getItem(KEY_COINS) || 100);
 
-let totalScore =
-  Number(localStorage.getItem(STORAGE.score) || 0);
+let score =
+  Number(localStorage.getItem(KEY_SCORE) || 0);
 
 let lives = 3;
 
-let selectedIndexes = [];
+let selected = [];
 
 let currentWord = "";
 
-let foundWords = [];
+let found = [];
 
-let bonusWords = [];
+let bonusFound = [];
 
-let musicEnabled =
-  localStorage.getItem(STORAGE.music) !== "off";
+let musicOn =
+  localStorage.getItem(KEY_MUSIC) !== "off";
 
 
-/* ---------- STAGES ----------
-
-   هر مرحله:
-   lettersLatin = حروف قابل انتخاب
-   answersLatin = کلمات اصلی
-   bonusLatin = کلمات پنهان
-
-   در حالت عربی، نمایش جداگانه و کنترل‌شده است.
-*/
+/* STAGES */
 
 const stages = [
 
   {
-    lettersLatin:["گ","ل","ا","ب"],
-    lettersArabic:["گ","ل","ا","ب"],
-
-    answersLatin:["گل","بال","گال"],
+    letters:["گ","ل","ا","ب"],
+    arabic:["گ","ل","ا","ب"],
+    answers:["گل","بال","گال"],
     answersArabic:["گل","بال","گال"],
-
-    bonusLatin:["لب","با","لا"],
+    bonus:["لب","با","لا"],
     bonusArabic:["لب","با","لا"]
   },
 
   {
-    lettersLatin:["ا","و","د","ن"],
-    lettersArabic:["ا","و","د","ن"],
-
-    answersLatin:["نان","دان","وان"],
-    answersArabic:["نان","دان","وان"],
-
-    bonusLatin:["آن","نو","نا"]
-    ,
-    bonusArabic:["آن","نو","نا"]
+    letters:["ن","ا","ن","د"],
+    arabic:["ن","ا","ن","د"],
+    answers:["نان","دان","ندا"],
+    answersArabic:["نان","دان","ندا"],
+    bonus:["آن","نا","نان"],
+    bonusArabic:["آن","نا","نان"]
   },
 
   {
-    lettersLatin:["گ","و","ی","س"],
-    lettersArabic:["گ","و","ی","س"],
-
-    answersLatin:["گوی","سی","سو"],
+    letters:["گ","و","ی","س"],
+    arabic:["گ","و","ی","س"],
+    answers:["گوی","سی","سو"],
     answersArabic:["گوی","سی","سو"],
-
-    bonusLatin:["وی","گو","یس"],
-    bonusArabic:["وی","گو","یس"]
+    bonus:["گو","وی","سو"],
+    bonusArabic:["گو","وی","سو"]
   },
 
   {
-    lettersLatin:["چ","و","ر","ک"],
-    lettersArabic:["چ","و","ر","ک"],
-
-    answersLatin:["چور","کور","روک"],
+    letters:["چ","و","ر","ک"],
+    arabic:["چ","و","ر","ک"],
+    answers:["چور","کور","روک"],
     answersArabic:["چور","کور","روک"],
-
-    bonusLatin:["ور","رو","کو"],
+    bonus:["ور","رو","کو"],
     bonusArabic:["ور","رو","کو"]
   },
 
   {
-    lettersLatin:["گ","و","ن","ش"],
-    lettersArabic:["گ","و","ن","ش"],
-
-    answersLatin:["گونش","گون","شون"],
-    answersArabic:["گونش","گون","شون"],
-
-    bonusLatin:["گوش","شون","نو"],
-    bonusArabic:["گوش","شون","نو"]
+    letters:["گ","و","ن","ش"],
+    arabic:["گ","و","ن","ش"],
+    answers:["گونش","گون","گوش"],
+    answersArabic:["گونش","گون","گوش"],
+    bonus:["نو","شون","ون"],
+    bonusArabic:["نو","شون","ون"]
   },
 
   {
-    lettersLatin:["ا","ئ","و"],
-    lettersArabic:["ا","ئ","و"],
-
-    answersLatin:["ائو","او"],
+    letters:["ا","ئ","و"],
+    arabic:["ا","ئ","و"],
+    answers:["ائو","او"],
     answersArabic:["ائو","او"],
-
-    bonusLatin:["ئو","او"],
+    bonus:["ئو","او"],
     bonusArabic:["ئو","او"]
   },
 
   {
-    lettersLatin:["ا","غ","ا","ج"],
-    lettersArabic:["ا","غ","ا","ج"],
-
-    answersLatin:["آغا","غاج"],
+    letters:["ا","غ","ا","ج"],
+    arabic:["ا","غ","ا","ج"],
+    answers:["آغا","غاج"],
     answersArabic:["آغا","غاج"],
-
-    bonusLatin:["آج","غا","گا"],
+    bonus:["آج","غا","گا"],
     bonusArabic:["آج","غا","گا"]
   },
 
   {
-    lettersLatin:["س","و","ا","ل"],
-    lettersArabic:["س","و","ا","ل"],
-
-    answersLatin:["سال","وال","سوال"],
+    letters:["س","و","ا","ل"],
+    arabic:["س","و","ا","ل"],
+    answers:["سال","وال","سوال"],
     answersArabic:["سال","وال","سوال"],
-
-    bonusLatin:["سا","لا","سو"],
+    bonus:["سا","لا","سو"],
     bonusArabic:["سا","لا","سو"]
   },
 
   {
-    lettersLatin:["ا","ی","ل","ا"],
-    lettersArabic:["ا","ی","ل","ا"],
-
-    answersLatin:["آلا","الا","یالا"],
-    answersArabic:["آلا","الا","یالا"],
-
-    bonusLatin:["لا","یا","آل"],
-    bonusArabic:["لا","یا","آل"]
-  },
-
-  {
-    lettersLatin:["ب","ا","ه","ا","ر"],
-    lettersArabic:["ب","ا","ه","ا","ر"],
-
-    answersLatin:["بهار","بار","راه"],
+    letters:["ب","ا","ه","ا","ر"],
+    arabic:["ب","ا","ه","ا","ر"],
+    answers:["بهار","بار","راه"],
     answersArabic:["بهار","بار","راه"],
-
-    bonusLatin:["به","راه","بار"],
-    bonusArabic:["به","راه","بار"]
+    bonus:["به","ها","راه"],
+    bonusArabic:["به","ها","راه"]
   }
 
 ];
 
 
-/* ---------- DOM ---------- */
+/* DOM */
 
-const homeScreen = document.getElementById("homeScreen");
-const gameScreen = document.getElementById("gameScreen");
-const endScreen = document.getElementById("endScreen");
+const home =
+  document.getElementById("home");
 
-const latinModeBtn = document.getElementById("latinModeBtn");
-const arabicModeBtn = document.getElementById("arabicModeBtn");
+const game =
+  document.getElementById("game");
 
-const startBtn = document.getElementById("startBtn");
+const end =
+  document.getElementById("end");
 
-const homeStage = document.getElementById("homeStage");
-const homeCoins = document.getElementById("homeCoins");
+const latinBtn =
+  document.getElementById("latinBtn");
 
-const musicBtnHome = document.getElementById("musicBtnHome");
-const musicStatus = document.getElementById("musicStatus");
+const arabicBtn =
+  document.getElementById("arabicBtn");
 
-const bgMusic = document.getElementById("bgMusic");
+const startBtn =
+  document.getElementById("startBtn");
 
-const stageTitle = document.getElementById("stageTitle");
-const foundText = document.getElementById("foundText");
-const coinCount = document.getElementById("coinCount");
-const progressBar = document.getElementById("progressBar");
-const message = document.getElementById("message");
+const homeStage =
+  document.getElementById("homeStage");
 
-const answerList = document.getElementById("answerList");
-const currentWordBox = document.getElementById("currentWord");
-const lettersBox = document.getElementById("letters");
+const homeCoins =
+  document.getElementById("homeCoins");
 
-const livesBox = document.getElementById("lives");
-const bonusCount = document.getElementById("bonusCount");
+const musicBtn =
+  document.getElementById("musicBtn");
 
-const shuffleBtn = document.getElementById("shuffleBtn");
-const submitBtn = document.getElementById("submitBtn");
-const hintBtn = document.getElementById("hintBtn");
-const homeBtn = document.getElementById("homeBtn");
+const musicStatus =
+  document.getElementById("musicStatus");
 
-const endScore = document.getElementById("endScore");
-const endWords = document.getElementById("endWords");
-const endBonus = document.getElementById("endBonus");
-const endCoins = document.getElementById("endCoins");
+const bgMusic =
+  document.getElementById("bgMusic");
 
-const nextStageBtn = document.getElementById("nextStageBtn");
-const restartBtn = document.getElementById("restartBtn");
-const endHomeBtn = document.getElementById("endHomeBtn");
+const stageTitle =
+  document.getElementById("stageTitle");
+
+const foundText =
+  document.getElementById("foundText");
+
+const coinCount =
+  document.getElementById("coinCount");
+
+const progress =
+  document.getElementById("progress");
+
+const message =
+  document.getElementById("message");
+
+const answerList =
+  document.getElementById("answerList");
+
+const current =
+  document.getElementById("current");
+
+const lettersBox =
+  document.getElementById("letters");
+
+const lineLayer =
+  document.getElementById("lineLayer");
+
+const livesBox =
+  document.getElementById("lives");
+
+const bonusCount =
+  document.getElementById("bonusCount");
 
 
-/* ---------- MODE ---------- */
+/* SCREEN */
 
-function setMode(newMode){
+function show(screen){
 
-  mode = newMode;
+  home.classList.remove("active");
+  game.classList.remove("active");
+  end.classList.remove("active");
 
-  localStorage.setItem(STORAGE.mode, mode);
+  screen.classList.add("active");
 
-  latinModeBtn.classList.toggle(
+}
+
+
+/* NUMBERS */
+
+function faNumber(value){
+
+  return String(value)
+    .replace(/\d/g,
+      d => "۰۱۲۳۴۵۶۷۸۹"[d]
+    );
+
+}
+
+
+/* MODE */
+
+function setMode(value){
+
+  mode = value;
+
+  localStorage.setItem(
+    KEY_MODE,
+    mode
+  );
+
+  latinBtn.classList.toggle(
     "selected",
     mode === "latin"
   );
 
-  arabicModeBtn.classList.toggle(
+  arabicBtn.classList.toggle(
     "selected",
     mode === "arabic"
   );
 
-  if(mode === "arabic"){
-    document.documentElement.dir = "rtl";
-  }else{
-    document.documentElement.dir = "ltr";
-  }
 }
 
-latinModeBtn.addEventListener(
-  "click",
-  () => setMode("latin")
-);
+latinBtn.onclick = () =>
+  setMode("latin");
 
-arabicModeBtn.addEventListener(
-  "click",
-  () => setMode("arabic")
-);
-
-setMode(mode);
+arabicBtn.onclick = () =>
+  setMode("arabic");
 
 
-/* ---------- SCREEN ---------- */
-
-function showScreen(screen){
-
-  [homeScreen,gameScreen,endScreen]
-    .forEach(s => s.classList.remove("active"));
-
-  screen.classList.add("active");
-}
-
-
-/* ---------- MUSIC ---------- */
+/* MUSIC */
 
 async function startMusic(){
 
-  if(!musicEnabled) return;
+  if(!musicOn)
+    return;
 
   try{
 
-    bgMusic.volume = 0.45;
+    bgMusic.volume = .45;
 
     await bgMusic.play();
 
-    musicStatus.textContent = "موسیقی روشن است";
-    musicBtnHome.textContent = "🔊";
+    musicStatus.textContent =
+      "موسیقی روشن است";
 
-  }catch(error){
+    musicBtn.textContent =
+      "🔊";
+
+  }catch(e){
 
     musicStatus.textContent =
-      "برای پخش موسیقی دوباره دکمه را بزنید";
+      "برای پخش، دوباره دکمه را بزن";
 
   }
-}
-
-function stopMusic(){
-
-  bgMusic.pause();
 
 }
+
 
 function toggleMusic(){
 
   if(bgMusic.paused){
 
-    musicEnabled = true;
+    musicOn = true;
 
     localStorage.setItem(
-      STORAGE.music,
+      KEY_MUSIC,
       "on"
     );
 
@@ -1102,39 +1031,40 @@ function toggleMusic(){
 
   }else{
 
-    musicEnabled = false;
+    musicOn = false;
 
     localStorage.setItem(
-      STORAGE.music,
+      KEY_MUSIC,
       "off"
     );
 
-    stopMusic();
+    bgMusic.pause();
 
     musicStatus.textContent =
       "موسیقی خاموش است";
 
-    musicBtnHome.textContent = "🔇";
+    musicBtn.textContent =
+      "🔇";
+
   }
+
 }
 
-musicBtnHome.addEventListener(
-  "click",
-  toggleMusic
-);
+musicBtn.onclick =
+  toggleMusic;
 
 
-/* ---------- HOME ---------- */
+/* HOME */
 
 function updateHome(){
 
   homeStage.textContent =
-    toPersianNumber(stageNumber);
+    faNumber(stageNumber);
 
   homeCoins.textContent =
-    toPersianNumber(coins);
+    faNumber(coins);
 
-  musicBtnHome.textContent =
+  musicBtn.textContent =
     bgMusic.paused ? "🔇" : "🔊";
 
 }
@@ -1142,74 +1072,84 @@ function updateHome(){
 updateHome();
 
 
-/* ---------- NUMBER ---------- */
-
-function toPersianNumber(value){
-
-  return String(value)
-    .replace(/\d/g,d =>
-      "۰۱۲۳۴۵۶۷۸۹"[d]
-    );
-}
-
-
-/* ---------- LOAD STAGE ---------- */
+/* STAGE */
 
 function getStage(){
 
-  const index =
-    (stageNumber - 1) % stages.length;
-
-  return stages[index];
+  return stages[
+    (stageNumber - 1) % stages.length
+  ];
 
 }
 
+
+function getLetters(){
+
+  const s = getStage();
+
+  return mode === "latin"
+    ? s.letters
+    : s.arabic;
+
+}
+
+
+function getAnswers(){
+
+  const s = getStage();
+
+  return mode === "latin"
+    ? s.answers
+    : s.answersArabic;
+
+}
+
+
+function getBonus(){
+
+  const s = getStage();
+
+  return mode === "latin"
+    ? s.bonus
+    : s.bonusArabic;
+
+}
+
+
+/* START */
 
 function startGame(){
 
   startMusic();
 
   lives = 3;
-
-  foundWords = [];
-
-  bonusWords = [];
-
-  selectedIndexes = [];
-
+  selected = [];
   currentWord = "";
+  found = [];
+  bonusFound = [];
 
   loadStage();
 
-  showScreen(gameScreen);
+  show(game);
 
 }
 
 
+/* LOAD */
+
 function loadStage(){
 
-  const stage = getStage();
-
   stageTitle.textContent =
-    "مرحله " + toPersianNumber(stageNumber);
+    "مرحله " + faNumber(stageNumber);
 
-  const answers =
-    mode === "latin"
-      ? stage.answersLatin
-      : stage.answersArabic;
+  selected = [];
+  currentWord = "";
 
-  const letters =
-    mode === "latin"
-      ? stage.lettersLatin
-      : stage.lettersArabic;
-
-  renderAnswers(answers);
-
-  renderLetters(letters);
-
-  renderCurrentWord();
-
+  renderAnswers();
+  renderLetters();
+  renderCurrent();
   updateStats();
+  drawLines();
 
   message.textContent =
     "حروف را به هم وصل کن";
@@ -1217,169 +1157,182 @@ function loadStage(){
 }
 
 
-/* ---------- ANSWERS ---------- */
+/* ANSWERS */
 
-function renderAnswers(answers){
+function renderAnswers(){
 
   answerList.innerHTML = "";
 
-  answers.forEach(word => {
+  getAnswers().forEach(word => {
 
-    const slot =
+    const box =
       document.createElement("div");
 
-    slot.className = "answer-slot";
+    box.className = "answer";
 
-    if(foundWords.includes(word)){
+    if(found.includes(word)){
 
-      slot.classList.add("done");
+      box.classList.add("done");
 
-      slot.textContent = word;
+      box.textContent = word;
 
     }else{
 
-      slot.textContent =
-        "•".repeat(Array.from(word).length);
+      box.textContent =
+        "•".repeat(
+          Array.from(word).length
+        );
 
     }
 
-    answerList.appendChild(slot);
+    answerList.appendChild(box);
 
   });
 
 }
 
 
-/* ---------- LETTERS ---------- */
+/* LETTERS */
 
-function renderLetters(letters){
+function renderLetters(){
 
   lettersBox.innerHTML = "";
 
-  letters.forEach((letter,index) => {
+  getLetters().forEach(
+    (letter,index) => {
 
-    const button =
-      document.createElement("button");
+      const btn =
+        document.createElement("button");
 
-    button.className = "letter";
+      btn.className = "letter";
 
-    button.textContent = letter;
+      btn.textContent = letter;
 
-    button.dataset.index = index;
+      btn.dataset.index = index;
 
-    button.addEventListener(
-      "pointerdown",
-      event => {
+      btn.dataset.char = letter;
 
-        event.preventDefault();
+      /*
+        بسیار مهم:
+        انتخاب حرف فقط انتخاب است.
+        اینجا هیچ صدای غلطی نداریم.
+      */
 
-        beginSelection(index);
+      btn.addEventListener(
+        "pointerdown",
+        e => {
 
-      }
-    );
+          e.preventDefault();
 
-    button.addEventListener(
-      "pointerenter",
-      event => {
-
-        if(event.buttons === 1){
-
-          extendSelection(index);
+          selectFirst(index);
 
         }
+      );
 
-      }
-    );
+      btn.addEventListener(
+        "pointerenter",
+        e => {
 
-    button.addEventListener(
-      "pointerup",
-      event => {
+          if(e.buttons === 1){
 
-        event.preventDefault();
+            selectNext(index);
 
-        finishSelection();
+          }
 
-      }
-    );
+        }
+      );
 
-    lettersBox.appendChild(button);
+      btn.addEventListener(
+        "pointerup",
+        e => {
 
-  });
+          e.preventDefault();
 
-}
+          currentWord =
+            makeWord();
 
+          renderCurrent();
 
-/* ---------- SELECTION ---------- */
+        }
+      );
 
-function beginSelection(index){
+      lettersBox.appendChild(btn);
 
-  selectedIndexes = [index];
-
-  updateSelectedLetters();
-
-  renderCurrentWord();
-
-}
-
-function extendSelection(index){
-
-  if(selectedIndexes.length === 0)
-    return;
-
-  if(selectedIndexes.includes(index))
-    return;
-
-  selectedIndexes.push(index);
-
-  updateSelectedLetters();
-
-  renderCurrentWord();
+    }
+  );
 
 }
 
-function finishSelection(){
 
-  if(selectedIndexes.length === 0)
-    return;
+/* FIRST LETTER */
+
+function selectFirst(index){
+
+  selected = [index];
 
   currentWord =
-    getSelectedWord();
+    makeWord();
 
-  renderCurrentWord();
+  updateSelected();
+
+  renderCurrent();
+
+  drawLines();
 
 }
 
 
-function getSelectedWord(){
+/* NEXT LETTER */
 
-  const stage = getStage();
+function selectNext(index){
 
-  const letters =
-    mode === "latin"
-      ? stage.lettersLatin
-      : stage.lettersArabic;
+  if(selected.length === 0)
+    return;
 
-  return selectedIndexes
-    .map(index => letters[index])
+  if(selected.includes(index))
+    return;
+
+  selected.push(index);
+
+  currentWord =
+    makeWord();
+
+  updateSelected();
+
+  renderCurrent();
+
+  drawLines();
+
+}
+
+
+/* MAKE WORD */
+
+function makeWord(){
+
+  return selected
+    .map(index =>
+      getLetters()[index]
+    )
     .join("");
 
 }
 
 
-/* ---------- SELECTED UI ---------- */
+/* SELECTED UI */
 
-function updateSelectedLetters(){
+function updateSelected(){
 
   document
     .querySelectorAll(".letter")
-    .forEach(button => {
+    .forEach(btn => {
 
       const index =
-        Number(button.dataset.index);
+        Number(btn.dataset.index);
 
-      button.classList.toggle(
+      btn.classList.toggle(
         "selected",
-        selectedIndexes.includes(index)
+        selected.includes(index)
       );
 
     });
@@ -1387,116 +1340,161 @@ function updateSelectedLetters(){
 }
 
 
-function renderCurrentWord(){
+/* CURRENT WORD */
 
-  currentWordBox.innerHTML = "";
+function renderCurrent(){
 
-  const chars =
-    Array.from(currentWord);
+  current.innerHTML = "";
 
-  chars.forEach(char => {
+  Array.from(currentWord)
+    .forEach(char => {
 
-    const box =
-      document.createElement("div");
+      const box =
+        document.createElement("div");
 
-    box.className = "current-letter";
+      box.className =
+        "currentLetter";
 
-    box.textContent = char;
+      box.textContent = char;
 
-    currentWordBox.appendChild(box);
+      current.appendChild(box);
 
-  });
+    });
 
 }
 
 
-/* ---------- SUBMIT ---------- */
+/* CONNECTION LINES */
+
+function drawLines(){
+
+  lineLayer.innerHTML = "";
+
+  if(selected.length < 2)
+    return;
+
+  const board =
+    document.querySelector(".board");
+
+  const boardRect =
+    board.getBoundingClientRect();
+
+  const buttons =
+    [...document.querySelectorAll(".letter")];
+
+  for(let i=0;i<selected.length-1;i++){
+
+    const a =
+      buttons.find(
+        b =>
+          Number(b.dataset.index)
+          === selected[i]
+      );
+
+    const b =
+      buttons.find(
+        x =>
+          Number(x.dataset.index)
+          === selected[i+1]
+      );
+
+    if(!a || !b)
+      continue;
+
+    const ra =
+      a.getBoundingClientRect();
+
+    const rb =
+      b.getBoundingClientRect();
+
+    const x1 =
+      ra.left +
+      ra.width/2 -
+      boardRect.left;
+
+    const y1 =
+      ra.top +
+      ra.height/2 -
+      boardRect.top;
+
+    const x2 =
+      rb.left +
+      rb.width/2 -
+      boardRect.left;
+
+    const y2 =
+      rb.top +
+      rb.height/2 -
+      boardRect.top;
+
+    const line =
+      document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "line"
+      );
+
+    line.setAttribute("x1",x1);
+    line.setAttribute("y1",y1);
+    line.setAttribute("x2",x2);
+    line.setAttribute("y2",y2);
+
+    lineLayer.appendChild(line);
+
+  }
+
+}
+
+
+/* CLEAR */
+
+function clearSelection(){
+
+  selected = [];
+
+  currentWord = "";
+
+  updateSelected();
+
+  renderCurrent();
+
+  drawLines();
+
+}
+
+
+/* SUBMIT */
 
 function submitWord(){
 
-  currentWord = getSelectedWord();
+  /*
+    اینجا تنها جایی است که
+    کلمه بررسی می‌شود.
+  */
 
-  if(!currentWord){
+  const word =
+    makeWord();
+
+  if(!word){
 
     message.textContent =
-      "اول چند حرف را انتخاب کن";
+      "اول حروف را انتخاب کن";
 
     return;
 
   }
 
-  const stage = getStage();
-
   const answers =
-    mode === "latin"
-      ? stage.answersLatin
-      : stage.answersArabic;
+    getAnswers();
 
   const bonuses =
-    mode === "latin"
-      ? stage.bonusLatin
-      : stage.bonusArabic;
-
-  const normalized =
-    normalizeWord(currentWord);
-
-  const normalizedAnswers =
-    answers.map(normalizeWord);
-
-  const normalizedBonuses =
-    bonuses.map(normalizeWord);
+    getBonus();
 
 
-  /* اصلی */
+  /* CORRECT */
 
-  const answerIndex =
-    normalizedAnswers.indexOf(normalized);
+  if(answers.includes(word)){
 
-  if(answerIndex !== -1){
-
-    const actualWord =
-      answers[answerIndex];
-
-    if(!foundWords.includes(actualWord)){
-
-      foundWords.push(actualWord);
-
-      totalScore +=
-        10 + actualWord.length * 2;
-
-      playCorrectSound();
-
-      message.textContent =
-        "✨ آفرین! کلمه درست است";
-
-      gameScreen.classList.add(
-        "correct-flash"
-      );
-
-      setTimeout(() => {
-        gameScreen.classList.remove(
-          "correct-flash"
-        );
-      },450);
-
-      clearSelection();
-
-      renderAnswers(answers);
-
-      updateStats();
-
-      if(foundWords.length === answers.length){
-
-        setTimeout(
-          finishStage,
-          550
-        );
-
-      }
-
-      return;
-
-    }else{
+    if(found.includes(word)){
 
       message.textContent =
         "این کلمه را قبلاً پیدا کردی";
@@ -1507,48 +1505,53 @@ function submitWord(){
 
     }
 
+    found.push(word);
+
+    score +=
+      10 + word.length * 2;
+
+    playCorrect();
+
+    message.textContent =
+      "✨ آفرین! کلمه درست است";
+
+    game.classList.add("good");
+
+    setTimeout(() =>
+      game.classList.remove("good"),
+      350
+    );
+
+    clearSelection();
+
+    renderAnswers();
+
+    updateStats();
+
+    save();
+
+    if(found.length === answers.length){
+
+      setTimeout(
+        finishStage,
+        550
+      );
+
+    }
+
+    return;
+
   }
 
 
-  /* پنهان */
+  /* BONUS */
 
-  const bonusIndex =
-    normalizedBonuses.indexOf(normalized);
+  if(bonuses.includes(word)){
 
-  if(bonusIndex !== -1){
-
-    const actualBonus =
-      bonuses[bonusIndex];
-
-    if(!bonusWords.includes(actualBonus)){
-
-      bonusWords.push(actualBonus);
-
-      coins += 5;
-
-      totalScore += 5;
-
-      saveData();
-
-      playCorrectSound();
+    if(bonusFound.includes(word)){
 
       message.textContent =
-        "🌟 کلمه پنهان! +۵ سکه";
-
-      bonusCount.textContent =
-        toPersianNumber(bonusWords.length);
-
-      coinCount.textContent =
-        toPersianNumber(coins);
-
-      clearSelection();
-
-      return;
-
-    }else{
-
-      message.textContent =
-        "این کلمه قبلاً پیدا شده";
+        "این کلمه پنهان را قبلاً پیدا کردی";
 
       clearSelection();
 
@@ -1556,29 +1559,49 @@ function submitWord(){
 
     }
 
+    bonusFound.push(word);
+
+    coins += 5;
+
+    score += 5;
+
+    playCorrect();
+
+    message.textContent =
+      "🌟 کلمه پنهان! +۵ سکه";
+
+    clearSelection();
+
+    updateStats();
+
+    save();
+
+    return;
+
   }
 
 
-  /* غلط */
+  /* WRONG */
 
-  playWrongSound();
+  /*
+    صدای غلط فقط همین‌جا اجرا می‌شود.
+  */
+
+  playWrong();
 
   lives--;
 
   updateLives();
 
   message.textContent =
-    "❌ این کلمه در این مرحله نیست";
+    "❌ کلمه درست نیست";
 
-  gameScreen.classList.add(
-    "wrong-shake"
+  game.classList.add("shake");
+
+  setTimeout(() =>
+    game.classList.remove("shake"),
+    300
   );
-
-  setTimeout(() => {
-    gameScreen.classList.remove(
-      "wrong-shake"
-    );
-  },350);
 
   clearSelection();
 
@@ -1590,149 +1613,118 @@ function submitWord(){
         "❤️ جان‌ها تمام شد";
 
       setTimeout(
-        restartCurrentStage,
-        800
+        restartStage,
+        700
       );
 
-    },250);
+    },200);
 
   }
 
 }
 
 
-/* ---------- NORMALIZE ---------- */
+/* SHUFFLE */
 
-function normalizeWord(word){
-
-  return word
-    .trim()
-    .toLocaleLowerCase("az-AZ");
-
-}
-
-
-/* ---------- CLEAR ---------- */
-
-function clearSelection(){
-
-  selectedIndexes = [];
-
-  currentWord = "";
-
-  updateSelectedLetters();
-
-  renderCurrentWord();
-
-}
-
-
-/* ---------- SHUFFLE ---------- */
-
-function shuffleArray(array){
-
-  const result = [...array];
-
-  for(let i=result.length-1;i>0;i--){
-
-    const j =
-      Math.floor(Math.random()*(i+1));
-
-    [result[i],result[j]] =
-      [result[j],result[i]];
-
-  }
-
-  return result;
-
-}
-
-
-function shuffleLetters(){
-
-  const stage = getStage();
+function shuffle(){
 
   const letters =
-    mode === "latin"
-      ? stage.lettersLatin
-      : stage.lettersArabic;
+    getLetters();
 
-  const shuffled =
-    shuffleArray(letters);
+  /*
+    برای جلوگیری از باگ شماره‌ها،
+    ترتیب حروف را با یک آرایهٔ جدید
+    و index واقعی خودشان نگه می‌داریم.
+  */
 
-  selectedIndexes = [];
+  const items =
+    letters.map(
+      (char,index) => ({
+        char,
+        original:index
+      })
+    );
 
-  currentWord = "";
+  for(let i=items.length-1;i>0;i--){
+
+    const j =
+      Math.floor(
+        Math.random()*(i+1)
+      );
+
+    [items[i],items[j]] =
+      [items[j],items[i]];
+
+  }
 
   lettersBox.innerHTML = "";
 
-  shuffled.forEach((letter,index) => {
+  items.forEach(item => {
 
-    const button =
+    const btn =
       document.createElement("button");
 
-    button.className = "letter";
+    btn.className = "letter";
 
-    button.textContent = letter;
+    btn.textContent = item.char;
 
-    button.dataset.index = index;
+    /*
+      index واقعی را نگه می‌داریم.
+    */
 
-    button.addEventListener(
+    btn.dataset.index =
+      item.original;
+
+    btn.dataset.char =
+      item.char;
+
+    btn.addEventListener(
       "pointerdown",
       e => {
 
         e.preventDefault();
 
-        selectedIndexes = [index];
-
-        updateSelectedLetters();
-
-        currentWord = getSelectedWord();
-
-        renderCurrentWord();
+        selectFirst(
+          item.original
+        );
 
       }
     );
 
-    button.addEventListener(
+    btn.addEventListener(
       "pointerenter",
       e => {
 
         if(e.buttons === 1){
 
-          if(!selectedIndexes.includes(index)){
-
-            selectedIndexes.push(index);
-
-            updateSelectedLetters();
-
-            currentWord =
-              getSelectedWord();
-
-            renderCurrentWord();
-
-          }
+          selectNext(
+            item.original
+          );
 
         }
 
       }
     );
 
-    button.addEventListener(
+    btn.addEventListener(
       "pointerup",
       e => {
 
         e.preventDefault();
 
         currentWord =
-          getSelectedWord();
+          makeWord();
+
+        renderCurrent();
 
       }
     );
 
-    lettersBox.appendChild(button);
+    lettersBox.appendChild(btn);
 
   });
+
+  clearSelection();
 
   message.textContent =
     "🔀 حروف جابه‌جا شدند";
@@ -1740,26 +1732,21 @@ function shuffleLetters(){
 }
 
 
-/* ---------- HINT ---------- */
+/* HINT */
 
-function useHint(){
-
-  const stage = getStage();
-
-  const answers =
-    mode === "latin"
-      ? stage.answersLatin
-      : stage.answersArabic;
+function hint(){
 
   const remaining =
-    answers.filter(
-      word => !foundWords.includes(word)
-    );
+    getAnswers()
+      .filter(
+        word =>
+          !found.includes(word)
+      );
 
   if(remaining.length === 0){
 
     message.textContent =
-      "همهٔ کلمات پیدا شده‌اند";
+      "همهٔ کلمات را پیدا کردی";
 
     return;
 
@@ -1768,64 +1755,58 @@ function useHint(){
   if(coins < 10){
 
     message.textContent =
-      "🪙 برای راهنما حداقل ۱۰ سکه لازم است";
+      "🪙 برای راهنما ۱۰ سکه لازم است";
 
     return;
 
   }
 
-  const target = remaining[0];
+  const word =
+    remaining[0];
 
   coins -= 10;
 
-  saveData();
+  save();
 
-  coinCount.textContent =
-    toPersianNumber(coins);
+  updateStats();
 
   message.textContent =
-    "💡 کلمه با حرف «" +
-    Array.from(target)[0] +
-    "» شروع می‌شود";
+    "💡 این کلمه با «"
+    + Array.from(word)[0]
+    + "» شروع می‌شود";
 
 }
 
 
-/* ---------- STATS ---------- */
+/* STATS */
 
 function updateStats(){
 
-  const stage = getStage();
-
-  const answers =
-    mode === "latin"
-      ? stage.answersLatin
-      : stage.answersArabic;
+  const total =
+    getAnswers().length;
 
   foundText.textContent =
-    toPersianNumber(foundWords.length)
+    faNumber(found.length)
     + " از "
-    + toPersianNumber(answers.length)
-    + " کلمه";
+    + faNumber(total);
 
   coinCount.textContent =
-    toPersianNumber(coins);
+    faNumber(coins);
 
   bonusCount.textContent =
-    toPersianNumber(bonusWords.length);
+    faNumber(bonusFound.length);
 
-  const percent =
-    answers.length === 0
-      ? 0
-      : (foundWords.length / answers.length) * 100;
-
-  progressBar.style.width =
-    percent + "%";
+  progress.style.width =
+    (
+      found.length / total * 100
+    ) + "%";
 
   updateLives();
 
 }
 
+
+/* LIVES */
 
 function updateLives(){
 
@@ -1837,110 +1818,116 @@ function updateLives(){
 }
 
 
-/* ---------- FINISH ---------- */
+/* FINISH */
 
 function finishStage(){
 
-  const earnedCoins =
-    10 + foundWords.length * 3;
+  const reward =
+    10 + found.length * 3;
 
-  coins += earnedCoins;
+  coins += reward;
 
-  totalScore += 25;
+  score += 25;
 
-  saveData();
+  save();
 
-  endScore.textContent =
-    toPersianNumber(totalScore);
+  document.getElementById(
+    "endScore"
+  ).textContent =
+    faNumber(score);
 
-  endWords.textContent =
-    toPersianNumber(foundWords.length);
+  document.getElementById(
+    "endWords"
+  ).textContent =
+    faNumber(found.length);
 
-  endBonus.textContent =
-    toPersianNumber(bonusWords.length);
+  document.getElementById(
+    "endBonus"
+  ).textContent =
+    faNumber(bonusFound.length);
 
-  endCoins.textContent =
-    toPersianNumber(earnedCoins);
+  document.getElementById(
+    "endCoins"
+  ).textContent =
+    faNumber(reward);
 
-  document.getElementById("endTitle")
-    .textContent =
-      "آفرین قهرمان!";
-
-  document.getElementById("endIcon")
-    .textContent =
-      "🏆";
+  document.getElementById(
+    "endTitle"
+  ).textContent =
+    "آفرین قهرمان!";
 
   stageNumber++;
 
-  saveData();
+  save();
 
   updateHome();
 
-  showScreen(endScreen);
+  show(end);
 
 }
 
 
-/* ---------- RESTART ---------- */
+/* RESTART */
 
-function restartCurrentStage(){
+function restartStage(){
 
   lives = 3;
 
-  foundWords = [];
-
-  bonusWords = [];
-
-  selectedIndexes = [];
+  selected = [];
 
   currentWord = "";
 
+  found = [];
+
+  bonusFound = [];
+
   loadStage();
 
-  showScreen(gameScreen);
+  show(game);
 
 }
 
 
-/* ---------- SAVE ---------- */
+/* SAVE */
 
-function saveData(){
+function save(){
 
   localStorage.setItem(
-    STORAGE.stage,
+    KEY_STAGE,
     stageNumber
   );
 
   localStorage.setItem(
-    STORAGE.coins,
+    KEY_COINS,
     coins
   );
 
   localStorage.setItem(
-    STORAGE.score,
-    totalScore
+    KEY_SCORE,
+    score
   );
 
   localStorage.setItem(
-    STORAGE.mode,
+    KEY_MODE,
     mode
   );
 
 }
 
 
-/* ---------- AUDIO EFFECTS ---------- */
+/* CORRECT SOUND */
 
 let audioContext = null;
 
-
-function getAudioContext(){
+function getAudio(){
 
   if(!audioContext){
 
     audioContext =
-      new (window.AudioContext ||
-           window.webkitAudioContext)();
+      new (
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
 
   }
 
@@ -1949,12 +1936,12 @@ function getAudioContext(){
 }
 
 
-function playCorrectSound(){
+function playCorrect(){
 
   try{
 
     const ctx =
-      getAudioContext();
+      getAudio();
 
     if(ctx.state === "suspended")
       ctx.resume();
@@ -1976,42 +1963,50 @@ function playCorrectSound(){
     );
 
     osc.frequency.exponentialRampToValueAtTime(
-      783.99,
-      now + .18
+      659.25,
+      now + .15
     );
 
     gain.gain.setValueAtTime(
-      .0001,
+      .001,
       now
     );
 
     gain.gain.exponentialRampToValueAtTime(
-      .15,
+      .14,
       now + .02
     );
 
     gain.gain.exponentialRampToValueAtTime(
-      .0001,
-      now + .3
+      .001,
+      now + .28
     );
 
     osc.connect(gain);
-    gain.connect(ctx.destination);
+
+    gain.connect(
+      ctx.destination
+    );
 
     osc.start(now);
-    osc.stop(now + .3);
+
+    osc.stop(
+      now + .28
+    );
 
   }catch(e){}
 
 }
 
 
-function playWrongSound(){
+/* WRONG SOUND */
+
+function playWrong(){
 
   try{
 
     const ctx =
-      getAudioContext();
+      getAudio();
 
     if(ctx.state === "suspended")
       ctx.resume();
@@ -2034,120 +2029,118 @@ function playWrongSound(){
 
     osc.frequency.exponentialRampToValueAtTime(
       110,
-      now + .2
+      now + .18
     );
 
     gain.gain.setValueAtTime(
-      .0001,
+      .001,
       now
     );
 
     gain.gain.exponentialRampToValueAtTime(
-      .12,
+      .11,
       now + .01
     );
 
     gain.gain.exponentialRampToValueAtTime(
-      .0001,
-      now + .25
+      .001,
+      now + .22
     );
 
     osc.connect(gain);
-    gain.connect(ctx.destination);
+
+    gain.connect(
+      ctx.destination
+    );
 
     osc.start(now);
-    osc.stop(now + .25);
+
+    osc.stop(
+      now + .22
+    );
 
   }catch(e){}
 
 }
 
 
-/* ---------- BUTTONS ---------- */
+/* BUTTONS */
 
-startBtn.addEventListener(
-  "click",
+startBtn.onclick = () => {
+
+  getAudio();
+
+  startGame();
+
+};
+
+
+document.getElementById(
+  "submit"
+).onclick =
+  submitWord;
+
+
+document.getElementById(
+  "shuffle"
+).onclick =
+  shuffle;
+
+
+document.getElementById(
+  "hint"
+).onclick =
+  hint;
+
+
+document.getElementById(
+  "homeBtn"
+).onclick = () => {
+
+  save();
+
+  updateHome();
+
+  show(home);
+
+};
+
+
+document.getElementById(
+  "nextBtn"
+).onclick =
+  startGame;
+
+
+document.getElementById(
+  "againBtn"
+).onclick =
+  restartStage;
+
+
+document.getElementById(
+  "endHomeBtn"
+).onclick = () => {
+
+  updateHome();
+
+  show(home);
+
+};
+
+
+/* RESIZE */
+
+window.addEventListener(
+  "resize",
   () => {
 
-    getAudioContext();
+    if(game.classList.contains("active")){
 
-    startGame();
-
-  }
-);
-
-submitBtn.addEventListener(
-  "click",
-  submitWord
-);
-
-shuffleBtn.addEventListener(
-  "click",
-  shuffleLetters
-);
-
-hintBtn.addEventListener(
-  "click",
-  useHint
-);
-
-homeBtn.addEventListener(
-  "click",
-  () => {
-
-    saveData();
-
-    updateHome();
-
-    showScreen(homeScreen);
-
-  }
-);
-
-restartBtn.addEventListener(
-  "click",
-  restartCurrentStage
-);
-
-nextStageBtn.addEventListener(
-  "click",
-  () => {
-
-    startGame();
-
-  }
-);
-
-endHomeBtn.addEventListener(
-  "click",
-  () => {
-
-    updateHome();
-
-    showScreen(homeScreen);
-
-  }
-);
-
-
-/* ---------- KEYBOARD ---------- */
-
-document.addEventListener(
-  "keydown",
-  event => {
-
-    if(!gameScreen.classList.contains("active"))
-      return;
-
-    if(event.key === "Enter"){
-
-      submitWord();
-
-    }
-
-    if(event.key === "Escape"){
-
-      clearSelection();
+      setTimeout(
+        drawLines,
+        50
+      );
 
     }
 
@@ -2155,33 +2148,19 @@ document.addEventListener(
 );
 
 
-/* ---------- PREVENT LONG PRESS ---------- */
+/* INITIAL */
 
-document.addEventListener(
-  "contextmenu",
-  event => {
-
-    if(event.target.classList.contains("letter")){
-
-      event.preventDefault();
-
-    }
-
-  }
-);
-
-
-/* ---------- INITIAL ---------- */
+setMode(mode);
 
 updateHome();
 
-if(!musicEnabled){
+if(!musicOn){
+
+  musicBtn.textContent =
+    "🔇";
 
   musicStatus.textContent =
     "موسیقی خاموش است";
-
-  musicBtnHome.textContent =
-    "🔇";
 
 }
 
