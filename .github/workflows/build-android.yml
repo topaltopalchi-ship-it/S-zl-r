@@ -1,7 +1,10 @@
-name: Build Heydarbaba Android
+name: Build Heydarbaba Release
 
 on:
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build-android:
@@ -45,19 +48,118 @@ jobs:
           npm install -D @capacitor/assets
           npx capacitor-assets generate --android
 
+      - name: Create or restore release keystore
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          if [ -f release-key.jks.enc ]; then
+            openssl enc -d -aes-256-cbc -pbkdf2 \
+              -in release-key.jks.enc \
+              -out release-key.jks \
+              -pass env:KEYSTORE_PASSWORD
+          else
+            keytool -genkeypair -v \
+              -keystore release-key.jks \
+              -storepass "$KEYSTORE_PASSWORD" \
+              -keypass "$KEY_PASSWORD" \
+              -alias heydarbaba \
+              -keyalg RSA \
+              -keysize 2048 \
+              -validity 10000 \
+              -dname "CN=Heydarbaba, OU=Game, O=Heydarbaba, L=Iran, C=IR"
+
+            openssl enc -aes-256-cbc -pbkdf2 -salt \
+              -in release-key.jks \
+              -out release-key.jks.enc \
+              -pass env:KEYSTORE_PASSWORD
+
+            rm -f release-key.jks
+
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add release-key.jks.enc
+            git commit -m "Add encrypted Android release keystore"
+            git push
+          fi
+
+      - name: Create keystore properties
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          cat > android/keystore.properties <<EOF
+          storeFile=../release-key.jks
+          storePassword=$KEYSTORE_PASSWORD
+          keyAlias=heydarbaba
+          keyPassword=$KEY_PASSWORD
+          EOF
+
+      - name: Configure Android release signing
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path("android/app/build.gradle")
+          text = path.read_text()
+
+          header = '''def keystoreProperties = new Properties()
+          def keystorePropertiesFile = rootProject.file("keystore.properties")
+          if (keystorePropertiesFile.exists()) {
+              keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+          }
+
+          '''
+
+          text = text.replace(
+              "android {\n",
+              header + "android {\n",
+              1
+          )
+
+          text = text.replace(
+              "    buildTypes {\n",
+              '''    signingConfigs {
+                  release {
+                      storeFile file(keystoreProperties['storeFile'])
+                      storePassword keystoreProperties['storePassword']
+                      keyAlias keystoreProperties['keyAlias']
+                      keyPassword keystoreProperties['keyPassword']
+                  }
+              }
+
+              buildTypes {
+              ''',
+              1
+          )
+
+          text = text.replace(
+              "        release {\n",
+              '''        release {
+                      signingConfig signingConfigs.release
+              ''',
+              1
+          )
+
+          path.write_text(text)
+          PY
+
       - name: Sync Capacitor
         run: npx cap sync android
 
       - name: Make Gradle executable
         run: chmod +x android/gradlew
 
-      - name: Build APK
+      - name: Build signed APK and AAB
         run: |
           cd android
-          ./gradlew assembleDebug
+          ./gradlew assembleRelease
+          ./gradlew bundleRelease
 
-      - name: Upload APK
+      - name: Upload Release files
         uses: actions/upload-artifact@v4
         with:
-          name: Heydarbaba-Android
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: Heydarbaba-Release
+          path: |
+            android/app/build/outputs/apk/release/app-release.apk
+            android/app/build/outputs/bundle/release/app-release.aab
