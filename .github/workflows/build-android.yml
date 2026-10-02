@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -101,47 +102,44 @@ jobs:
           from pathlib import Path
 
           path = Path("android/app/build.gradle")
-          text = path.read_text()
+          lines = path.read_text().splitlines()
 
-          header = '''def keystoreProperties = new Properties()
-          def keystorePropertiesFile = rootProject.file("keystore.properties")
-          if (keystorePropertiesFile.exists()) {
-              keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+          result = []
+          added_signing_configs = False
+          inside_build_types = False
+          release_found = False
+
+          for line in lines:
+
+              if not added_signing_configs and line.strip() == "buildTypes {":
+                  result.append("""    signingConfigs {
+              release {
+                  storeFile file(keystoreProperties['storeFile'])
+                  storePassword keystoreProperties['storePassword']
+                  keyAlias keystoreProperties['keyAlias']
+                  keyPassword keystoreProperties['keyPassword']
+              }
           }
 
-          '''
+          """.rstrip())
 
-          text = text.replace(
-              "android {\n",
-              header + "android {\n",
-              1
-          )
+                  added_signing_configs = True
+                  inside_build_types = True
 
-          text = text.replace(
-              "    buildTypes {\n",
-              '''    signingConfigs {
-                  release {
-                      storeFile file(keystoreProperties['storeFile'])
-                      storePassword keystoreProperties['storePassword']
-                      keyAlias keystoreProperties['keyAlias']
-                      keyPassword keystoreProperties['keyPassword']
-                  }
-              }
+              result.append(line)
 
-              buildTypes {
-              ''',
-              1
-          )
+              if inside_build_types and not release_found:
+                  if line.strip() == "release {":
+                      result.append("        signingConfig signingConfigs.release")
+                      release_found = True
 
-          text = text.replace(
-              "        release {\n",
-              '''        release {
-                      signingConfig signingConfigs.release
-              ''',
-              1
-          )
+          if not added_signing_configs:
+              raise SystemExit("ERROR: buildTypes block not found")
 
-          path.write_text(text)
+          if not release_found:
+              raise SystemExit("ERROR: release build type not found")
+
+          path.write_text("\n".join(result) + "\n")
           PY
 
       - name: Sync Capacitor
@@ -150,16 +148,24 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x android/gradlew
 
-      - name: Build signed APK and AAB
+      - name: Build signed APK
         run: |
           cd android
           ./gradlew assembleRelease
+
+      - name: Build signed AAB
+        run: |
+          cd android
           ./gradlew bundleRelease
 
-      - name: Upload Release files
+      - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: Heydarbaba-Release
-          path: |
-            android/app/build/outputs/apk/release/app-release.apk
-            android/app/build/outputs/bundle/release/app-release.aab
+          name: Heydarbaba-Release-APK
+          path: android/app/build/outputs/apk/release/app-release.apk
+
+      - name: Upload Release AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: Heydarbaba-Release-AAB
+          path: android/app/build/outputs/bundle/release/app-release.aab
