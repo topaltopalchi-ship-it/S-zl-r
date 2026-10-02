@@ -1,33 +1,98 @@
-      - name: Download the exact AAB from the latest successful release build
+name: Generate Cafe Bazaar BIN
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  generate-bin:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Download the exact AAB from Release #11
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p release
 
-          RUN_ID=$(gh run list \
-            --workflow build-android.yml \
-            --status success \
-            --limit 1 \
-            --json databaseId \
-            --jq '.[0].databaseId')
-
-          if [ -z "$RUN_ID" ]; then
-            echo "No successful Build Heydarbaba Release run found."
-            exit 1
-          fi
-
-          echo "Using release workflow run: $RUN_ID"
-
-          gh run download "$RUN_ID" \
+          gh run download 37054016507 \
             --name Heydarbaba-Release-AAB \
             --dir release
 
           AAB_PATH=$(find release -type f -name 'app-release.aab' | head -n 1)
 
           if [ -z "$AAB_PATH" ]; then
-            echo "app-release.aab was not found."
+            echo "ERROR: app-release.aab was not found."
             find release -maxdepth 3 -type f -print
             exit 1
           fi
 
+          echo "Exact AAB found:"
           ls -lh "$AAB_PATH"
+
+      - name: Restore the same release keystore
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          openssl enc -d -aes-256-cbc -pbkdf2 \
+            -in release-key.jks.enc \
+            -out release-key.jks \
+            -pass env:KEYSTORE_PASSWORD
+
+          ls -lh release-key.jks
+
+      - name: Download Cafe Bazaar Bundle Signer
+        run: |
+          curl -L --fail --silent --show-error \
+            -o bundlesigner-0.1.13.jar \
+            https://github.com/cafebazaar/bundle-signer/releases/download/v0.1.13/bundlesigner-0.1.13.jar
+
+          ls -lh bundlesigner-0.1.13.jar
+
+      - name: Generate Cafe Bazaar BIN
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          _JAVA_OPTIONS: -Xmx4g
+        run: |
+          mkdir -p output
+
+          AAB_PATH=$(find release -type f -name 'app-release.aab' | head -n 1)
+
+          java -jar bundlesigner-0.1.13.jar genbin \
+            -v \
+            --bundle "$AAB_PATH" \
+            --bin output \
+            --v2-signing-enabled true \
+            --v3-signing-enabled false \
+            --ks release-key.jks \
+            --ks-pass env:KEYSTORE_PASSWORD \
+            --key-pass env:KEY_PASSWORD \
+            --ks-key-alias heydarbaba
+
+          echo "Generated files:"
+          ls -lh output
+
+      - name: Upload Cafe Bazaar BIN
+        uses: actions/upload-artifact@v4
+        with:
+          name: Heydarbaba-CafeBazaar-BIN
+          path: output/*.bin
+
+      - name: Remove private key material
+        if: always()
+        run: |
+          rm -f release-key.jks
