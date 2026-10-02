@@ -82,6 +82,13 @@ button:hover{
   margin-top:10px;
 }
 
+.music-btn{
+  background:rgba(255,255,255,.15);
+  color:white;
+  width:100%;
+  margin-top:12px;
+}
+
 .stats{
   display:flex;
   justify-content:space-between;
@@ -191,13 +198,23 @@ input:focus{
 }
 
 @keyframes correctAnim{
-  50%{transform:scale(1.04);}
+  50%{
+    transform:scale(1.04);
+  }
 }
 
 @keyframes wrongAnim{
-  25%{transform:translateX(-8px);}
-  50%{transform:translateX(8px);}
-  75%{transform:translateX(-5px);}
+  25%{
+    transform:translateX(-8px);
+  }
+
+  50%{
+    transform:translateX(8px);
+  }
+
+  75%{
+    transform:translateX(-5px);
+  }
 }
 
 .hidden{
@@ -268,7 +285,18 @@ input:focus{
   color:#17202a;
 }
 
+.music-control{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-top:15px;
+  color:#d7e1ea;
+  font-size:14px;
+}
+
 @media(max-width:480px){
+
   .card{
     padding:20px 15px;
   }
@@ -300,9 +328,19 @@ input:focus{
 
 <body>
 
+<!-- موسیقی زمینه -->
+<audio
+  id="bgMusic"
+  src="Tar-Azari-09.mp3"
+  loop
+  preload="auto">
+</audio>
+
+
 <div class="container">
 
   <!-- صفحه شروع -->
+
   <div class="card" id="startScreen">
 
     <h1>🧩 SÖZLƏR</h1>
@@ -314,28 +352,46 @@ input:focus{
     <p>Əlifbanı seç:</p>
 
     <div class="mode-buttons">
-      <button class="mode-btn" onclick="selectMode('latin')">
+
+      <button
+        class="mode-btn"
+        onclick="selectMode('latin')">
         🇮🇷 Latin
       </button>
 
-      <button class="mode-btn" onclick="selectMode('arabic')">
+      <button
+        class="mode-btn"
+        onclick="selectMode('arabic')">
         🇮🇷 Ərəb
       </button>
+
     </div>
 
     <div id="selectedMode">
       Əlifba seçilməyib
     </div>
 
-    <button class="start-btn" onclick="startGame()">
+    <button
+      class="start-btn"
+      onclick="startGame()">
       ▶️ Oyuna başla
+    </button>
+
+    <button
+      class="music-btn"
+      onclick="toggleMusic()"
+      id="musicButton">
+      🔊 Musiqi: Açıq
     </button>
 
   </div>
 
 
   <!-- صفحه بازی -->
-  <div class="card hidden" id="gameScreen">
+
+  <div
+    class="card hidden"
+    id="gameScreen">
 
     <div class="stats">
 
@@ -361,15 +417,25 @@ input:focus{
 
     </div>
 
+
     <div class="timer-box">
-      <div class="timer-bar" id="timerBar"></div>
+      <div
+        class="timer-bar"
+        id="timerBar">
+      </div>
     </div>
+
 
     <div class="word-label">
       Qarışıq söz:
     </div>
 
-    <div class="scrambled" id="scrambledWord"></div>
+
+    <div
+      class="scrambled"
+      id="scrambledWord">
+    </div>
+
 
     <input
       id="answer"
@@ -378,82 +444,160 @@ input:focus{
       placeholder="Cavabını yaz..."
     >
 
+
     <div class="actions">
 
-      <button class="check-btn" onclick="checkAnswer()">
+      <button
+        class="check-btn"
+        onclick="checkAnswer()">
         ✓ Yoxla
       </button>
 
-      <button class="hint-btn" onclick="showHint()">
+      <button
+        class="hint-btn"
+        onclick="showHint()">
         💡 İpucu
       </button>
 
     </div>
 
-    <div class="message" id="message"></div>
+
+    <div
+      class="message"
+      id="message">
+    </div>
+
+
+    <div class="music-control">
+      🎵 Tar musiqisi aktivdir
+    </div>
 
   </div>
 
 
   <!-- صفحه پایان -->
-  <div class="card hidden" id="endScreen">
 
-    <div class="end-icon" id="endIcon">
+  <div
+    class="card hidden"
+    id="endScreen">
+
+    <div
+      class="end-icon"
+      id="endIcon">
       🏆
     </div>
 
-    <h1>Oyun bitdi!</h1>
 
-    <div class="subtitle" id="endMessage">
+    <h1>
+      Oyun bitdi!
+    </h1>
+
+
+    <div
+      class="subtitle"
+      id="endMessage">
       Yaxşı oyun idi!
     </div>
 
-    <div class="final-score" id="finalScore">
+
+    <div
+      class="final-score"
+      id="finalScore">
       0
     </div>
 
-    <div>Yekun xal</div>
+
+    <div>
+      Yekun xal
+    </div>
+
 
     <div class="record">
+
       🏆 Ən yaxşı nəticə:
-      <strong id="finalBest">0</strong>
+
+      <strong id="finalBest">
+        0
+      </strong>
+
     </div>
+
 
     <div class="result-grid">
 
       <div class="result-item">
-        <span>✅ Düz cavab</span>
-        <strong id="correctCount">0</strong>
+
+        <span>
+          ✅ Düz cavab
+        </span>
+
+        <strong id="correctCount">
+          0
+        </strong>
+
       </div>
 
-      <div class="result-item">
-        <span>❌ Səhv cavab</span>
-        <strong id="wrongCount">0</strong>
-      </div>
 
       <div class="result-item">
-        <span>🎯 Mərhələ</span>
-        <strong id="finalStage">1</strong>
+
+        <span>
+          ❌ Səhv cavab
+        </span>
+
+        <strong id="wrongCount">
+          0
+        </strong>
+
       </div>
 
+
       <div class="result-item">
-        <span>❤️ Qalan can</span>
-        <strong id="finalLives">0</strong>
+
+        <span>
+          🎯 Mərhələ
+        </span>
+
+        <strong id="finalStage">
+          1
+        </strong>
+
+      </div>
+
+
+      <div class="result-item">
+
+        <span>
+          ❤️ Qalan can
+        </span>
+
+        <strong id="finalLives">
+          0
+        </strong>
+
       </div>
 
     </div>
 
-    <div class="new-record hidden" id="newRecord">
+
+    <div
+      class="new-record hidden"
+      id="newRecord">
       🎉 Yeni rekord!
     </div>
 
+
     <div class="end-buttons">
 
-      <button class="play-again" onclick="restartGame()">
+      <button
+        class="play-again"
+        onclick="restartGame()">
         🔄 Yenidən oyna
       </button>
 
-      <button class="home-btn" onclick="goHome()">
+
+      <button
+        class="home-btn"
+        onclick="goHome()">
         🏠 Əsas səhifə
       </button>
 
@@ -522,22 +666,48 @@ const words = [
 
 
 let mode = "latin";
+
 let stage = 1;
+
 let lives = 3;
+
 let score = 0;
+
 let correctCount = 0;
+
 let wrongCount = 0;
+
 let currentWord = null;
+
 let timer = null;
+
 let timeLeft = 30;
+
 let gameActive = false;
+
 let hintUsed = false;
 
+let musicEnabled = true;
+
+
 let bestScore =
-  Number(localStorage.getItem("sozlerBest")) || 0;
+  Number(
+    localStorage.getItem("sozlerBest")
+  ) || 0;
 
-document.getElementById("best").textContent = bestScore;
 
+const bgMusic =
+  document.getElementById("bgMusic");
+
+
+bgMusic.volume = 0.35;
+
+
+document.getElementById("best")
+  .textContent = bestScore;
+
+
+/* انتخاب زبان */
 
 function selectMode(selected){
 
@@ -545,12 +715,16 @@ function selectMode(selected){
 
   if(selected === "latin"){
 
-    document.getElementById("selectedMode").textContent =
+    document.getElementById(
+      "selectedMode"
+    ).textContent =
       "🇮🇷 Latin əlifbası seçildi";
 
   }else{
 
-    document.getElementById("selectedMode").textContent =
+    document.getElementById(
+      "selectedMode"
+    ).textContent =
       "🇮🇷 Ərəb əlifbası seçildi";
 
   }
@@ -558,62 +732,159 @@ function selectMode(selected){
 }
 
 
+/* موسیقی */
+
+function startMusic(){
+
+  if(!musicEnabled){
+    return;
+  }
+
+  bgMusic.volume = 0.35;
+
+  bgMusic.play().catch(() => {
+
+    console.log(
+      "Music playback waiting for user interaction."
+    );
+
+  });
+
+}
+
+
+function stopMusic(){
+
+  bgMusic.pause();
+
+  bgMusic.currentTime = 0;
+
+}
+
+
+function toggleMusic(){
+
+  musicEnabled = !musicEnabled;
+
+  const button =
+    document.getElementById(
+      "musicButton"
+    );
+
+  if(musicEnabled){
+
+    button.textContent =
+      "🔊 Musiqi: Açıq";
+
+    if(gameActive){
+
+      startMusic();
+
+    }
+
+  }else{
+
+    button.textContent =
+      "🔇 Musiqi: Bağlı";
+
+    bgMusic.pause();
+
+  }
+
+}
+
+
+/* شروع بازی */
+
 function startGame(){
 
+  startMusic();
+
   stage = 1;
+
   lives = 3;
+
   score = 0;
+
   correctCount = 0;
+
   wrongCount = 0;
+
   gameActive = true;
 
-  document.getElementById("startScreen")
-    .classList.add("hidden");
 
-  document.getElementById("endScreen")
-    .classList.add("hidden");
+  document.getElementById(
+    "startScreen"
+  ).classList.add("hidden");
 
-  document.getElementById("gameScreen")
-    .classList.remove("hidden");
+
+  document.getElementById(
+    "endScreen"
+  ).classList.add("hidden");
+
+
+  document.getElementById(
+    "gameScreen"
+  ).classList.remove("hidden");
+
 
   updateStats();
+
   nextWord();
 
 }
 
+
+/* سختی بازی */
 
 function getDifficulty(){
 
   if(stage <= 5){
 
     return {
+
       min:2,
+
       max:4,
+
       time:30,
+
       points:10
+
     };
 
   }
+
 
   if(stage <= 10){
 
     return {
+
       min:4,
+
       max:6,
+
       time:24,
+
       points:15
+
     };
 
   }
 
+
   return {
 
     min:6,
+
     max:20,
 
     time:Math.max(
       14,
-      24 - Math.floor((stage - 10) / 3)
+      24 -
+      Math.floor(
+        (stage - 10) / 3
+      )
     ),
 
     points:20
@@ -623,21 +894,30 @@ function getDifficulty(){
 }
 
 
+/* انتخاب کلمه */
+
 function getWord(){
 
-  const difficulty = getDifficulty();
+  const difficulty =
+    getDifficulty();
 
-  let available = words.filter(word => {
 
-    const length =
-      Array.from(word.latin).length;
+  let available =
+    words.filter(word => {
 
-    return (
-      length >= difficulty.min &&
-      length <= difficulty.max
-    );
+      const length =
+        Array.from(
+          word.latin
+        ).length;
 
-  });
+
+      return (
+        length >= difficulty.min &&
+        length <= difficulty.max
+      );
+
+    });
+
 
   if(available.length === 0){
 
@@ -645,31 +925,56 @@ function getWord(){
 
   }
 
+
   return available[
-    Math.floor(Math.random() * available.length)
+    Math.floor(
+      Math.random() *
+      available.length
+    )
   ];
 
 }
 
 
+/* مخلوط کردن حروف */
+
 function shuffle(text){
 
-  const arr = Array.from(text);
+  const arr =
+    Array.from(text);
 
-  for(let i = arr.length - 1; i > 0; i--){
+
+  for(
+    let i = arr.length - 1;
+    i > 0;
+    i--
+  ){
 
     const j =
-      Math.floor(Math.random() * (i + 1));
+      Math.floor(
+        Math.random() *
+        (i + 1)
+      );
 
-    [arr[i], arr[j]] =
-      [arr[j], arr[i]];
+
+    [
+      arr[i],
+      arr[j]
+    ] =
+    [
+      arr[j],
+      arr[i]
+    ];
 
   }
+
 
   return arr.join("");
 
 }
 
+
+/* کلمه جدید */
 
 function nextWord(){
 
@@ -677,43 +982,73 @@ function nextWord(){
 
   hintUsed = false;
 
-  currentWord = getWord();
+
+  currentWord =
+    getWord();
+
 
   let displayWord =
     mode === "latin"
       ? currentWord.latin
       : currentWord.arabic;
 
-  let scrambled = shuffle(displayWord);
 
-  document.getElementById("scrambledWord")
-    .textContent = scrambled;
+  let scrambled =
+    shuffle(displayWord);
+
+
+  document.getElementById(
+    "scrambledWord"
+  ).textContent =
+    scrambled;
+
 
   const scrambledElement =
-    document.getElementById("scrambledWord");
+    document.getElementById(
+      "scrambledWord"
+    );
+
 
   if(mode === "arabic"){
 
-    scrambledElement.classList.add("arabic");
+    scrambledElement
+      .classList.add("arabic");
 
   }else{
 
-    scrambledElement.classList.remove("arabic");
+    scrambledElement
+      .classList.remove("arabic");
 
   }
 
-  document.getElementById("answer").value = "";
 
-  document.getElementById("answer").focus();
+  document.getElementById(
+    "answer"
+  ).value = "";
 
-  document.getElementById("message").textContent = "";
 
-  const difficulty = getDifficulty();
+  document.getElementById(
+    "answer"
+  ).focus();
 
-  startTimer(difficulty.time);
+
+  document.getElementById(
+    "message"
+  ).textContent = "";
+
+
+  const difficulty =
+    getDifficulty();
+
+
+  startTimer(
+    difficulty.time
+  );
 
 }
 
+
+/* تایمر */
 
 function startTimer(seconds){
 
@@ -721,53 +1056,72 @@ function startTimer(seconds){
 
   updateTimer();
 
-  timer = setInterval(() => {
 
-    timeLeft--;
+  timer =
+    setInterval(() => {
 
-    updateTimer();
+      timeLeft--;
 
-    if(timeLeft <= 0){
+      updateTimer();
 
-      clearInterval(timer);
 
-      timeOut();
+      if(timeLeft <= 0){
 
-    }
+        clearInterval(timer);
 
-  },1000);
+        timeOut();
+
+      }
+
+    },1000);
 
 }
 
 
 function updateTimer(){
 
-  const difficulty = getDifficulty();
+  const difficulty =
+    getDifficulty();
+
 
   const percent =
     Math.max(
       0,
-      (timeLeft / difficulty.time) * 100
+      (
+        timeLeft /
+        difficulty.time
+      ) * 100
     );
 
-  document.getElementById("timerBar")
-    .style.width = percent + "%";
+
+  document.getElementById(
+    "timerBar"
+  ).style.width =
+    percent + "%";
 
 }
 
 
+/* بررسی جواب */
+
 function checkAnswer(){
 
-  if(!gameActive) return;
+  if(!gameActive){
+    return;
+  }
+
 
   const input =
-    document.getElementById("answer")
-      .value.trim();
+    document.getElementById(
+      "answer"
+    ).value.trim();
+
 
   const correctAnswer =
     mode === "latin"
       ? currentWord.latin
       : currentWord.arabic;
+
 
   if(input === correctAnswer){
 
@@ -775,36 +1129,59 @@ function checkAnswer(){
 
     correctCount++;
 
-    const difficulty = getDifficulty();
 
-    let points = difficulty.points;
+    const difficulty =
+      getDifficulty();
+
+
+    let points =
+      difficulty.points;
+
 
     if(hintUsed){
 
-      points = Math.max(5, points - 5);
+      points =
+        Math.max(
+          5,
+          points - 5
+        );
 
     }
 
+
     score += points;
+
 
     playCorrectSound();
 
-    showMessage("✅ Düzdür! +" + points + " xal");
 
-    document.getElementById("gameScreen")
-      .classList.add("correct");
+    showMessage(
+      "✅ Düzdür! +" +
+      points +
+      " xal"
+    );
+
+
+    document.getElementById(
+      "gameScreen"
+    ).classList.add("correct");
+
 
     setTimeout(() => {
 
-      document.getElementById("gameScreen")
-        .classList.remove("correct");
+      document.getElementById(
+        "gameScreen"
+      ).classList.remove("correct");
+
 
       stage++;
 
       updateStats();
+
       nextWord();
 
     },700);
+
 
   }else{
 
@@ -812,12 +1189,16 @@ function checkAnswer(){
 
     playWrongSound();
 
-    loseLife("❌ Səhv cavab!");
+    loseLife(
+      "❌ Səhv cavab!"
+    );
 
   }
 
 }
 
+
+/* پایان زمان */
 
 function timeOut(){
 
@@ -825,10 +1206,14 @@ function timeOut(){
 
   playWrongSound();
 
-  loseLife("⏰ Vaxt bitdi!");
+  loseLife(
+    "⏰ Vaxt bitdi!"
+  );
 
 }
 
+
+/* کم شدن جان */
 
 function loseLife(message){
 
@@ -838,15 +1223,20 @@ function loseLife(message){
 
   showMessage(message);
 
-  document.getElementById("gameScreen")
-    .classList.add("wrong");
+
+  document.getElementById(
+    "gameScreen"
+  ).classList.add("wrong");
+
 
   setTimeout(() => {
 
-    document.getElementById("gameScreen")
-      .classList.remove("wrong");
+    document.getElementById(
+      "gameScreen"
+    ).classList.remove("wrong");
 
   },450);
+
 
   if(lives <= 0){
 
@@ -869,125 +1259,208 @@ function loseLife(message){
 }
 
 
+/* راهنما */
+
 function showHint(){
 
-  if(!currentWord || hintUsed) return;
+  if(
+    !currentWord ||
+    hintUsed
+  ){
+    return;
+  }
+
 
   hintUsed = true;
+
 
   const answer =
     mode === "latin"
       ? currentWord.latin
       : currentWord.arabic;
 
+
   const chars =
     Array.from(answer);
+
 
   const first =
     chars[0];
 
+
   showMessage(
-    "💡 İlk hərf: " + first
+    "💡 İlk hərf: " +
+    first
   );
 
 }
 
 
+/* پیام */
+
 function showMessage(text){
 
-  document.getElementById("message")
-    .textContent = text;
+  document.getElementById(
+    "message"
+  ).textContent =
+    text;
 
 }
 
+
+/* آمار */
 
 function updateStats(){
 
-  document.getElementById("stage")
-    .textContent = stage;
+  document.getElementById(
+    "stage"
+  ).textContent =
+    stage;
 
-  document.getElementById("lives")
-    .textContent = lives;
 
-  document.getElementById("score")
-    .textContent = score;
+  document.getElementById(
+    "lives"
+  ).textContent =
+    lives;
 
-  document.getElementById("best")
-    .textContent = bestScore;
+
+  document.getElementById(
+    "score"
+  ).textContent =
+    score;
+
+
+  document.getElementById(
+    "best"
+  ).textContent =
+    bestScore;
 
 }
 
 
+/* پایان بازی */
+
 function finishGame(){
+
+  stopMusic();
 
   gameActive = false;
 
   clearInterval(timer);
 
-  const oldBest = bestScore;
 
-  let isNewRecord = false;
+  const oldBest =
+    bestScore;
+
+
+  let isNewRecord =
+    false;
+
 
   if(score > bestScore){
 
     bestScore = score;
+
 
     localStorage.setItem(
       "sozlerBest",
       bestScore
     );
 
+
     isNewRecord = true;
 
   }
 
-  document.getElementById("gameScreen")
-    .classList.add("hidden");
 
-  document.getElementById("endScreen")
-    .classList.remove("hidden");
+  document.getElementById(
+    "gameScreen"
+  ).classList.add("hidden");
 
-  document.getElementById("finalScore")
-    .textContent = score;
 
-  document.getElementById("finalBest")
-    .textContent = bestScore;
+  document.getElementById(
+    "endScreen"
+  ).classList.remove("hidden");
 
-  document.getElementById("correctCount")
-    .textContent = correctCount;
 
-  document.getElementById("wrongCount")
-    .textContent = wrongCount;
+  document.getElementById(
+    "finalScore"
+  ).textContent =
+    score;
 
-  document.getElementById("finalStage")
-    .textContent = stage;
 
-  document.getElementById("finalLives")
-    .textContent = lives;
+  document.getElementById(
+    "finalBest"
+  ).textContent =
+    bestScore;
+
+
+  document.getElementById(
+    "correctCount"
+  ).textContent =
+    correctCount;
+
+
+  document.getElementById(
+    "wrongCount"
+  ).textContent =
+    wrongCount;
+
+
+  document.getElementById(
+    "finalStage"
+  ).textContent =
+    stage;
+
+
+  document.getElementById(
+    "finalLives"
+  ).textContent =
+    lives;
+
 
   const newRecord =
-    document.getElementById("newRecord");
+    document.getElementById(
+      "newRecord"
+    );
+
 
   const endIcon =
-    document.getElementById("endIcon");
+    document.getElementById(
+      "endIcon"
+    );
+
 
   const endMessage =
-    document.getElementById("endMessage");
+    document.getElementById(
+      "endMessage"
+    );
+
 
   if(isNewRecord){
 
-    newRecord.classList.remove("hidden");
+    newRecord.classList.remove(
+      "hidden"
+    );
 
-    endIcon.textContent = "🏆";
+
+    endIcon.textContent =
+      "🏆";
+
 
     endMessage.textContent =
       "Təbriklər! Yeni rekord qırdın!";
 
   }else{
 
-    newRecord.classList.add("hidden");
+    newRecord.classList.add(
+      "hidden"
+    );
 
-    endIcon.textContent = "🎮";
+
+    endIcon.textContent =
+      "🎮";
+
 
     endMessage.textContent =
       "Yaxşı oyun idi! Yenidən cəhd et.";
@@ -997,6 +1470,8 @@ function finishGame(){
 }
 
 
+/* دوباره بازی */
+
 function restartGame(){
 
   startGame();
@@ -1004,23 +1479,35 @@ function restartGame(){
 }
 
 
+/* صفحه اصلی */
+
 function goHome(){
+
+  stopMusic();
 
   clearInterval(timer);
 
   gameActive = false;
 
-  document.getElementById("gameScreen")
-    .classList.add("hidden");
 
-  document.getElementById("endScreen")
-    .classList.add("hidden");
+  document.getElementById(
+    "gameScreen"
+  ).classList.add("hidden");
 
-  document.getElementById("startScreen")
-    .classList.remove("hidden");
+
+  document.getElementById(
+    "endScreen"
+  ).classList.add("hidden");
+
+
+  document.getElementById(
+    "startScreen"
+  ).classList.remove("hidden");
 
 }
 
+
+/* صدای جواب درست */
 
 function getAudioContext(){
 
@@ -1034,6 +1521,7 @@ function getAudioContext(){
 
   }
 
+
   return window.audioContext;
 
 }
@@ -1041,118 +1529,189 @@ function getAudioContext(){
 
 function playCorrectSound(){
 
-  const ctx = getAudioContext();
+  const ctx =
+    getAudioContext();
 
-  const now = ctx.currentTime;
+
+  const now =
+    ctx.currentTime;
+
 
   const notes = [
+
     523.25,
+
     659.25,
+
     783.99
+
   ];
 
-  notes.forEach((frequency,index)=>{
 
-    const oscillator =
-      ctx.createOscillator();
+  notes.forEach(
+    (frequency,index) => {
 
-    const gain =
-      ctx.createGain();
+      const oscillator =
+        ctx.createOscillator();
 
-    oscillator.frequency.value =
-      frequency;
 
-    oscillator.type = "sine";
+      const gain =
+        ctx.createGain();
 
-    gain.gain.setValueAtTime(
-      0.0001,
-      now + index * 0.09
-    );
 
-    gain.gain.exponentialRampToValueAtTime(
-      0.18,
-      now + index * 0.09 + 0.02
-    );
+      oscillator.frequency.value =
+        frequency;
 
-    gain.gain.exponentialRampToValueAtTime(
-      0.0001,
-      now + index * 0.09 + 0.16
-    );
 
-    oscillator.connect(gain);
-    gain.connect(ctx.destination);
+      oscillator.type =
+        "sine";
 
-    oscillator.start(
-      now + index * 0.09
-    );
 
-    oscillator.stop(
-      now + index * 0.09 + 0.18
-    );
+      gain.gain.setValueAtTime(
+        0.0001,
+        now +
+        index * 0.09
+      );
 
-  });
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.18,
+        now +
+        index * 0.09 +
+        0.02
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now +
+        index * 0.09 +
+        0.16
+      );
+
+
+      oscillator.connect(gain);
+
+      gain.connect(
+        ctx.destination
+      );
+
+
+      oscillator.start(
+        now +
+        index * 0.09
+      );
+
+
+      oscillator.stop(
+        now +
+        index * 0.09 +
+        0.18
+      );
+
+    }
+  );
 
 }
 
+
+/* صدای جواب غلط */
 
 function playWrongSound(){
 
-  const ctx = getAudioContext();
+  const ctx =
+    getAudioContext();
 
-  const now = ctx.currentTime;
+
+  const now =
+    ctx.currentTime;
+
 
   const notes = [
+
     260,
+
     180,
+
     120
+
   ];
 
-  notes.forEach((frequency,index)=>{
 
-    const oscillator =
-      ctx.createOscillator();
+  notes.forEach(
+    (frequency,index) => {
 
-    const gain =
-      ctx.createGain();
+      const oscillator =
+        ctx.createOscillator();
 
-    oscillator.frequency.value =
-      frequency;
 
-    oscillator.type = "sawtooth";
+      const gain =
+        ctx.createGain();
 
-    gain.gain.setValueAtTime(
-      0.0001,
-      now + index * 0.1
-    );
 
-    gain.gain.exponentialRampToValueAtTime(
-      0.15,
-      now + index * 0.1 + 0.02
-    );
+      oscillator.frequency.value =
+        frequency;
 
-    gain.gain.exponentialRampToValueAtTime(
-      0.0001,
-      now + index * 0.1 + 0.16
-    );
 
-    oscillator.connect(gain);
-    gain.connect(ctx.destination);
+      oscillator.type =
+        "sawtooth";
 
-    oscillator.start(
-      now + index * 0.1
-    );
 
-    oscillator.stop(
-      now + index * 0.1 + 0.18
-    );
+      gain.gain.setValueAtTime(
+        0.0001,
+        now +
+        index * 0.1
+      );
 
-  });
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.15,
+        now +
+        index * 0.1 +
+        0.02
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now +
+        index * 0.1 +
+        0.16
+      );
+
+
+      oscillator.connect(gain);
+
+      gain.connect(
+        ctx.destination
+      );
+
+
+      oscillator.start(
+        now +
+        index * 0.1
+      );
+
+
+      oscillator.stop(
+        now +
+        index * 0.1 +
+        0.18
+      );
+
+    }
+  );
 
 }
 
 
-document.getElementById("answer")
-  .addEventListener("keydown", function(event){
+/* کلید Enter */
+
+document.getElementById(
+  "answer"
+).addEventListener(
+  "keydown",
+  function(event){
 
     if(event.key === "Enter"){
 
@@ -1160,7 +1719,8 @@ document.getElementById("answer")
 
     }
 
-  });
+  }
+);
 
 </script>
 
