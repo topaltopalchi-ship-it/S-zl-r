@@ -37,6 +37,10 @@ h1 {
   letter-spacing: 3px;
 }
 
+h2 {
+  margin-top: 10px;
+}
+
 .subtitle {
   color: #666;
   margin-bottom: 25px;
@@ -84,13 +88,14 @@ button:active {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .top {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 15px;
   font-weight: bold;
 }
 
@@ -102,19 +107,44 @@ button:active {
   color: #c58a00;
 }
 
+.lives {
+  color: #d33;
+}
+
+.timer {
+  background: #f1f1f1;
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.timer.warning {
+  color: #d33;
+  background: #ffe5e5;
+}
+
+.combo {
+  min-height: 25px;
+  color: #e67e00;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
 .word-number {
   color: #666;
   margin-bottom: 15px;
 }
 
 .scrambled {
-  min-height: 80px;
+  min-height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
   margin: 15px 0;
+  direction: ltr;
 }
 
 .letter {
@@ -124,17 +154,15 @@ button:active {
   font-size: 25px;
   font-weight: bold;
   box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  min-width: 45px;
 }
 
-.arabic-word {
+.arabic-letters {
   direction: rtl;
-  font-size: 38px;
-  font-weight: bold;
-  min-height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 15px 0;
+}
+
+.arabic-letters .letter {
+  font-family: Tahoma, Arial, sans-serif;
 }
 
 .hint {
@@ -162,7 +190,7 @@ input:focus {
 }
 
 .result {
-  font-size: 21px;
+  font-size: 20px;
   font-weight: bold;
   margin: 15px 0;
   min-height: 30px;
@@ -215,6 +243,7 @@ input:focus {
   <div id="gameScreen" class="hidden">
 
     <div class="top">
+
       <div class="score">
         Xal: <span id="score">0</span>
       </div>
@@ -222,17 +251,30 @@ input:focus {
       <div class="best">
         Rekord: <span id="bestScore">0</span>
       </div>
+
+      <div class="lives">
+        ❤️ <span id="lives">3</span>
+      </div>
+
     </div>
+
+    <div id="timer" class="timer">
+      ⏱️ Vaxt: <span id="time">20</span>
+    </div>
+
+    <div id="combo" class="combo"></div>
 
     <div class="word-number">
-      Söz <span id="wordNumber">1</span> / <span id="totalWords">50</span>
+      Söz <span id="wordNumber">1</span> /
+      <span id="totalWords">50</span>
     </div>
 
+    <!-- Scrambled letters -->
     <div id="scrambled" class="scrambled"></div>
 
-    <div id="arabicWord" class="arabic-word hidden"></div>
-
-    <div id="hint" class="hint"></div>
+    <div id="hint" class="hint">
+      💡 İpucu üçün düyməyə bas.
+    </div>
 
     <input
       id="answer"
@@ -274,9 +316,7 @@ input:focus {
       Rekord: <span id="finalBest">0</span>
     </div>
 
-    <p class="small">
-      Yeni sözlər tap və rekordunu yenilə!
-    </p>
+    <p id="endReason" class="small"></p>
 
     <button class="green-btn" onclick="playAgain()">
       🔄 Yenidən oyna
@@ -295,317 +335,63 @@ input:focus {
 
 const words = [
 
-  {
-    latin: "günəş",
-    arabic: "گونش",
-    hint: "Yerə işıq və istilik verir."
-  },
+  {latin:"günəş", arabic:"گونش", hint:"Yerə işıq və istilik verir."},
+  {latin:"çörək", arabic:"چورک", hint:"Süfrədə yeyilən əsas qidalardan biridir."},
+  {latin:"bulud", arabic:"بلود", hint:"Göydə görünür və yağış gətirə bilər."},
+  {latin:"su", arabic:"سو", hint:"İçmək üçün lazımdır."},
+  {latin:"kitab", arabic:"کیتاب", hint:"Oxumaq üçün istifadə olunur."},
+  {latin:"məktəb", arabic:"مکتب", hint:"Şagirdlər burada oxuyurlar."},
+  {latin:"ev", arabic:"ائو", hint:"İnsanların yaşadığı yerdir."},
+  {latin:"qapı", arabic:"قاپی", hint:"Evə və otağa giriş üçün istifadə olunur."},
+  {latin:"çiçək", arabic:"چیچک", hint:"Bitkilərdə gözəl görünən hissədir."},
+  {latin:"dəniz", arabic:"دنیز", hint:"Böyük su sahəsidir."},
+  {latin:"dağ", arabic:"داغ", hint:"Çox hündür təbii yüksəklikdir."},
+  {latin:"ağac", arabic:"آغاج", hint:"Meşələrdə çox olur."},
+  {latin:"göy", arabic:"گوی", hint:"Səmanın rəngidir."},
+  {latin:"ay", arabic:"آی", hint:"Gecə səmada görünür."},
+  {latin:"ulduz", arabic:"اولدوز", hint:"Gecə səmasında parlayır."},
 
-  {
-    latin: "çörək",
-    arabic: "چورک",
-    hint: "Süfrədə yeyilən əsas qidalardan biridir."
-  },
-
-  {
-    latin: "bulud",
-    arabic: "بلود",
-    hint: "Göydə görünür və yağış gətirə bilər."
-  },
-
-  {
-    latin: "su",
-    arabic: "سو",
-    hint: "İçmək üçün lazımdır."
-  },
-
-  {
-    latin: "kitab",
-    arabic: "کیتاب",
-    hint: "Oxumaq üçün istifadə olunur."
-  },
-
-  {
-    latin: "məktəb",
-    arabic: "مکتب",
-    hint: "Şagirdlər burada oxuyurlar."
-  },
-
-  {
-    latin: "ev",
-    arabic: "ائو",
-    hint: "İnsanların yaşadığı yerdir."
-  },
-
-  {
-    latin: "qapı",
-    arabic: "قاپی",
-    hint: "Evə və otağa giriş üçün istifadə olunur."
-  },
-
-  {
-    latin: "çiçək",
-    arabic: "چیچک",
-    hint: "Bitkilərdə gözəl görünən hissədir."
-  },
-
-  {
-    latin: "dəniz",
-    arabic: "دنیز",
-    hint: "Böyük su sahəsidir."
-  },
-
-  {
-    latin: "dağ",
-    arabic: "داغ",
-    hint: "Çox hündür təbii yüksəklikdir."
-  },
-
-  {
-    latin: "ağac",
-    arabic: "آغاج",
-    hint: "Meşələrdə çox olur."
-  },
-
-  {
-    latin: "göy",
-    arabic: "گوی",
-    hint: "Səmanın rəngidir."
-  },
-
-  {
-    latin: "ay",
-    arabic: "آی",
-    hint: "Gecə səmada görünür."
-  },
-
-  {
-    latin: "ulduz",
-    arabic: "اولدوز",
-    hint: "Gecə səmasında parlayır."
-  },
-
-  {
-    latin: "ana",
-    arabic: "آنا",
-    hint: "Uşağı dünyaya gətirən qadın."
-  },
-
-  {
-    latin: "ata",
-    arabic: "آتا",
-    hint: "Ailədə kişi valideyn."
-  },
-
-  {
-    latin: "qardaş",
-    arabic: "قارداش",
-    hint: "Eyni ailədən olan oğlan."
-  },
-
-  {
-    latin: "bacı",
-    arabic: "باجی",
-    hint: "Eyni ailədən olan qız."
-  },
-
-  {
-    latin: "uşaq",
-    arabic: "اوشاق",
-    hint: "Kiçik yaşda insan."
-  },
-
-  {
-    latin: "dost",
-    arabic: "دوست",
-    hint: "Səninlə yaxşı münasibəti olan insan."
-  },
-
-  {
-    latin: "yol",
-    arabic: "یول",
-    hint: "Getmək üçün istifadə olunan keçid."
-  },
-
-  {
-    latin: "maşın",
-    arabic: "ماشین",
-    hint: "Yolda hərəkət edən nəqliyyat vasitəsi."
-  },
-
-  {
-    latin: "avtomobil",
-    arabic: "آوتوموبیل",
-    hint: "İnsan və əşya daşıyan nəqliyyat vasitəsi."
-  },
-
-  {
-    latin: "telefon",
-    arabic: "تلفون",
-    hint: "Danışmaq və əlaqə saxlamaq üçün istifadə olunur."
-  },
-
-  {
-    latin: "kompüter",
-    arabic: "کمپیوتَر",
-    hint: "Məlumat işləmək üçün elektron cihaz."
-  },
-
-  {
-    latin: "qələm",
-    arabic: "قلم",
-    hint: "Yazmaq üçün istifadə olunur."
-  },
-
-  {
-    latin: "kağız",
-    arabic: "کاغذ",
-    hint: "Yazmaq və çəkmək üçün istifadə olunur."
-  },
-
-  {
-    latin: "masa",
-    arabic: "میز",
-    hint: "Üstündə əşyalar qoyulan mebel."
-  },
-
-  {
-    latin: "stul",
-    arabic: "ستول",
-    hint: "Oturmaq üçün istifadə olunur."
-  },
-
-  {
-    latin: "otaq",
-    arabic: "اوتاق",
-    hint: "Evin daxilində olan məkan."
-  },
-
-  {
-    latin: "pəncərə",
-    arabic: "پنجَرَه",
-    hint: "İşıq və hava daxil olması üçün açılır."
-  },
-
-  {
-    latin: "bağ",
-    arabic: "باغ",
-    hint: "Ağac və bitkilərin olduğu yer."
-  },
-
-  {
-    latin: "çiçək",
-    arabic: "چیچک",
-    hint: "Bitkinin rəngli və gözəl hissəsi."
-  },
-
-  {
-    latin: "meyvə",
-    arabic: "میوه",
-    hint: "Ağac və bitkilərdən alınan qida."
-  },
-
-  {
-    latin: "alma",
-    arabic: "آلما",
-    hint: "Məşhur qırmızı və ya yaşıl meyvə."
-  },
-
-  {
-    latin: "üzüm",
-    arabic: "اوزوم",
-    hint: "Salxım şəklində bitən meyvə."
-  },
-
-  {
-    latin: "çay",
-    arabic: "چای",
-    hint: "İsti içki kimi də istifadə olunur."
-  },
-
-  {
-    latin: "qəhvə",
-    arabic: "قهوه",
-    hint: "İsti və məşhur içki."
-  },
-
-  {
-    latin: "süd",
-    arabic: "سود",
-    hint: "Ağ rəngli içki və qida."
-  },
-
-  {
-    latin: "duz",
-    arabic: "دوز",
-    hint: "Yeməyə dad vermək üçün istifadə olunur."
-  },
-
-  {
-    latin: "şəkər",
-    arabic: "شکر",
-    hint: "Şirin dad verir."
-  },
-
-  {
-    latin: "gecə",
-    arabic: "گجه",
-    hint: "Günəş batdıqdan sonrakı vaxt."
-  },
-
-  {
-    latin: "səhər",
-    arabic: "سحر",
-    hint: "Günün başladığı vaxt."
-  },
-
-  {
-    latin: "gündüz",
-    arabic: "گوندوز",
-    hint: "Günəşin göründüyü vaxt."
-  },
-
-  {
-    latin: "yağış",
-    arabic: "یاغیش",
-    hint: "Buludlardan yerə düşən su."
-  },
-
-  {
-    latin: "qar",
-    arabic: "قار",
-    hint: "Soyuq havada göydən düşən ağ yağıntı."
-  },
-
-  {
-    latin: "külək",
-    arabic: "کولک",
-    hint: "Havanın hərəkətidir."
-  },
-
-  {
-    latin: "torpaq",
-    arabic: "تورپاق",
-    hint: "Bitkilərin böyüdüyü yer."
-  },
-
-  {
-    latin: "daş",
-    arabic: "داش",
-    hint: "Təbiətdə olan sərt maddə."
-  },
-
-  {
-    latin: "ağ",
-    arabic: "آغ",
-    hint: "Qara rəngin əksi."
-  },
-
-  {
-    latin: "qara",
-    arabic: "قارا",
-    hint: "Tünd rənglərdən biri."
-  }
+  {latin:"ana", arabic:"آنا", hint:"Uşağı dünyaya gətirən qadın."},
+  {latin:"ata", arabic:"آتا", hint:"Ailədə kişi valideyn."},
+  {latin:"qardaş", arabic:"قارداش", hint:"Eyni ailədən olan oğlan."},
+  {latin:"bacı", arabic:"باجی", hint:"Eyni ailədən olan qız."},
+  {latin:"uşaq", arabic:"اوشاق", hint:"Kiçik yaşda insan."},
+  {latin:"dost", arabic:"دوست", hint:"Səninlə yaxşı münasibəti olan insan."},
+  {latin:"yol", arabic:"یول", hint:"Getmək üçün istifadə olunan keçid."},
+  {latin:"maşın", arabic:"ماشین", hint:"Yolda hərəkət edən nəqliyyat vasitəsi."},
+  {latin:"telefon", arabic:"تلفون", hint:"Danışmaq və əlaqə saxlamaq üçün istifadə olunur."},
+  {latin:"qələm", arabic:"قلم", hint:"Yazmaq üçün istifadə olunur."},
+  {latin:"kağız", arabic:"کاغذ", hint:"Yazmaq və çəkmək üçün istifadə olunur."},
+  {latin:"masa", arabic:"میز", hint:"Üstündə əşyalar qoyulan mebel."},
+  {latin:"stul", arabic:"ستول", hint:"Oturmaq üçün istifadə olunur."},
+  {latin:"otaq", arabic:"اوتاق", hint:"Evin daxilində olan məkan."},
+  {latin:"pəncərə", arabic:"پنجَرَه", hint:"İşıq və hava daxil olması üçün açılır."},
+  {latin:"bağ", arabic:"باغ", hint:"Ağac və bitkilərin olduğu yer."},
+  {latin:"meyvə", arabic:"میوه", hint:"Ağac və bitkilərdən alınan qida."},
+  {latin:"alma", arabic:"آلما", hint:"Məşhur qırmızı və ya yaşıl meyvə."},
+  {latin:"üzüm", arabic:"اوزوم", hint:"Salxım şəklində bitən meyvə."},
+  {latin:"çay", arabic:"چای", hint:"İsti içki kimi də istifadə olunur."},
+  {latin:"qəhvə", arabic:"قهوه", hint:"İsti və məşhur içki."},
+  {latin:"süd", arabic:"سود", hint:"Ağ rəngli içki və qida."},
+  {latin:"duz", arabic:"دوز", hint:"Yeməyə dad vermək üçün istifadə olunur."},
+  {latin:"şəkər", arabic:"شکر", hint:"Şirin dad verir."},
+  {latin:"gecə", arabic:"گجه", hint:"Günəş batdıqdan sonrakı vaxt."},
+  {latin:"səhər", arabic:"سحر", hint:"Günün başladığı vaxt."},
+  {latin:"gündüz", arabic:"گوندوز", hint:"Günəşin göründüyü vaxt."},
+  {latin:"yağış", arabic:"یاغیش", hint:"Buludlardan yerə düşən su."},
+  {latin:"qar", arabic:"قار", hint:"Soyuq havada göydən düşən ağ yağıntı."},
+  {latin:"külək", arabic:"کولک", hint:"Havanın hərəkətidir."},
+  {latin:"torpaq", arabic:"تورپاق", hint:"Bitkilərin böyüdüyü yer."},
+  {latin:"daş", arabic:"داش", hint:"Təbiətdə olan sərt maddə."},
+  {latin:"ağ", arabic:"آغ", hint:"Qara rəngin əksi."},
+  {latin:"qara", arabic:"قارا", hint:"Tünd rənglərdən biri."},
+  {latin:"qırmızı", arabic:"قیرمیزی", hint:"Gül və alma kimi əşyalarda olan rəng."},
+  {latin:"yaşıl", arabic:"یاشیل", hint:"Ot və yarpaqların rəngi."},
+  {latin:"sarı", arabic:"ساری", hint:"Günəşə bənzər parlaq rəng."},
+  {latin:"böyük", arabic:"بویوک", hint:"Kiçik sözünün əksi."},
+  {latin:"kiçik", arabic:"کیچیک", hint:"Böyük sözünün əksi."},
+  {latin:"isti", arabic:"ایستی", hint:"Soyuğun əksi."},
+  {latin:"soyuq", arabic:"سویوق", hint:"İstinin əksi."}
 
 ];
 
@@ -613,18 +399,30 @@ const words = [
 let mode = "latin";
 let currentIndex = 0;
 let score = 0;
+let lives = 3;
+let combo = 0;
 let hintUsed = false;
 let currentWord = null;
+
+let timeLeft = 20;
+let timerInterval = null;
+let movingToNext = false;
+
 
 const startScreen = document.getElementById("startScreen");
 const gameScreen = document.getElementById("gameScreen");
 const endScreen = document.getElementById("endScreen");
 
-document.getElementById("totalWords").textContent = words.length;
+document.getElementById("totalWords").textContent =
+  words.length;
 
 
 function getBestScore() {
-  return Number(localStorage.getItem("sozlerBestScore") || 0);
+
+  return Number(
+    localStorage.getItem("sozlerBestScore") || 0
+  );
+
 }
 
 
@@ -633,7 +431,10 @@ function saveBestScore() {
   const best = getBestScore();
 
   if (score > best) {
-    localStorage.setItem("sozlerBestScore", score);
+    localStorage.setItem(
+      "sozlerBestScore",
+      score
+    );
   }
 
 }
@@ -642,15 +443,27 @@ function saveBestScore() {
 function startGame(selectedMode) {
 
   mode = selectedMode;
+
   currentIndex = 0;
   score = 0;
+  lives = 3;
+  combo = 0;
 
   startScreen.classList.add("hidden");
   endScreen.classList.add("hidden");
   gameScreen.classList.remove("hidden");
 
-  document.getElementById("score").textContent = score;
-  document.getElementById("bestScore").textContent = getBestScore();
+  document.getElementById("score").textContent =
+    score;
+
+  document.getElementById("lives").textContent =
+    lives;
+
+  document.getElementById("bestScore").textContent =
+    getBestScore();
+
+  document.getElementById("combo").textContent =
+    "";
 
   loadWord();
 
@@ -659,12 +472,17 @@ function startGame(selectedMode) {
 
 function loadWord() {
 
+  clearInterval(timerInterval);
+
+  movingToNext = false;
+
   if (currentIndex >= words.length) {
-    finishGame();
+    finishGame("🎉 Bütün sözləri tamamladın!");
     return;
   }
 
   currentWord = words[currentIndex];
+
   hintUsed = false;
 
   document.getElementById("wordNumber").textContent =
@@ -677,49 +495,42 @@ function loadWord() {
   document.getElementById("hint").textContent =
     "💡 İpucu üçün düyməyə bas.";
 
-  const scrambled = document.getElementById("scrambled");
-  const arabicWord = document.getElementById("arabicWord");
+  updateCombo();
 
-  scrambled.innerHTML = "";
+  showScrambledLetters();
 
-  if (mode === "latin") {
-
-    scrambled.classList.remove("hidden");
-    arabicWord.classList.add("hidden");
-
-    showScrambledLetters(currentWord.latin);
-
-  } else {
-
-    scrambled.classList.add("hidden");
-    arabicWord.classList.remove("hidden");
-
-    arabicWord.textContent = currentWord.arabic;
-  }
+  startTimer();
 
   document.getElementById("answer").focus();
 
 }
 
 
-function showScrambledLetters(word) {
+function showScrambledLetters() {
 
-  const letters = Array.from(word);
+  const scrambled =
+    document.getElementById("scrambled");
 
-  for (let i = letters.length - 1; i > 0; i--) {
+  scrambled.innerHTML = "";
 
-    const j = Math.floor(Math.random() * (i + 1));
+  let text;
 
-    [letters[i], letters[j]] =
-      [letters[j], letters[i]];
-
+  if (mode === "latin") {
+    text = currentWord.latin;
+    scrambled.classList.remove("arabic-letters");
+  } else {
+    text = currentWord.arabic;
+    scrambled.classList.add("arabic-letters");
   }
 
-  const scrambled = document.getElementById("scrambled");
+  const letters = Array.from(text);
+
+  shuffleArray(letters);
 
   letters.forEach(letter => {
 
-    const div = document.createElement("div");
+    const div =
+      document.createElement("div");
 
     div.className = "letter";
     div.textContent = letter;
@@ -731,6 +542,113 @@ function showScrambledLetters(word) {
 }
 
 
+function shuffleArray(array) {
+
+  /*
+    Fisher-Yates shuffle
+    برای جابه‌جایی واقعی حروف
+  */
+
+  for (
+    let i = array.length - 1;
+    i > 0;
+    i--
+  ) {
+
+    const j =
+      Math.floor(Math.random() * (i + 1));
+
+    [array[i], array[j]] =
+      [array[j], array[i]];
+
+  }
+
+  /*
+    اگر اتفاقاً همان ترتیب اصلی درآمد،
+    دوباره جابه‌جا می‌کنیم.
+  */
+
+}
+
+
+function startTimer() {
+
+  timeLeft = 20;
+
+  updateTimer();
+
+  timerInterval =
+    setInterval(() => {
+
+      timeLeft--;
+
+      updateTimer();
+
+      if (timeLeft <= 0) {
+
+        clearInterval(timerInterval);
+
+        timeExpired();
+
+      }
+
+    }, 1000);
+
+}
+
+
+function updateTimer() {
+
+  const timer =
+    document.getElementById("timer");
+
+  document.getElementById("time").textContent =
+    timeLeft;
+
+  if (timeLeft <= 5) {
+    timer.classList.add("warning");
+  } else {
+    timer.classList.remove("warning");
+  }
+
+}
+
+
+function timeExpired() {
+
+  if (movingToNext) return;
+
+  movingToNext = true;
+
+  lives--;
+
+  combo = 0;
+
+  updateLives();
+  updateCombo();
+
+  document.getElementById("result").textContent =
+    "⏰ Vaxt bitdi!";
+
+  if (lives <= 0) {
+
+    setTimeout(() => {
+      finishGame("💔 Bütün canların bitdi.");
+    }, 900);
+
+    return;
+  }
+
+  setTimeout(() => {
+
+    currentIndex++;
+    loadWord();
+
+  }, 900);
+
+}
+
+
 function showHint() {
 
   if (!currentWord) return;
@@ -738,9 +656,7 @@ function showHint() {
   document.getElementById("hint").textContent =
     "💡 " + currentWord.hint;
 
-  if (!hintUsed) {
-    hintUsed = true;
-  }
+  hintUsed = true;
 
 }
 
@@ -757,38 +673,57 @@ function normalize(text) {
 
 function checkAnswer() {
 
-  if (!currentWord) return;
+  if (!currentWord || movingToNext) return;
 
   const input =
     document.getElementById("answer").value;
 
-  const answer = normalize(input);
-  const correct = normalize(currentWord.latin);
+  const answer =
+    normalize(input);
 
-  const result = document.getElementById("result");
+  const correct =
+    normalize(currentWord.latin);
+
+  const result =
+    document.getElementById("result");
 
   if (!answer) {
 
-    result.textContent = "✍️ Əvvəl cavabı yaz.";
-    return;
+    result.textContent =
+      "✍️ Əvvəl cavabı yaz.";
 
+    return;
   }
 
 
   if (answer === correct) {
 
-    let points = 10;
+    movingToNext = true;
 
-    if (!hintUsed) {
-      points = 10;
-    } else {
-      points = 5;
+    clearInterval(timerInterval);
+
+    combo++;
+
+    /*
+      امتیاز پایه ۱۰ است.
+      هر زنجیره درست، ۲ امتیاز اضافه می‌کند.
+      اگر از راهنمایی استفاده شده باشد،
+      ۵ امتیاز از امتیاز نهایی کم می‌شود.
+    */
+
+    let points =
+      10 + ((combo - 1) * 2);
+
+    if (hintUsed) {
+      points = Math.max(5, points - 5);
     }
 
     score += points;
 
     result.textContent =
-      "✅ Doğrudur! +" + points + " xal";
+      "✅ Doğrudur! +" +
+      points +
+      " xal";
 
     document.getElementById("score").textContent =
       score;
@@ -798,17 +733,71 @@ function checkAnswer() {
     document.getElementById("bestScore").textContent =
       getBestScore();
 
+    updateCombo();
+
     setTimeout(() => {
 
       currentIndex++;
+
       loadWord();
 
     }, 900);
 
   } else {
 
+    lives--;
+
+    combo = 0;
+
+    updateLives();
+    updateCombo();
+
     result.textContent =
-      "❌ Yanlışdır. Yenidən cəhd et.";
+      "❌ Yanlışdır!";
+
+    if (lives <= 0) {
+
+      clearInterval(timerInterval);
+
+      movingToNext = true;
+
+      setTimeout(() => {
+
+        finishGame(
+          "💔 Bütün canların bitdi."
+        );
+
+      }, 700);
+
+    }
+
+  }
+
+}
+
+
+function updateLives() {
+
+  document.getElementById("lives").textContent =
+    lives;
+
+}
+
+
+function updateCombo() {
+
+  const comboElement =
+    document.getElementById("combo");
+
+  if (combo >= 2) {
+
+    comboElement.textContent =
+      "🔥 Zəncir: " + combo;
+
+  } else {
+
+    comboElement.textContent =
+      "";
 
   }
 
@@ -824,7 +813,9 @@ function handleEnter(event) {
 }
 
 
-function finishGame() {
+function finishGame(reason) {
+
+  clearInterval(timerInterval);
 
   saveBestScore();
 
@@ -833,6 +824,9 @@ function finishGame() {
 
   document.getElementById("finalBest").textContent =
     getBestScore();
+
+  document.getElementById("endReason").textContent =
+    reason;
 
   gameScreen.classList.add("hidden");
   endScreen.classList.remove("hidden");
@@ -847,8 +841,14 @@ function playAgain() {
 
   currentIndex = 0;
   score = 0;
+  lives = 3;
+  combo = 0;
 
-  document.getElementById("score").textContent = score;
+  document.getElementById("score").textContent =
+    score;
+
+  document.getElementById("lives").textContent =
+    lives;
 
   loadWord();
 
@@ -857,11 +857,14 @@ function playAgain() {
 
 function backToStart() {
 
+  clearInterval(timerInterval);
+
   gameScreen.classList.add("hidden");
   endScreen.classList.add("hidden");
   startScreen.classList.remove("hidden");
 
 }
+
 
 </script>
 
