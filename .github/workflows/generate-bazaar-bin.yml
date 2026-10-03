@@ -22,13 +22,13 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Download the exact AAB from Release #11
+      - name: Download the exact AAB from Release #12
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p release
 
-          gh run download 37054016507 \
+          gh run download 37100026569 \
             --name Heydarbaba-Release-AAB \
             --dir release
 
