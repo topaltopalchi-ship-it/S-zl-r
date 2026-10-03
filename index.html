@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
 <title>حیدربابا</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
@@ -23,7 +25,6 @@ html,body{
 body{
   min-height:100vh;
   overflow-x:hidden;
-  position:relative;
   direction:rtl;
 }
 
@@ -65,7 +66,9 @@ button{
   padding:16px 14px 30px;
 }
 
-.screen{display:none}
+.screen{
+  display:none;
+}
 
 .screen.active{
   display:block;
@@ -73,8 +76,14 @@ button{
 }
 
 @keyframes screenIn{
-  from{opacity:0;transform:translateY(15px) scale(.985)}
-  to{opacity:1;transform:translateY(0) scale(1)}
+  from{
+    opacity:0;
+    transform:translateY(15px) scale(.985);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
 }
 
 .logo{
@@ -129,7 +138,6 @@ button{
     rgba(255,255,255,.045)
   );
   font-weight:800;
-  touch-action:manipulation;
 }
 
 .mode-btn:active{
@@ -143,7 +151,6 @@ button{
     rgba(170,105,20,.32)
   );
   border-color:#efbd5a;
-  box-shadow:0 0 22px rgba(210,145,40,.18);
 }
 
 .start-btn{
@@ -156,7 +163,6 @@ button{
   font-weight:900;
   font-size:18px;
   background:linear-gradient(135deg,#efbd58,#b97618);
-  box-shadow:0 12px 28px rgba(190,125,25,.30);
 }
 
 .start-btn:active{
@@ -220,7 +226,12 @@ button{
 }
 
 .stage-btn.locked{
-  opacity:.32;
+  opacity:.28;
+  cursor:not-allowed;
+}
+
+.stage-btn:not(.locked):active{
+  transform:scale(.94);
 }
 
 .stage-info{
@@ -342,7 +353,6 @@ button{
     0 9px 20px rgba(0,0,0,.24),
     inset 0 1px 0 rgba(255,255,255,.10);
   touch-action:none;
-  user-select:none;
 }
 
 .letter.selected{
@@ -387,6 +397,15 @@ button{
   background:rgba(214,155,50,.22);
 }
 
+.exit-btn{
+  background:linear-gradient(
+    145deg,
+    rgba(180,70,70,.45),
+    rgba(110,35,35,.30)
+  );
+  border:1px solid rgba(255,150,150,.20);
+}
+
 .message{
   min-height:28px;
   margin-top:12px;
@@ -394,8 +413,13 @@ button{
   font-weight:800;
 }
 
-.correct{color:#9cf0b9}
-.wrong{color:#ffaaa0}
+.correct{
+  color:#9cf0b9;
+}
+
+.wrong{
+  color:#ffaaa0;
+}
 
 .shake{
   animation:shake .38s ease;
@@ -473,7 +497,12 @@ button{
   font-weight:900;
 }
 
+.modal-secondary{
+  background:rgba(255,255,255,.09)!important;
+}
+
 @media(max-width:360px){
+
   .letter{
     font-size:21px;
     border-radius:17px;
@@ -484,7 +513,9 @@ button{
     height:39px;
     font-size:18px;
   }
+
 }
+
 </style>
 </head>
 
@@ -495,6 +526,8 @@ button{
 </audio>
 
 <div class="app">
+
+<!-- ================= HOME ================= -->
 
 <section id="homeScreen" class="screen active">
 
@@ -553,6 +586,9 @@ button{
 
 </section>
 
+
+<!-- ================= GAME ================= -->
+
 <section id="gameScreen" class="screen">
 
   <div class="logo" style="font-size:30px;">
@@ -600,6 +636,14 @@ button{
         درهم‌ریختن
       </button>
 
+      <button
+        id="exitBtn"
+        class="action-btn exit-btn"
+        style="grid-column:1 / -1;"
+      >
+        🏠 خروج
+      </button>
+
     </div>
 
     <div id="message" class="message"></div>
@@ -618,9 +662,13 @@ button{
 
 </div>
 
+
 <button id="musicBtn" class="music-btn">
   🔊
 </button>
+
+
+<!-- ================= MODAL ================= -->
 
 <div id="modal" class="modal">
 
@@ -632,11 +680,23 @@ button{
 
     <button id="modalAction"></button>
 
+    <button
+      id="modalCancel"
+      class="modal-secondary"
+    >
+      ادامه بازی
+    </button>
+
   </div>
 
 </div>
 
+
 <script>
+
+/* =========================================================
+   مراحل
+========================================================= */
 
 const stages = [
 
@@ -782,78 +842,273 @@ arabicAnswers:["ائل"]
 
 ];
 
-let mode=localStorage.getItem("hb_mode")||"latin";
-let coins=Number(localStorage.getItem("hb_coins")||0);
-let score=Number(localStorage.getItem("hb_score")||0);
-let unlockedStage=Number(localStorage.getItem("hb_unlockedStage")||1);
-let selectedStage=Number(localStorage.getItem("hb_selectedStage")||1);
+
+/* =========================================================
+   ذخیره پیشرفت
+========================================================= */
+
+const PROGRESS_VERSION="2";
+
+let savedVersion=
+  localStorage.getItem("hb_progress_version");
+
+/*
+  اگر نسخه جدید سیستم قفل باشد،
+  پیشرفت قبلی یک بار از نو با مرحله ۱ شروع می‌شود.
+*/
+
+if(savedVersion!==PROGRESS_VERSION){
+
+  localStorage.setItem(
+    "hb_progress_version",
+    PROGRESS_VERSION
+  );
+
+  localStorage.setItem(
+    "hb_unlockedStage",
+    "1"
+  );
+
+  localStorage.setItem(
+    "hb_selectedStage",
+    "1"
+  );
+}
+
+
+/* =========================================================
+   متغیرها
+========================================================= */
+
+let mode=
+  localStorage.getItem("hb_mode") || "latin";
+
+let coins=
+  Number(localStorage.getItem("hb_coins") || 0);
+
+let score=
+  Number(localStorage.getItem("hb_score") || 0);
+
+let unlockedStage=
+  Number(localStorage.getItem("hb_unlockedStage") || 1);
+
+let selectedStage=
+  Number(localStorage.getItem("hb_selectedStage") || 1);
+
+
+/* امنیت پیشرفت */
+
+if(unlockedStage<1)
+  unlockedStage=1;
+
+if(unlockedStage>stages.length)
+  unlockedStage=stages.length;
+
+if(selectedStage<1)
+  selectedStage=1;
+
+if(selectedStage>unlockedStage)
+  selectedStage=unlockedStage;
+
 
 let lives=3;
+
 let currentLetters=[];
+
 let currentWord="";
+
 let selectedIndexes=[];
+
 let foundWords=[];
+
 let dragging=false;
+
 let activePointerId=null;
+
 let gameOver=false;
+
 let modalActionType="";
 
-if(unlockedStage<1) unlockedStage=1;
-if(unlockedStage>stages.length) unlockedStage=stages.length;
-if(selectedStage<1) selectedStage=1;
-if(selectedStage>unlockedStage) selectedStage=unlockedStage;
 
-const music=document.getElementById("music");
-const homeScreen=document.getElementById("homeScreen");
-const gameScreen=document.getElementById("gameScreen");
-const latinBtn=document.getElementById("latinBtn");
-const arabicBtn=document.getElementById("arabicBtn");
-const continueBtn=document.getElementById("continueBtn");
-const stageGrid=document.getElementById("stageGrid");
-const stageInfo=document.getElementById("stageInfo");
-const homeStage=document.getElementById("homeStage");
-const homeCoins=document.getElementById("homeCoins");
-const homeScore=document.getElementById("homeScore");
-const gameStage=document.getElementById("gameStage");
-const gameCoins=document.getElementById("gameCoins");
-const gameLives=document.getElementById("gameLives");
-const wordSlots=document.getElementById("wordSlots");
-const currentWordEl=document.getElementById("currentWord");
-const lettersArea=document.getElementById("lettersArea");
-const message=document.getElementById("message");
-const clearBtn=document.getElementById("clearBtn");
-const checkBtn=document.getElementById("checkBtn");
-const shuffleBtn=document.getElementById("shuffleBtn");
-const hintBtn=document.getElementById("hintBtn");
-const modal=document.getElementById("modal");
-const modalTitle=document.getElementById("modalTitle");
-const modalText=document.getElementById("modalText");
-const modalAction=document.getElementById("modalAction");
-const musicBtn=document.getElementById("musicBtn");
+/* =========================================================
+   عناصر صفحه
+========================================================= */
+
+const music=
+  document.getElementById("music");
+
+const homeScreen=
+  document.getElementById("homeScreen");
+
+const gameScreen=
+  document.getElementById("gameScreen");
+
+const latinBtn=
+  document.getElementById("latinBtn");
+
+const arabicBtn=
+  document.getElementById("arabicBtn");
+
+const continueBtn=
+  document.getElementById("continueBtn");
+
+const stageGrid=
+  document.getElementById("stageGrid");
+
+const stageInfo=
+  document.getElementById("stageInfo");
+
+const homeStage=
+  document.getElementById("homeStage");
+
+const homeCoins=
+  document.getElementById("homeCoins");
+
+const homeScore=
+  document.getElementById("homeScore");
+
+const gameStage=
+  document.getElementById("gameStage");
+
+const gameCoins=
+  document.getElementById("gameCoins");
+
+const gameLives=
+  document.getElementById("gameLives");
+
+const wordSlots=
+  document.getElementById("wordSlots");
+
+const currentWordEl=
+  document.getElementById("currentWord");
+
+const lettersArea=
+  document.getElementById("lettersArea");
+
+const message=
+  document.getElementById("message");
+
+const clearBtn=
+  document.getElementById("clearBtn");
+
+const checkBtn=
+  document.getElementById("checkBtn");
+
+const shuffleBtn=
+  document.getElementById("shuffleBtn");
+
+const hintBtn=
+  document.getElementById("hintBtn");
+
+const exitBtn=
+  document.getElementById("exitBtn");
+
+const modal=
+  document.getElementById("modal");
+
+const modalTitle=
+  document.getElementById("modalTitle");
+
+const modalText=
+  document.getElementById("modalText");
+
+const modalAction=
+  document.getElementById("modalAction");
+
+const modalCancel=
+  document.getElementById("modalCancel");
+
+const musicBtn=
+  document.getElementById("musicBtn");
+
+
+/* =========================================================
+   ذخیره
+========================================================= */
 
 function save(){
-  localStorage.setItem("hb_mode",mode);
-  localStorage.setItem("hb_coins",coins);
-  localStorage.setItem("hb_score",score);
-  localStorage.setItem("hb_unlockedStage",unlockedStage);
-  localStorage.setItem("hb_selectedStage",selectedStage);
+
+  localStorage.setItem(
+    "hb_mode",
+    mode
+  );
+
+  localStorage.setItem(
+    "hb_coins",
+    coins
+  );
+
+  localStorage.setItem(
+    "hb_score",
+    score
+  );
+
+  localStorage.setItem(
+    "hb_unlockedStage",
+    unlockedStage
+  );
+
+  localStorage.setItem(
+    "hb_selectedStage",
+    selectedStage
+  );
+
 }
+
+
+/* =========================================================
+   انتخاب الفبا
+========================================================= */
 
 function setMode(newMode){
+
   mode=newMode;
-  latinBtn.classList.toggle("selected",mode==="latin");
-  arabicBtn.classList.toggle("selected",mode==="arabic");
+
+  latinBtn.classList.toggle(
+    "selected",
+    mode==="latin"
+  );
+
+  arabicBtn.classList.toggle(
+    "selected",
+    mode==="arabic"
+  );
+
   save();
+
 }
 
-latinBtn.onclick=()=>setMode("latin");
-arabicBtn.onclick=()=>setMode("arabic");
+
+latinBtn.onclick=()=>{
+  setMode("latin");
+};
+
+arabicBtn.onclick=()=>{
+  setMode("arabic");
+};
+
+
+/* =========================================================
+   صفحه اصلی
+========================================================= */
 
 function updateHome(){
-  homeStage.textContent=selectedStage;
-  homeCoins.textContent=coins;
-  homeScore.textContent=score;
+
+  homeStage.textContent=
+    selectedStage;
+
+  homeCoins.textContent=
+    coins;
+
+  homeScore.textContent=
+    score;
+
 }
+
+
+/* =========================================================
+   نمایش مراحل و قفل‌ها
+========================================================= */
 
 function renderStages(){
 
@@ -862,95 +1117,234 @@ function renderStages(){
   for(let i=0;i<stages.length;i++){
 
     const number=i+1;
-    const btn=document.createElement("button");
+
+    const btn=
+      document.createElement("button");
 
     btn.className="stage-btn";
+
+
+    /*
+      فقط مراحل <= unlockedStage باز هستند
+    */
 
     if(number<=unlockedStage){
 
       btn.textContent=number;
 
       if(number===selectedStage){
+
         btn.classList.add("current");
+
       }
 
       btn.onclick=()=>{
+
+        /*
+          امنیت دوباره:
+          اگر مرحله قفل بود، هیچ کاری نکن
+        */
+
+        if(number>unlockedStage){
+
+          showLockedMessage();
+
+          return;
+
+        }
+
         selectedStage=number;
+
         save();
+
         updateHome();
+
         renderStages();
+
       };
 
     }else{
 
+      /*
+        مرحله قفل
+      */
+
       btn.classList.add("locked");
+
       btn.textContent="🔒";
+
+      btn.onclick=()=>{
+
+        showLockedMessage();
+
+      };
 
     }
 
     stageGrid.appendChild(btn);
+
   }
 
+
   stageInfo.textContent=
-    `${unlockedStage} / ${stages.length} مرحله باز است`;
+    `${unlockedStage} از ${stages.length} مرحله باز است`;
+
 }
 
+
+/* =========================================================
+   پیام مرحله قفل
+========================================================= */
+
+function showLockedMessage(){
+
+  showModal(
+    "مرحله قفل است 🔒",
+    "برای ورود به این مرحله ابتدا باید مرحله قبلی را کامل کنید.",
+    "متوجه شدم",
+    "close"
+  );
+
+}
+
+
+/* =========================================================
+   شروع بازی
+========================================================= */
+
 continueBtn.onclick=()=>{
+
+  /*
+    فقط مرحله انتخاب‌شده‌ای که باز است
+  */
+
+  if(selectedStage>unlockedStage){
+
+    selectedStage=
+      unlockedStage;
+
+    save();
+
+  }
+
   startGame(selectedStage);
+
 };
+
 
 function startGame(stageNumber){
 
-  if(stageNumber<1||stageNumber>unlockedStage)return;
+  /*
+    جلوگیری قطعی از ورود مستقیم
+    به مرحله قفل‌شده
+  */
 
-  selectedStage=stageNumber;
+  if(
+    stageNumber<1 ||
+    stageNumber>stages.length ||
+    stageNumber>unlockedStage
+  ){
+
+    showLockedMessage();
+
+    return;
+
+  }
+
+
+  selectedStage=
+    stageNumber;
+
   lives=3;
+
   foundWords=[];
+
   currentWord="";
+
   selectedIndexes=[];
+
   dragging=false;
+
   activePointerId=null;
+
   gameOver=false;
 
+
   message.textContent="";
+
   message.className="message";
 
+
   homeScreen.classList.remove("active");
+
   gameScreen.classList.add("active");
 
+
   loadStage();
+
   startMusic();
+
   save();
+
 }
+
+
+/* =========================================================
+   بارگذاری مرحله
+========================================================= */
 
 function loadStage(){
 
-  const stage=stages[selectedStage-1];
+  const stage=
+    stages[selectedStage-1];
+
 
   currentLetters=
     mode==="latin"
     ? [...stage.latinLetters]
     : [...stage.arabicLetters];
 
+
   shuffleArray(currentLetters);
 
-  gameStage.textContent=selectedStage;
-  gameCoins.textContent=coins;
+
+  gameStage.textContent=
+    selectedStage;
+
+  gameCoins.textContent=
+    coins;
+
 
   updateLives();
+
   renderSlots();
+
   renderLetters();
+
   clearCurrentWord();
+
 }
+
+
+/* =========================================================
+   پاسخ‌های مرحله
+========================================================= */
 
 function getAnswers(){
 
-  const stage=stages[selectedStage-1];
+  const stage=
+    stages[selectedStage-1];
 
   return mode==="latin"
     ? stage.latinAnswers
     : stage.arabicAnswers;
+
 }
+
+
+/* =========================================================
+   جای خالی کلمات
+========================================================= */
 
 function renderSlots(){
 
@@ -958,200 +1352,388 @@ function renderSlots(){
 
   getAnswers().forEach(answer=>{
 
-    const word=document.createElement("div");
-    word.className="answer-word";
+    const word=
+      document.createElement("div");
+
+    word.className=
+      "answer-word";
+
 
     if(mode==="arabic"){
-      word.classList.add("arabic");
+
+      word.classList.add(
+        "arabic"
+      );
+
     }
+
 
     [...answer].forEach(letter=>{
 
-      const slot=document.createElement("div");
+      const slot=
+        document.createElement("div");
 
       slot.className=
         foundWords.includes(answer)
-        ?"answer-slot found"
-        :"answer-slot";
+        ? "answer-slot found"
+        : "answer-slot";
+
 
       if(foundWords.includes(answer)){
-        slot.textContent=letter;
+
+        slot.textContent=
+          letter;
+
       }
 
+
       word.appendChild(slot);
+
     });
 
+
     wordSlots.appendChild(word);
+
   });
+
 }
+
+
+/* =========================================================
+   حروف
+========================================================= */
 
 function renderLetters(){
 
   lettersArea.innerHTML="";
 
-  currentLetters.forEach((letter,index)=>{
+  currentLetters.forEach(
+    (letter,index)=>{
 
-    const el=document.createElement("div");
+      const el=
+        document.createElement("div");
 
-    el.className="letter";
-    el.dataset.index=index;
-    el.textContent=letter;
+      el.className="letter";
 
-    lettersArea.appendChild(el);
-  });
-}
+      el.dataset.index=
+        index;
 
-lettersArea.addEventListener("pointerdown",e=>{
+      el.textContent=
+        letter;
 
-  if(gameOver)return;
+      lettersArea.appendChild(el);
 
-  const letter=e.target.closest(".letter");
-  if(!letter)return;
-
-  e.preventDefault();
-
-  dragging=true;
-  activePointerId=e.pointerId;
-
-  clearCurrentWord();
-
-  try{
-    lettersArea.setPointerCapture(e.pointerId);
-  }catch(err){}
-
-  addLetter(Number(letter.dataset.index));
-
-},{passive:false});
-
-lettersArea.addEventListener("pointermove",e=>{
-
-  if(!dragging)return;
-  if(activePointerId!==e.pointerId)return;
-
-  e.preventDefault();
-
-  const element=document.elementFromPoint(
-    e.clientX,
-    e.clientY
+    }
   );
 
-  if(!element)return;
+}
 
-  const letter=element.closest(".letter");
-  if(!letter)return;
 
-  addLetter(Number(letter.dataset.index));
+/* =========================================================
+   لمس و انتخاب حروف
+========================================================= */
 
-},{passive:false});
+lettersArea.addEventListener(
+  "pointerdown",
+  e=>{
 
-lettersArea.addEventListener("pointerup",e=>{
+    if(gameOver)
+      return;
 
-  if(activePointerId!==e.pointerId)return;
+    const letter=
+      e.target.closest(".letter");
 
-  e.preventDefault();
+    if(!letter)
+      return;
 
-  dragging=false;
+    e.preventDefault();
 
-  try{
-    if(lettersArea.hasPointerCapture(e.pointerId)){
-      lettersArea.releasePointerCapture(e.pointerId);
-    }
-  }catch(err){}
+    dragging=true;
 
-  activePointerId=null;
+    activePointerId=
+      e.pointerId;
 
-},{passive:false});
+    clearCurrentWord();
 
-lettersArea.addEventListener("pointercancel",e=>{
+    try{
 
-  dragging=false;
-  activePointerId=null;
+      lettersArea.setPointerCapture(
+        e.pointerId
+      );
 
-},{passive:false});
+    }catch(err){}
+
+    addLetter(
+      Number(letter.dataset.index)
+    );
+
+  },
+  {passive:false}
+);
+
+
+lettersArea.addEventListener(
+  "pointermove",
+  e=>{
+
+    if(!dragging)
+      return;
+
+    if(activePointerId!==e.pointerId)
+      return;
+
+    e.preventDefault();
+
+    const element=
+      document.elementFromPoint(
+        e.clientX,
+        e.clientY
+      );
+
+    if(!element)
+      return;
+
+    const letter=
+      element.closest(".letter");
+
+    if(!letter)
+      return;
+
+    addLetter(
+      Number(letter.dataset.index)
+    );
+
+  },
+  {passive:false}
+);
+
+
+lettersArea.addEventListener(
+  "pointerup",
+  e=>{
+
+    if(
+      activePointerId!==e.pointerId
+    )
+      return;
+
+    e.preventDefault();
+
+    dragging=false;
+
+    try{
+
+      if(
+        lettersArea.hasPointerCapture(
+          e.pointerId
+        )
+      ){
+
+        lettersArea.releasePointerCapture(
+          e.pointerId
+        );
+
+      }
+
+    }catch(err){}
+
+    activePointerId=null;
+
+  },
+  {passive:false}
+);
+
+
+lettersArea.addEventListener(
+  "pointercancel",
+  ()=>{
+    dragging=false;
+    activePointerId=null;
+  },
+  {passive:false}
+);
+
+
+/* =========================================================
+   اضافه کردن حرف
+========================================================= */
 
 function addLetter(index){
 
-  if(selectedIndexes.includes(index))return;
+  if(
+    selectedIndexes.includes(index)
+  )
+    return;
+
 
   selectedIndexes.push(index);
 
-  currentWord+=currentLetters[index];
+  currentWord+=
+    currentLetters[index];
 
-  currentWordEl.textContent=currentWord;
 
-  const elements=lettersArea.querySelectorAll(".letter");
+  currentWordEl.textContent=
+    currentWord;
+
+
+  const elements=
+    lettersArea.querySelectorAll(
+      ".letter"
+    );
+
 
   if(elements[index]){
-    elements[index].classList.add("selected");
+
+    elements[index].classList.add(
+      "selected"
+    );
+
   }
+
 }
+
+
+/* =========================================================
+   پاک کردن
+========================================================= */
 
 function clearCurrentWord(){
 
   currentWord="";
+
   selectedIndexes=[];
+
   currentWordEl.textContent="";
 
-  lettersArea.querySelectorAll(".letter")
+
+  lettersArea
+    .querySelectorAll(".letter")
     .forEach(el=>{
-      el.classList.remove("selected");
+
+      el.classList.remove(
+        "selected"
+      );
+
     });
+
 }
 
-checkBtn.onclick=checkWord;
+
+clearBtn.onclick=
+  clearCurrentWord;
+
+
+/* =========================================================
+   بررسی
+========================================================= */
+
+checkBtn.onclick=
+  checkWord;
+
 
 function checkWord(){
 
   if(!currentWord){
 
-    message.textContent="ابتدا حروف را انتخاب کنید.";
-    message.className="message wrong";
+    message.textContent=
+      "ابتدا حروف را انتخاب کنید.";
+
+    message.className=
+      "message wrong";
 
     return;
+
   }
 
-  const answers=getAnswers();
+
+  const answers=
+    getAnswers();
+
 
   if(
-    answers.includes(currentWord)&&
+    answers.includes(currentWord) &&
     !foundWords.includes(currentWord)
   ){
 
-    foundWords.push(currentWord);
+    foundWords.push(
+      currentWord
+    );
+
 
     score+=10;
+
     coins+=1;
+
 
     playCorrectSound();
 
-    message.textContent="درست است! 👏";
-    message.className="message correct";
+
+    message.textContent=
+      "درست است! 👏";
+
+    message.className=
+      "message correct";
+
 
     renderSlots();
+
     updateGameStats();
+
     clearCurrentWord();
 
-    if(foundWords.length===answers.length){
 
-      setTimeout(finishStage,500);
+    /*
+      فقط وقتی تمام کلمات مرحله پیدا شوند
+      مرحله بعدی باز می‌شود
+    */
+
+    if(
+      foundWords.length===
+      answers.length
+    ){
+
+      setTimeout(
+        finishStage,
+        500
+      );
+
     }
 
   }else{
 
     playWrongSound();
 
-    message.textContent="این کلمه درست نیست.";
-    message.className="message wrong";
 
-    lettersArea.classList.remove("shake");
+    message.textContent=
+      "این کلمه درست نیست.";
+
+    message.className=
+      "message wrong";
+
+
+    lettersArea.classList.remove(
+      "shake"
+    );
+
     void lettersArea.offsetWidth;
-    lettersArea.classList.add("shake");
+
+    lettersArea.classList.add(
+      "shake"
+    );
+
 
     clearCurrentWord();
 
     loseLife();
+
   }
+
 }
+
+
+/* =========================================================
+   کم شدن جان
+========================================================= */
 
 function loseLife(){
 
@@ -1159,75 +1741,146 @@ function loseLife(){
 
   updateLives();
 
+
   if(lives<=0){
-    setTimeout(showGameOver,300);
+
+    setTimeout(
+      showGameOver,
+      300
+    );
+
   }
+
 }
+
+
+/* =========================================================
+   نمایش جان
+========================================================= */
 
 function updateLives(){
 
   gameLives.textContent=
     "❤️".repeat(lives)+
     "🖤".repeat(3-lives);
+
 }
+
+
+/* =========================================================
+   آمار
+========================================================= */
 
 function updateGameStats(){
 
-  gameCoins.textContent=coins;
+  gameCoins.textContent=
+    coins;
+
   save();
+
 }
+
+
+/* =========================================================
+   پایان مرحله
+========================================================= */
 
 function finishStage(){
 
   score+=10;
+
   coins+=5;
 
+
+  /*
+    نکته مهم:
+    فقط همین‌جا مرحله بعدی باز می‌شود.
+  */
+
   if(
-    selectedStage===unlockedStage&&
-    unlockedStage<stages.length
+    selectedStage===
+    unlockedStage &&
+    unlockedStage<
+    stages.length
   ){
+
     unlockedStage++;
+
   }
 
+
   save();
+
   updateHome();
+
   renderStages();
 
-  if(selectedStage<stages.length){
+
+  if(
+    selectedStage<
+    stages.length
+  ){
 
     showModal(
+
       "عالی! 🎉",
+
       `مرحله ${selectedStage} کامل شد.<br>
        ۵ سکه دریافت کردید.<br>
-       مرحله بعد باز شد.`,
+       🔓 مرحله ${selectedStage+1} باز شد.`,
+
       "مرحله بعد",
+
       "next"
+
     );
 
   }else{
 
     showModal(
+
       "تبریک! 🎉",
+
       `همه ${stages.length} مرحله را کامل کردید.<br>
-       🏆 بازی را کامل کردید!<br>
-       اگر بخواهید می‌توانید مرحله ۲۰ را دوباره بازی کنید.`,
+       🏆 بازی را کامل کردید!`,
+
       "مرحله ۲۰",
+
       "final"
+
     );
+
   }
+
 }
+
+
+/* =========================================================
+   پایان جان‌ها
+========================================================= */
 
 function showGameOver(){
 
   gameOver=true;
 
   showModal(
+
     "جان‌ها تمام شد ❤️",
-    "می‌توانید این مرحله را دوباره امتحان کنید.",
+
+    "این مرحله را دوباره امتحان کنید.",
+
     "تلاش دوباره",
+
     "retry"
+
   );
+
 }
+
+
+/* =========================================================
+   پنجره
+========================================================= */
 
 function showModal(
   title,
@@ -1236,57 +1889,182 @@ function showModal(
   actionType
 ){
 
-  modalTitle.textContent=title;
-  modalText.innerHTML=text;
-  modalAction.textContent=buttonText;
-  modalActionType=actionType;
+  modalTitle.textContent=
+    title;
 
-  modal.classList.add("show");
+  modalText.innerHTML=
+    text;
+
+  modalAction.textContent=
+    buttonText;
+
+  modalActionType=
+    actionType;
+
+  modal.classList.add(
+    "show"
+  );
+
 }
+
+
+/* =========================================================
+   دکمه خروج
+========================================================= */
+
+exitBtn.onclick=()=>{
+
+  if(gameOver)
+    return;
+
+
+  showModal(
+
+    "خروج از مرحله؟",
+
+    "آیا مطمئن هستید که می‌خواهید از این مرحله خارج شوید؟",
+
+    "خروج",
+
+    "exit"
+
+  );
+
+};
+
+
+/* =========================================================
+   لغو پنجره
+========================================================= */
+
+modalCancel.onclick=()=>{
+
+  modal.classList.remove(
+    "show"
+  );
+
+};
+
+
+/* =========================================================
+   عملیات پنجره
+========================================================= */
 
 modalAction.onclick=()=>{
 
-  modal.classList.remove("show");
+  modal.classList.remove(
+    "show"
+  );
 
-  if(modalActionType==="next"){
 
-    selectedStage++;
+  if(
+    modalActionType==="next"
+  ){
+
+    /*
+      مرحله بعد فقط در صورتی باز است
+      که finishStage آن را باز کرده باشد.
+    */
+
+    if(
+      selectedStage<
+      unlockedStage
+    ){
+
+      selectedStage++;
+
+      save();
+
+      startGame(
+        selectedStage
+      );
+
+    }
+
+
+  }else if(
+    modalActionType==="retry"
+  ){
+
+    startGame(
+      selectedStage
+    );
+
+
+  }else if(
+    modalActionType==="final"
+  ){
+
+    selectedStage=
+      stages.length;
+
     save();
-    startGame(selectedStage);
 
-  }else if(modalActionType==="retry"){
+    startGame(
+      stages.length
+    );
 
-    startGame(selectedStage);
 
-  }else if(modalActionType==="final"){
+  }else if(
+    modalActionType==="exit"
+  ){
 
-    selectedStage=stages.length;
+    gameOver=false;
+
+    dragging=false;
+
+    activePointerId=null;
+
+    clearCurrentWord();
+
+
+    gameScreen.classList.remove(
+      "active"
+    );
+
+    homeScreen.classList.add(
+      "active"
+    );
+
+
+    updateHome();
+
+    renderStages();
+
     save();
-    startGame(stages.length);
+
+
+  }else if(
+    modalActionType==="close"
+  ){
+
+    /* فقط بستن پیام */
+
   }
+
 };
 
-clearBtn.onclick=clearCurrentWord;
+
+/* =========================================================
+   درهم‌ریختن
+========================================================= */
 
 shuffleBtn.onclick=()=>{
 
-  shuffleArray(currentLetters);
+  shuffleArray(
+    currentLetters
+  );
+
   clearCurrentWord();
+
   renderLetters();
+
 };
 
-function shuffleArray(array){
 
-  for(let i=array.length-1;i>0;i--){
-
-    const j=Math.floor(
-      Math.random()*(i+1)
-    );
-
-    [array[i],array[j]]=
-      [array[j],array[i]];
-  }
-}
+/* =========================================================
+   راهنما
+========================================================= */
 
 hintBtn.onclick=()=>{
 
@@ -1295,63 +2073,132 @@ hintBtn.onclick=()=>{
     message.textContent=
       "برای راهنما ۱۰ سکه لازم است.";
 
-    message.className="message wrong";
+    message.className=
+      "message wrong";
 
     return;
+
   }
 
-  const remaining=getAnswers().filter(
-    word=>!foundWords.includes(word)
-  );
 
-  if(!remaining.length)return;
+  const remaining=
+    getAnswers().filter(
+      word=>
+        !foundWords.includes(word)
+    );
+
+
+  if(!remaining.length)
+    return;
+
 
   coins-=10;
 
-  gameCoins.textContent=coins;
+  gameCoins.textContent=
+    coins;
 
   save();
+
 
   message.textContent=
     `راهنما: ${remaining[0].charAt(0)}...`;
 
-  message.className="message";
+  message.className=
+    "message";
+
 };
+
+
+/* =========================================================
+   مخلوط کردن
+========================================================= */
+
+function shuffleArray(array){
+
+  for(
+    let i=array.length-1;
+    i>0;
+    i--
+  ){
+
+    const j=
+      Math.floor(
+        Math.random()*(i+1)
+      );
+
+
+    [
+      array[i],
+      array[j]
+    ]=[
+      array[j],
+      array[i]
+    ];
+
+  }
+
+}
+
+
+/* =========================================================
+   موسیقی
+========================================================= */
 
 async function startMusic(){
 
   try{
 
     music.volume=.75;
+
     await music.play();
-    musicBtn.textContent="🔊";
+
+    musicBtn.textContent=
+      "🔊";
 
   }catch(err){
 
-    musicBtn.textContent="🔇";
+    musicBtn.textContent=
+      "🔇";
+
   }
+
 }
 
-musicBtn.onclick=async()=>{
 
-  if(music.paused){
+musicBtn.onclick=
+  async()=>{
 
-    try{
+    if(music.paused){
 
-      await music.play();
-      musicBtn.textContent="🔊";
+      try{
 
-    }catch(err){
+        await music.play();
 
-      musicBtn.textContent="🔇";
+        musicBtn.textContent=
+          "🔊";
+
+      }catch(err){
+
+        musicBtn.textContent=
+          "🔇";
+
+      }
+
+    }else{
+
+      music.pause();
+
+      musicBtn.textContent=
+        "🔇";
+
     }
 
-  }else{
+  };
 
-    music.pause();
-    musicBtn.textContent="🔇";
-  }
-};
+
+/* =========================================================
+   صدای درست
+========================================================= */
 
 function playCorrectSound(){
 
@@ -1361,37 +2208,63 @@ function playCorrectSound(){
       window.AudioContext||
       window.webkitAudioContext;
 
-    if(!AudioContext)return;
+    if(!AudioContext)
+      return;
 
-    const ctx=new AudioContext();
-    const osc=ctx.createOscillator();
-    const gain=ctx.createGain();
 
-    osc.frequency.value=720;
+    const ctx=
+      new AudioContext();
+
+    const osc=
+      ctx.createOscillator();
+
+    const gain=
+      ctx.createGain();
+
+
+    osc.frequency.value=
+      720;
+
 
     gain.gain.setValueAtTime(
       .001,
       ctx.currentTime
     );
 
+
     gain.gain.exponentialRampToValueAtTime(
       .18,
       ctx.currentTime+.02
     );
+
 
     gain.gain.exponentialRampToValueAtTime(
       .001,
       ctx.currentTime+.22
     );
 
+
     osc.connect(gain);
-    gain.connect(ctx.destination);
+
+    gain.connect(
+      ctx.destination
+    );
+
 
     osc.start();
-    osc.stop(ctx.currentTime+.23);
+
+    osc.stop(
+      ctx.currentTime+.23
+    );
 
   }catch(err){}
+
 }
+
+
+/* =========================================================
+   صدای اشتباه
+========================================================= */
 
 function playWrongSound(){
 
@@ -1401,41 +2274,71 @@ function playWrongSound(){
       window.AudioContext||
       window.webkitAudioContext;
 
-    if(!AudioContext)return;
+    if(!AudioContext)
+      return;
 
-    const ctx=new AudioContext();
-    const osc=ctx.createOscillator();
-    const gain=ctx.createGain();
 
-    osc.frequency.value=180;
+    const ctx=
+      new AudioContext();
+
+    const osc=
+      ctx.createOscillator();
+
+    const gain=
+      ctx.createGain();
+
+
+    osc.frequency.value=
+      180;
+
 
     gain.gain.setValueAtTime(
       .001,
       ctx.currentTime
     );
 
+
     gain.gain.exponentialRampToValueAtTime(
       .13,
       ctx.currentTime+.02
     );
+
 
     gain.gain.exponentialRampToValueAtTime(
       .001,
       ctx.currentTime+.18
     );
 
+
     osc.connect(gain);
-    gain.connect(ctx.destination);
+
+    gain.connect(
+      ctx.destination
+    );
+
 
     osc.start();
-    osc.stop(ctx.currentTime+.19);
+
+    osc.stop(
+      ctx.currentTime+.19
+    );
 
   }catch(err){}
+
 }
 
+
+/* =========================================================
+   شروع اولیه
+========================================================= */
+
 setMode(mode);
+
 updateHome();
+
 renderStages();
+
+save();
 
 </script>
 
