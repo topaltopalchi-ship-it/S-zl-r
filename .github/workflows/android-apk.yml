@@ -34,9 +34,21 @@ jobs:
           rm -rf www
           mkdir -p www
           cp index.html www/index.html
+          cp "aysəl.mp3" "www/aysəl.mp3"
+
+      - name: Prepare app icon
+        run: |
+          mkdir -p resources
+          cp "file_0000000098808210b95a759be7dd5505.png" resources/icon.png
+
+      - name: Install Capacitor Assets
+        run: npm install -D @capacitor/assets
 
       - name: Generate Android project
         run: npx cap add android
+
+      - name: Generate Android icon
+        run: npx capacitor-assets generate --android
 
       - name: Sync Capacitor
         run: npx cap sync android
