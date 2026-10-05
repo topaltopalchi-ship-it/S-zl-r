@@ -34,7 +34,10 @@ jobs:
           rm -rf www
           mkdir -p www
           cp index.html www/index.html
-          cp "aysəl.mp3" "www/aysəl.mp3"
+          cp "aysəl.mp3" "www/music.mp3"
+          cp "file_0000000098808210b95a759be7dd5505.png" "www/cover.png"
+          test -s "www/music.mp3"
+          test -s "www/cover.png"
 
       - name: Prepare app icon
         run: |
