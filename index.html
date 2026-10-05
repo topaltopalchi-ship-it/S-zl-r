@@ -522,13 +522,17 @@ button{
 
 }
 
+
+.cover-wrap{display:flex;justify-content:center;margin:0 auto 16px;}
+.cover-image{display:block;width:min(180px,48vw);height:min(180px,48vw);object-fit:cover;border-radius:28px;border:1px solid rgba(255,255,255,.18);box-shadow:0 18px 45px rgba(0,0,0,.38);}
+.cover-small{margin-bottom:10px;}.cover-small .cover-image{width:92px;height:92px;border-radius:20px;}
 </style>
 </head>
 
 <body>
 
 <audio id="music" loop preload="auto">
-  <source src="./ays%C9%99l.mp3" type="audio/mpeg">
+  <source src="./music.mp3" type="audio/mpeg">
 </audio>
 
 <div class="app">
@@ -538,6 +542,8 @@ button{
 <section id="homeScreen" class="screen active">
 
   <div class="logo">حیدربابا</div>
+
+  <div class="cover-wrap"><img class="cover-image" src="./cover.png" alt="حیدربابا"></div>
 
   <div class="glass home-card">
 
@@ -600,6 +606,8 @@ button{
   <div class="logo" style="font-size:30px;">
     حیدربابا
   </div>
+
+  <div class="cover-wrap cover-small"><img class="cover-image" src="./cover.png" alt="حیدربابا"></div>
 
   <div class="game-top">
 
