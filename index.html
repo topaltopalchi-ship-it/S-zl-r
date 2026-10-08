@@ -895,6 +895,145 @@ latinLetters:["e","l"],
 arabicLetters:["ا","ئ","ل"],
 latinAnswers:["el"],
 arabicAnswers:["ائل"]
+},
+{
+latinLetters:["k","i","t","a","b"],
+arabicLetters:["ک","ی","ت","ا","ب"],
+latinAnswers:["kitab","kit"],
+arabicAnswers:["کیتاب","کیت"]
+},
+
+{
+latinLetters:["m","ə","k","t","ə","b"],
+arabicLetters:["م","ک","ت","ب"],
+latinAnswers:["məktəb","mək"],
+arabicAnswers:["مکتب","مک"]
+},
+
+{
+latinLetters:["ş","ə","h","ə","r"],
+arabicLetters:["ش","ه","ر"],
+latinAnswers:["şəhər","şər"],
+arabicAnswers:["شهر","شر"]
+},
+
+{
+latinLetters:["k","ü","ç","ə"],
+arabicLetters:["ک","و","چ","ه"],
+latinAnswers:["küçə","üç"],
+arabicAnswers:["کوچه","اوچ"]
+},
+
+{
+latinLetters:["d","ə","n","i","z"],
+arabicLetters:["د","ه","ن","ی","ز"],
+latinAnswers:["dəniz","diz"],
+arabicAnswers:["دنیز","دیز"]
+},
+
+{
+latinLetters:["g","ə","m","i"],
+arabicLetters:["گ","ه","م","ی"],
+latinAnswers:["gəmi","əm"],
+arabicAnswers:["گمی","ام"]
+},
+
+{
+latinLetters:["u","ş","a","q"],
+arabicLetters:["او","ش","ا","ق"],
+latinAnswers:["uşaq","uş"],
+arabicAnswers:["اوشاق","اوش"]
+},
+
+{
+latinLetters:["q","ı","z"],
+arabicLetters:["ق","ی","ز"],
+latinAnswers:["qız","qı"],
+arabicAnswers:["قیز","قی"]
+},
+
+{
+latinLetters:["o","ğ","l","a","n"],
+arabicLetters:["او","غ","ل","ا","ن"],
+latinAnswers:["oğlan","olan"],
+arabicAnswers:["اوغلان","اولان"]
+},
+
+{
+latinLetters:["q","a","d","ı","n"],
+arabicLetters:["ق","ا","د","ی","ن"],
+latinAnswers:["qadın","qın"],
+arabicAnswers:["قادین","قین"]
+},
+
+{
+latinLetters:["k","i","ş","i"],
+arabicLetters:["ک","ی","ش","ی"],
+latinAnswers:["kişi","iş"],
+arabicAnswers:["کیشی","ایش"]
+},
+
+{
+latinLetters:["b","a","l","ı","q"],
+arabicLetters:["ب","ا","ل","ی","ق"],
+latinAnswers:["balıq","bal"],
+arabicAnswers:["بالیک","بال"]
+},
+
+{
+latinLetters:["q","u","ş"],
+arabicLetters:["ق","و","ش"],
+latinAnswers:["quş","uş"],
+arabicAnswers:["قوش","اوش"]
+},
+
+{
+latinLetters:["a","t","ı"],
+arabicLetters:["ا","ت","ی"],
+latinAnswers:["atı","at"],
+arabicAnswers:["آتی","آت"]
+},
+
+{
+latinLetters:["e","v"],
+arabicLetters:["ا","و"],
+latinAnswers:["ev"],
+arabicAnswers:["ائو"]
+},
+
+{
+latinLetters:["s","ə","m","a"],
+arabicLetters:["س","ه","م","ا"],
+latinAnswers:["səma","səm"],
+arabicAnswers:["سما","سم"]
+},
+
+{
+latinLetters:["k","ü","l","ə","k"],
+arabicLetters:["ک","و","ل","ه","ک"],
+latinAnswers:["külək","kəl"],
+arabicAnswers:["کولک","کل"]
+},
+
+{
+latinLetters:["y","a","ğ","ı","ş"],
+arabicLetters:["ی","ا","غ","ی","ش"],
+latinAnswers:["yağış","yağ"],
+arabicAnswers:["یاغیش","یاغ"]
+},
+
+{
+latinLetters:["b","a","h","a","r"],
+arabicLetters:["ب","ا","ه","ا","ر"],
+latinAnswers:["bahar","bar"],
+arabicAnswers:["بهار","بار"]
+},
+
+{
+latinLetters:["q","ı","ş"],
+arabicLetters:["ق","ی","ش"],
+latinAnswers:["qış","ış"],
+arabicAnswers:["قیش","ایش"]
 }
 
 ];
@@ -904,7 +1043,7 @@ arabicAnswers:["ائل"]
    ذخیره پیشرفت
 ========================================================= */
 
-const PROGRESS_VERSION="2";
+const PROGRESS_VERSION="3";
 
 let savedVersion=
   localStorage.getItem("hb_progress_version");
@@ -1459,7 +1598,63 @@ const wordMeanings = {
   "بال":"عسل",
   "داغ":"کوه",
   "یول":"راه؛ جاده",
-  "ائل":"مردم؛ ایل"
+  "ائل":"مردم؛ ایل",
+  kitab:"کتاب",
+  kit:"کت",
+  "کیتاب":"کتاب",
+  "کیت":"کت",
+  məktəb:"مدرسه",
+  "مکتب":"مدرسه",
+  şəhər:"شهر",
+  "شهر":"شهر",
+  küçə:"کوچه؛ خیابان",
+  üç:"سه",
+  "کوچه":"کوچه؛ خیابان",
+  "اوچ":"سه",
+  dəniz:"دریا",
+  diz:"زانو",
+  "دنیز":"دریا",
+  "دیز":"زانو",
+  gəmi:"کشتی",
+  "گمی":"کشتی",
+  uşaq:"کودک",
+  "اوشاق":"کودک",
+  qız:"دختر",
+  "قیز":"دختر",
+  oğlan:"پسر",
+  olan:"آن که هست",
+  "اوغلان":"پسر",
+  "اولان":"آن که هست",
+  qadın:"زن",
+  "قادین":"زن",
+  kişi:"مرد؛ شخص",
+  iş:"کار",
+  "کیشی":"مرد؛ شخص",
+  "ایش":"کار",
+  balıq:"ماهی",
+  "بالیک":"ماهی",
+  quş:"پرنده",
+  "قوش":"پرنده",
+  atı:"اسبِ او",
+  at:"اسب",
+  "آتی":"اسبِ او",
+  "آت":"اسب",
+  ev:"خانه",
+  "ائو":"خانه",
+  səma:"آسمان",
+  "سما":"آسمان",
+  külək:"باد",
+  "کولک":"باد",
+  yağış:"باران",
+  yağ:"روغن؛ چربی",
+  "یاغیش":"باران",
+  "یاغ":"روغن؛ چربی",
+  bahar:"بهار",
+  bar:"وجود دارد",
+  "بهار":"بهار",
+  "بار":"وجود دارد",
+  qış:"زمستان",
+  "قیش":"زمستان"
 };
 
 function renderMeanings(){
