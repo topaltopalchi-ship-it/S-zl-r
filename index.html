@@ -697,6 +697,7 @@ button{
 
 .album-btn{width:100%;margin-top:10px;padding:13px;border:1px solid rgba(239,189,88,.35);border-radius:14px;background:rgba(239,189,88,.08);color:#fff;font-weight:900;font-size:14px;cursor:pointer}.album-screen{padding:18px 12px 30px}.album-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.album-back{border:0;border-radius:12px;padding:9px 12px;background:rgba(255,255,255,.08);color:#fff;font-weight:900;cursor:pointer}.album-title{text-align:center;font-size:26px;font-weight:1000;flex:1}.album-progress{text-align:center;opacity:.72;font-size:12px;margin-bottom:14px}.album-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.album-item{position:relative;overflow:hidden;border-radius:17px;min-height:180px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}.album-item img{width:100%;height:180px;object-fit:cover;display:block}.album-item.locked img{filter:grayscale(1) brightness(.38)}.album-lock{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:30px;background:rgba(0,0,0,.22)}.album-item.locked .album-lock{display:flex}.album-caption{position:absolute;bottom:0;right:0;left:0;padding:24px 9px 8px;background:linear-gradient(transparent,rgba(0,0,0,.9));font-size:12px;font-weight:900}.album-stars{display:block;margin-top:3px;font-size:11px}
 .album-badges{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:8px 0 14px}.album-badge{padding:9px 4px;text-align:center;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);opacity:.42;filter:grayscale(1);transition:.25s}.album-badge.unlocked{opacity:1;filter:none;border-color:rgba(239,189,88,.45);background:linear-gradient(145deg,rgba(239,189,88,.16),rgba(255,255,255,.05));box-shadow:0 8px 18px rgba(0,0,0,.18)}.album-badge-icon{font-size:22px;display:block}.album-badge-title{display:block;margin-top:3px;font-size:10px;font-weight:900}.album-badge-count{display:block;margin-top:2px;font-size:9px;opacity:.65}
+.badge-pop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.62);z-index:150}.badge-pop.show{display:flex;animation:screenIn .28s ease both}.badge-pop-card{width:min(340px,92vw);padding:26px 20px;text-align:center;border-radius:28px;background:linear-gradient(145deg,#243d52,#102232);border:1px solid rgba(239,189,88,.45);box-shadow:0 25px 80px rgba(0,0,0,.58),0 0 35px rgba(239,189,88,.18)}.badge-pop-icon{font-size:64px;display:block;animation:badgeBounce .75s ease both}.badge-pop-kicker{color:#efbd58;font-weight:900;font-size:13px;margin-top:5px}.badge-pop-title{font-size:24px;font-weight:1000;margin:7px 0}.badge-pop-text{font-size:13px;line-height:1.8;opacity:.78}.badge-pop-close{margin-top:14px;width:100%;padding:12px;border:0;border-radius:15px;color:#fff;background:linear-gradient(135deg,#efbd58,#b97618);font-weight:900}@keyframes badgeBounce{0%{transform:scale(.45) rotate(-12deg);opacity:0}55%{transform:scale(1.16) rotate(5deg);opacity:1}100%{transform:scale(1) rotate(0)}}
 .album-note{text-align:center;margin-top:14px;padding:12px;border-radius:14px;background:rgba(255,255,255,.05);font-size:12px;line-height:1.8;opacity:.78}
 </style>
 </head>
@@ -871,6 +872,8 @@ button{
 
 
 <!-- ================= MODAL ================= -->
+
+<div id="badgePop" class="badge-pop"><div class="badge-pop-card"><span id="badgePopIcon" class="badge-pop-icon"></span><div class="badge-pop-kicker">نشان جدید آزاد شد!</div><div id="badgePopTitle" class="badge-pop-title"></div><div id="badgePopText" class="badge-pop-text"></div><button id="badgePopClose" class="badge-pop-close">عالیه! 🏆</button></div></div>
 
 <div id="modal" class="modal">
 
@@ -1307,6 +1310,11 @@ const albumBtn=document.getElementById("albumBtn");
 const albumBack=document.getElementById("albumBack");
 const albumGrid=document.getElementById("albumGrid");
 const albumProgress=document.getElementById("albumProgress");
+const badgePop=document.getElementById("badgePop");
+const badgePopIcon=document.getElementById("badgePopIcon");
+const badgePopTitle=document.getElementById("badgePopTitle");
+const badgePopText=document.getElementById("badgePopText");
+const badgePopClose=document.getElementById("badgePopClose");
 const albumBadges=document.getElementById("albumBadges");
 
 const homeStage=
@@ -1489,6 +1497,26 @@ const stageLandmarks=[
 /* =========================================================
    نمایش مراحل و قفل‌ها
 ========================================================= */
+
+const badgeMilestones=[
+  {count:5,icon:"🥉",title:"گنجینه‌جو",text:"۵ گنجینه را کشف کردی! سفر تو در میراث آذربایجان ادامه دارد."},
+  {count:10,icon:"🥈",title:"کاوشگر",text:"۱۰ گنجینه کشف شد! حالا دیگر یک کاوشگر واقعی هستی."},
+  {count:15,icon:"🥇",title:"میراث‌دار",text:"۱۵ گنجینه را جمع کردی! تقریباً تمام آلبوم را کامل کرده‌ای."},
+  {count:20,icon:"🏆",title:"قهرمان آذربایجان",text:"هر ۲۰ گنجینه را کشف کردی! آلبومت کامل شد. 🌟"}
+];
+let seenBadges={};
+try{seenBadges=JSON.parse(localStorage.getItem("hb_badgesSeen")||"{}")||{};}catch(err){seenBadges={};}
+function showBadgeUnlock(discovered){
+  const badge=badgeMilestones.find(b=>b.count===discovered && !seenBadges[b.count]);
+  if(!badge) return;
+  seenBadges[badge.count]=true;
+  localStorage.setItem("hb_badgesSeen",JSON.stringify(seenBadges));
+  badgePopIcon.textContent=badge.icon;
+  badgePopTitle.textContent=badge.title;
+  badgePopText.textContent=badge.text;
+  badgePop.classList.add("show");
+}
+badgePopClose.onclick=()=>badgePop.classList.remove("show");
 
 function renderAlbumBadges(discovered){
   const badges=[
