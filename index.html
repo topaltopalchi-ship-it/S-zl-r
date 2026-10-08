@@ -419,6 +419,42 @@ button{
   font-weight:800;
 }
 
+.meanings-panel{
+  margin-top:16px;
+  padding:14px;
+  border-radius:18px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+}
+.meanings-title{
+  margin:0 0 10px;
+  text-align:center;
+  color:#efbd58;
+  font-size:16px;
+}
+.meanings-list{
+  display:grid;
+  gap:8px;
+}
+.meaning-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:9px 11px;
+  border-radius:12px;
+  background:rgba(255,255,255,.055);
+}
+.meaning-word{
+  font-weight:900;
+  direction:auto;
+}
+.meaning-text{
+  opacity:.86;
+  text-align:left;
+  font-size:14px;
+}
+
 .correct{
   color:#9cf0b9;
 }
@@ -669,6 +705,13 @@ button{
     >
       💡 راهنما
     </button>
+
+    <div class="meanings-panel" aria-live="polite">
+      <h3 class="meanings-title">📖 معنی کلمات پیدا‌شده</h3>
+      <div id="meaningsList" class="meanings-list">
+        <div class="stage-info">بعد از پیدا کردن هر کلمه، معنی آن اینجا نمایش داده می‌شود.</div>
+      </div>
+    </div>
 
   </div>
 
@@ -1035,6 +1078,9 @@ const modalCancel=
 const musicBtn=
   document.getElementById("musicBtn");
 
+const meaningsList=
+  document.getElementById("meaningsList");
+
 
 /* =========================================================
    ذخیره
@@ -1357,6 +1403,98 @@ function getAnswers(){
 
 
 /* =========================================================
+   معنی واژه‌ها
+========================================================= */
+
+const wordMeanings = {
+  ata:"پدر",
+  ana:"مادر",
+  alma:"سیب",
+  al:"قرمز؛ بگیر (بسته به کاربرد)",
+  gün:"روز؛ خورشید",
+  günəş:"خورشید",
+  çörək:"نان",
+  gül:"گل؛ بخند (بسته به کاربرد)",
+  ağac:"درخت",
+  ağ:"سفید",
+  göz:"چشم",
+  öz:"خود",
+  qara:"سیاه",
+  qar:"برف",
+  ara:"میان؛ جست‌وجو کن (بسته به کاربرد)",
+  daş:"سنگ",
+  aş:"غذا؛ پلو (بسته به کاربرد)",
+  su:"آب",
+  ay:"ماه",
+  dost:"دوست",
+  gecə:"شب",
+  sev:"دوست بدار",
+  sevgi:"عشق؛ محبت",
+  bal:"عسل",
+  dağ:"کوه",
+  yol:"راه؛ جاده",
+  "اتا":"پدر",
+  "انا":"مادر",
+  "الما":"سیب",
+  "ال":"قرمز؛ بگیر (بسته به کاربرد)",
+  "گون":"روز؛ خورشید",
+  "گونش":"خورشید",
+  "چورک":"نان",
+  "گول":"گل؛ بخند (بسته به کاربرد)",
+  "اغاج":"درخت",
+  "اغ":"سفید",
+  "گوز":"چشم",
+  "اوز":"خود",
+  "قارا":"سیاه",
+  "قار":"برف",
+  "ارا":"میان",
+  "داش":"سنگ",
+  "اش":"غذا؛ پلو",
+  "سو":"آب",
+  "آی":"ماه",
+  "دوست":"دوست",
+  "گئجه":"شب",
+  "سئو":"دوست بدار",
+  "سئوگی":"عشق؛ محبت",
+  "بال":"عسل",
+  "داغ":"کوه",
+  "یول":"راه؛ جاده",
+  "ائل":"مردم؛ ایل"
+};
+
+function renderMeanings(){
+  if(!meaningsList) return;
+  const found = foundWords.slice();
+  meaningsList.innerHTML = "";
+
+  if(found.length===0){
+    const empty = document.createElement("div");
+    empty.className = "stage-info";
+    empty.textContent = "بعد از پیدا کردن هر کلمه، معنی آن اینجا نمایش داده می‌شود.";
+    meaningsList.appendChild(empty);
+    return;
+  }
+
+  found.forEach(word=>{
+    const row = document.createElement("div");
+    row.className = "meaning-row";
+
+    const wordEl = document.createElement("span");
+    wordEl.className = "meaning-word";
+    wordEl.textContent = word;
+
+    const meaningEl = document.createElement("span");
+    meaningEl.className = "meaning-text";
+    meaningEl.textContent = wordMeanings[word] || "معنی این واژه هنوز ثبت نشده است.";
+
+    row.appendChild(wordEl);
+    row.appendChild(meaningEl);
+    meaningsList.appendChild(row);
+  });
+}
+
+
+/* =========================================================
    جای خالی کلمات
 ========================================================= */
 
@@ -1410,6 +1548,7 @@ function renderSlots(){
 
   });
 
+  renderMeanings();
 }
 
 
