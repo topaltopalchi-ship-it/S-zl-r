@@ -543,6 +543,49 @@ button{
   background:rgba(255,255,255,.09)!important;
 }
 
+
+.round2-gallery{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin:14px 0 6px;
+}
+.round2-gallery figure{
+  margin:0;
+  overflow:hidden;
+  border-radius:16px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+}
+.round2-gallery figure:first-child{
+  grid-column:1 / -1;
+}
+.round2-gallery img{
+  display:block;
+  width:100%;
+  height:120px;
+  object-fit:cover;
+}
+.round2-gallery figure:first-child img{
+  height:150px;
+}
+.round2-gallery figcaption{
+  padding:7px 8px;
+  font-size:11px;
+  text-align:center;
+  opacity:.82;
+}
+.round2-badge{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(239,189,88,.18);
+  border:1px solid rgba(239,189,88,.35);
+  color:#efbd58;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
 @media(max-width:360px){
 
   .letter{
@@ -2141,7 +2184,6 @@ function finishStage(){
 
 
   /*
-    نکته مهم:
     فقط همین‌جا مرحله بعدی باز می‌شود.
   */
 
@@ -2162,6 +2204,20 @@ function finishStage(){
   updateHome();
 
   renderStages();
+
+
+  /*
+    بعد از مرحله ۲۰، دوره دوم با معرفی
+    جاذبه‌های آذربایجان آغاز می‌شود.
+  */
+
+  if(selectedStage===20){
+
+    showRoundTwoIntro();
+
+    return;
+
+  }
 
 
   if(
@@ -2192,13 +2248,77 @@ function finishStage(){
       `همه ${stages.length} مرحله را کامل کردید.<br>
        🏆 بازی را کامل کردید!`,
 
-      "مرحله ۲۰",
+      "مرحله ${stages.length}",
 
       "final"
 
     );
 
   }
+
+}
+
+
+/* =========================================================
+   شروع دوره دوم
+========================================================= */
+
+function showRoundTwoIntro(){
+
+  modalTitle.textContent=
+    "🇦🇿 دوره دوم حیدربابا";
+
+  modalText.innerHTML=
+    `<span class="round2-badge">مرحله ۲۱</span>
+     <div style="font-weight:900;font-size:18px;margin-bottom:4px;">
+       سفر به جاذبه‌های آذربایجان
+     </div>
+     <div style="opacity:.78;line-height:1.8;">
+       مرحله ۲۰ را پشت سر گذاشتی! حالا دوره دوم آغاز می‌شود.
+       قبل از ادامه، چند تصویر از جاذبه‌های زیبای آذربایجان ببین.
+     </div>
+
+     <div class="round2-gallery">
+       <figure>
+         <img
+           src="https://www.eurojet-service.com/uploads/img_66bf0aa8acd891170832550.jpg"
+           alt="مرکز حیدر علی‌اف و جاذبه‌های باکو"
+           loading="lazy"
+         >
+         <figcaption>باکو؛ مرکز حیدر علی‌اف</figcaption>
+       </figure>
+
+       <figure>
+         <img
+           src="https://cdn.getyourguide.com/img/tour/98b92c64afdf1c2d4cc22a8a846daff227dd5e4081b9282023451a9fe9a685e8.jpeg/145.jpg"
+           alt="جاذبه‌های طبیعی و تاریخی آذربایجان"
+           loading="lazy"
+         >
+         <figcaption>گوبوستان و سرزمین آتش</figcaption>
+       </figure>
+
+       <figure>
+         <img
+           src="https://7d9e88a8-f178-4098-bea5-48d960920605.selcdn.net/ed758588-e326-4359-90f7-fdcf9fee6e5a/-/resize/x600/-/quality/smart_retina/"
+           alt="شهر قدیمی باکو و برج دختر"
+           loading="lazy"
+         >
+         <figcaption>ایچری‌شهر و برج دختر</figcaption>
+       </figure>
+     </div>`;
+
+  modalAction.textContent=
+    "شروع دوره دوم 🚀";
+
+  modalActionType=
+    "round2";
+
+  modalCancel.textContent=
+    "بعداً";
+
+  modal.classList.add(
+    "show"
+  );
 
 }
 
@@ -2291,6 +2411,8 @@ modalCancel.onclick=()=>{
     "show"
   );
 
+  modalCancel.textContent="ادامه بازی";
+
 };
 
 
@@ -2320,6 +2442,25 @@ modalAction.onclick=()=>{
     ){
 
       selectedStage++;
+
+      save();
+
+      startGame(
+        selectedStage
+      );
+
+    }
+
+
+  }else if(
+    modalActionType==="round2"
+  ){
+
+    modalCancel.textContent="ادامه بازی";
+
+    if(selectedStage<unlockedStage){
+
+      selectedStage=21;
 
       save();
 
