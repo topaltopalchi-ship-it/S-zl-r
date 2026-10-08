@@ -299,6 +299,9 @@ button{
 .stage-btn:not(.locked):active{
   transform:scale(.96);
 }
+.stage-btn.unlock-pop{animation:stageUnlockPop .9s ease both;border-color:#ffd978;}
+@keyframes stageUnlockPop{0%{transform:scale(.82);opacity:.35;}55%{transform:scale(1.06);opacity:1;}100%{transform:scale(1);opacity:1;}}
+.stage-stars{position:absolute;right:5px;left:5px;bottom:38px;z-index:3;font-size:12px;letter-spacing:1px;text-shadow:0 2px 8px rgba(0,0,0,.8);}
 @media(max-width:360px){
   .stage-grid{gap:6px;}
   .stage-btn,.stage-btn .stage-photo{min-height:105px;height:105px;}
@@ -1219,6 +1222,9 @@ let unlockedStage=
 let selectedStage=
   Number(localStorage.getItem("hb_selectedStage") || 1);
 
+let stageStars={};
+try{ stageStars=JSON.parse(localStorage.getItem("hb_stageStars") || "{}") || {}; }catch(err){ stageStars={}; }
+let justUnlockedStage=0;
 
 /* امنیت پیشرفت */
 
@@ -1380,6 +1386,8 @@ function save(){
     selectedStage
   );
 
+  localStorage.setItem("hb_stageStars",JSON.stringify(stageStars));
+
 }
 
 
@@ -1474,12 +1482,14 @@ function renderStages(){
 
     const completed=number<unlockedStage;
     const available=number<=unlockedStage;
+    const stars=Number(stageStars[number] || 0);
 
     btn.innerHTML=`
       <img class="stage-photo" src="${landmark[1]}" alt="${landmark[0]}" loading="lazy">
       <span class="stage-shade"></span>
       <span class="stage-number">${number}</span>
       <span class="stage-name">${landmark[0]}</span>
+      ${stars ? `<span class="stage-stars">${"⭐".repeat(stars)}</span>` : ""}
       <span class="stage-status">${completed ? "✓" : (available ? "▶" : "🔒")}</span>
     `;
 
@@ -1500,6 +1510,8 @@ function renderStages(){
         renderStages();
       };
     }
+
+    if(number===justUnlockedStage){ btn.classList.add("unlock-pop"); }
 
     stageGrid.appendChild(btn);
   }
@@ -2258,21 +2270,13 @@ function finishStage(){
   coins+=5;
 
 
-  /*
-    فقط همین‌جا مرحله بعدی باز می‌شود.
-  */
+  const earnedStars = lives>=3 ? 3 : (lives===2 ? 2 : 1);
+  if(earnedStars > Number(stageStars[selectedStage] || 0)) stageStars[selectedStage]=earnedStars;
 
-  if(
-    selectedStage===
-    unlockedStage &&
-    unlockedStage<
-    stages.length
-  ){
-
+  if(selectedStage===unlockedStage && unlockedStage<stages.length){
     unlockedStage++;
-
+    justUnlockedStage=unlockedStage;
   }
-
 
   save();
 
