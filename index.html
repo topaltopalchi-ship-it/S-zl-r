@@ -694,6 +694,8 @@ button{
 .cover-wrap{display:flex;justify-content:center;margin:0 auto 16px;}
 .cover-image{display:block;width:min(180px,48vw);height:min(180px,48vw);object-fit:cover;border-radius:28px;border:1px solid rgba(255,255,255,.18);box-shadow:0 18px 45px rgba(0,0,0,.38);}
 .cover-small{margin-bottom:10px;}.cover-small .cover-image{width:92px;height:92px;border-radius:20px;}
+
+.album-btn{width:100%;margin-top:10px;padding:13px;border:1px solid rgba(239,189,88,.35);border-radius:14px;background:rgba(239,189,88,.08);color:#fff;font-weight:900;font-size:14px;cursor:pointer}.album-screen{padding:18px 12px 30px}.album-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.album-back{border:0;border-radius:12px;padding:9px 12px;background:rgba(255,255,255,.08);color:#fff;font-weight:900;cursor:pointer}.album-title{text-align:center;font-size:26px;font-weight:1000;flex:1}.album-progress{text-align:center;opacity:.72;font-size:12px;margin-bottom:14px}.album-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.album-item{position:relative;overflow:hidden;border-radius:17px;min-height:180px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}.album-item img{width:100%;height:180px;object-fit:cover;display:block}.album-item.locked img{filter:grayscale(1) brightness(.38)}.album-lock{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:30px;background:rgba(0,0,0,.22)}.album-item.locked .album-lock{display:flex}.album-caption{position:absolute;bottom:0;right:0;left:0;padding:24px 9px 8px;background:linear-gradient(transparent,rgba(0,0,0,.9));font-size:12px;font-weight:900}.album-stars{display:block;margin-top:3px;font-size:11px}.album-note{text-align:center;margin-top:14px;padding:12px;border-radius:14px;background:rgba(255,255,255,.05);font-size:12px;line-height:1.8;opacity:.78}
 </style>
 </head>
 
@@ -761,6 +763,7 @@ button{
     <div id="stageGrid" class="stage-grid"></div>
 
     <div id="stageInfo" class="stage-info"></div>
+    <button id="albumBtn" class="album-btn">🏛️ آلبوم گنجینه‌ها</button>
 
   </div>
 
@@ -847,6 +850,13 @@ button{
 
   </div>
 
+</section>
+
+<section id="albumScreen" class="screen album-screen">
+  <div class="album-header"><button id="albumBack" class="album-back">← بازگشت</button><div class="album-title">گنجینه آذربایجان</div><div style="width:72px"></div></div>
+  <div id="albumProgress" class="album-progress"></div>
+  <div id="albumGrid" class="album-grid"></div>
+  <div class="album-note">هر جاذبه با باز شدن مرحله مربوط به آن کشف می‌شود. همه ۲۰ گنجینه را جمع کن! 🏆</div>
 </section>
 
 </div>
@@ -1289,6 +1299,12 @@ const stageGrid=
 const stageInfo=
   document.getElementById("stageInfo");
 
+const albumScreen=document.getElementById("albumScreen");
+const albumBtn=document.getElementById("albumBtn");
+const albumBack=document.getElementById("albumBack");
+const albumGrid=document.getElementById("albumGrid");
+const albumProgress=document.getElementById("albumProgress");
+
 const homeStage=
   document.getElementById("homeStage");
 
@@ -1470,6 +1486,22 @@ const stageLandmarks=[
    نمایش مراحل و قفل‌ها
 ========================================================= */
 
+function renderAlbum(){
+  albumGrid.innerHTML="";
+  let discovered=0;
+  for(let i=0;i<stageLandmarks.length;i++){
+    const landmark=stageLandmarks[i], stageNumber=i+1, unlocked=stageNumber<=unlockedStage, stars=Number(stageStars[stageNumber]||0);
+    if(unlocked) discovered++;
+    const item=document.createElement("div");
+    item.className="album-item"+(unlocked ? "" : " locked");
+    item.innerHTML='<img src="'+landmark[1]+'" alt="'+landmark[0]+'" loading="lazy"><div class="album-lock">🔒</div><div class="album-caption">'+landmark[0]+'<span class="album-stars">'+(stars ? "⭐".repeat(stars) : "هنوز کشف نشده")+'</span></div>';
+    albumGrid.appendChild(item);
+  }
+  albumProgress.textContent="🏛️ "+discovered+" از "+stageLandmarks.length+" گنجینه کشف شده";
+}
+function openAlbum(){homeScreen.classList.remove("active");gameScreen.classList.remove("active");albumScreen.classList.add("active");renderAlbum();}
+function closeAlbum(){albumScreen.classList.remove("active");homeScreen.classList.add("active");updateHome();renderStages();}
+
 function renderStages(){
 
   stageGrid.innerHTML="";
@@ -1542,6 +1574,9 @@ function showLockedMessage(){
 /* =========================================================
    شروع بازی
 ========================================================= */
+
+albumBtn.onclick=openAlbum;
+albumBack.onclick=closeAlbum;
 
 continueBtn.onclick=()=>{
 
