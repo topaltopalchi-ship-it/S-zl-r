@@ -1536,7 +1536,7 @@ function renderAlbum(){
   albumGrid.innerHTML="";
   let discovered=0;
   for(let i=0;i<stageLandmarks.length;i++){
-    const landmark=stageLandmarks[i], stageNumber=i+1, unlocked=stageNumber<=unlockedStage, stars=Number(stageStars[stageNumber]||0);
+    const landmark=stageLandmarks[i], stageNumber=i+1, unlocked=stageNumber<unlockedStage, stars=Number(stageStars[stageNumber]||0);
     if(unlocked) discovered++;
     const item=document.createElement("div");
     item.className="album-item"+(unlocked ? "" : " locked");
