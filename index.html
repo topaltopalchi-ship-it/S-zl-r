@@ -208,16 +208,101 @@ button{
 }
 
 .stage-btn{
-  min-height:52px;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:17px;
-  background:linear-gradient(
-    145deg,
-    rgba(255,255,255,.09),
-    rgba(255,255,255,.035)
-  );
+  position:relative;
+  min-height:118px;
+  padding:0;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:18px;
+  background:#172536;
   color:#fff;
   font-weight:900;
+  box-shadow:0 10px 22px rgba(0,0,0,.24);
+}
+.stage-btn .stage-photo{
+  display:block;
+  width:100%;
+  height:118px;
+  object-fit:cover;
+  transition:filter .25s ease,transform .25s ease;
+}
+.stage-btn .stage-shade{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,.08),rgba(0,0,0,.72));
+}
+.stage-btn .stage-number{
+  position:absolute;
+  top:7px;
+  right:7px;
+  width:30px;
+  height:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#1b8b45;
+  border:2px solid rgba(255,255,255,.9);
+  font-size:14px;
+  z-index:2;
+}
+.stage-btn .stage-name{
+  position:absolute;
+  right:5px;
+  left:5px;
+  bottom:7px;
+  padding:5px 4px;
+  border-radius:10px;
+  background:rgba(0,0,0,.48);
+  font-size:10px;
+  line-height:1.25;
+  z-index:2;
+}
+.stage-btn .stage-status{
+  position:absolute;
+  left:7px;
+  top:7px;
+  width:27px;
+  height:27px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#159447;
+  font-size:15px;
+  z-index:2;
+}
+.stage-btn.current{
+  border:2px solid #efbd5a;
+  box-shadow:0 0 18px rgba(235,177,70,.34),0 10px 24px rgba(0,0,0,.28);
+}
+.stage-btn.current .stage-number{
+  background:#b97618;
+}
+.stage-btn.locked{
+  opacity:.92;
+  cursor:not-allowed;
+}
+.stage-btn.locked .stage-photo{
+  filter:grayscale(1) brightness(.55);
+}
+.stage-btn.locked .stage-shade{
+  background:rgba(0,0,0,.34);
+}
+.stage-btn.locked .stage-number{
+  background:#424b55;
+}
+.stage-btn.locked .stage-status{
+  background:rgba(25,30,35,.92);
+  border:1px solid rgba(255,255,255,.55);
+}
+.stage-btn:not(.locked):active{
+  transform:scale(.96);
+}
+@media(max-width:360px){
+  .stage-grid{gap:6px;}
+  .stage-btn,.stage-btn .stage-photo{min-height:105px;height:105px;}
+  .stage-btn .stage-name{font-size:9px;}
 }
 
 .stage-btn.current{
@@ -1086,7 +1171,7 @@ arabicAnswers:["قیش","ایش"]
    ذخیره پیشرفت
 ========================================================= */
 
-const PROGRESS_VERSION="4";
+const PROGRESS_VERSION="5";
 
 let savedVersion=
   localStorage.getItem("hb_progress_version");
@@ -1348,6 +1433,29 @@ function updateHome(){
 }
 
 
+const stageLandmarks=[
+  ["مسجد کبود","https://commons.wikimedia.org/wiki/Special:Redirect/file/Blue_Mosque.JPG"],
+  ["شاهگلی / ائل‌گلی","https://commons.wikimedia.org/wiki/Special:Redirect/file/El-Goli.jpg"],
+  ["بازار تاریخی تبریز","https://commons.wikimedia.org/wiki/Special:Redirect/file/Bazaar_-Tabriz.jpg"],
+  ["کندوان","https://commons.wikimedia.org/wiki/Special:Redirect/file/Kandovan_Iran.jpg"],
+  ["ارگ تبریز","https://commons.wikimedia.org/wiki/Special:Redirect/file/Arg_of_tabriz.jpg"],
+  ["پل قاری","https://commons.wikimedia.org/wiki/Special:Redirect/file/Qari_Bridge.jpg"],
+  ["مقبره‌الشعرا","https://commons.wikimedia.org/wiki/Special:Redirect/file/Maqbaratoshoara2.jpg"],
+  ["خانه مشروطه تبریز","https://commons.wikimedia.org/wiki/Special:Redirect/file/Constitution_House_of_Tabriz.jpg"],
+  ["موزه آذربایجان","https://commons.wikimedia.org/wiki/Special:Redirect/file/Azerbaijan_Museum_Tabriz.jpg"],
+  ["مسجد جامع تبریز","https://commons.wikimedia.org/wiki/Special:Redirect/file/Jameh_Mosque_of_Tabriz.jpg"],
+  ["مسجد صاحب‌الامر","https://commons.wikimedia.org/wiki/Special:Redirect/file/Sahib_ol_Amr_Mosque_Tabriz.jpg"],
+  ["برج ساعت تبریز","https://commons.wikimedia.org/wiki/Special:Redirect/file/Tabriz_Municipality.jpg"],
+  ["روستای اشتبین","https://commons.wikimedia.org/wiki/Special:Redirect/file/Ashtbin.jpg"],
+  ["قلعه بابک","https://commons.wikimedia.org/wiki/Special:Redirect/file/Babak_Castle.jpg"],
+  ["کلیسای سنت استپانوس","https://commons.wikimedia.org/wiki/Special:Redirect/file/St_Stepanos_Monastery.jpg"],
+  ["رصدخانه مراغه","https://commons.wikimedia.org/wiki/Special:Redirect/file/Maragheh_observatory.jpg"],
+  ["گنبد سلطانیه","https://commons.wikimedia.org/wiki/Special:Redirect/file/Soltaniyeh_Dome.jpg"],
+  ["کاخ موزه مراغه","https://commons.wikimedia.org/wiki/Special:Redirect/file/Maragheh_Museum.jpg"],
+  ["پل دختر میانه","https://commons.wikimedia.org/wiki/Special:Redirect/file/Miyaneh_Dokhtar_Bridge.jpg"],
+  ["آبشار آسیاب‌خرابه","https://commons.wikimedia.org/wiki/Special:Redirect/file/Asiab_Kharabeh.jpg"]
+];
+
 /* =========================================================
    نمایش مراحل و قفل‌ها
 ========================================================= */
@@ -1359,78 +1467,45 @@ function renderStages(){
   for(let i=0;i<stages.length;i++){
 
     const number=i+1;
+    const landmark=stageLandmarks[i%stageLandmarks.length];
 
-    const btn=
-      document.createElement("button");
-
+    const btn=document.createElement("button");
     btn.className="stage-btn";
 
+    const completed=number<unlockedStage;
+    const available=number<=unlockedStage;
 
-    /*
-      فقط مراحل <= unlockedStage باز هستند
-    */
+    btn.innerHTML=`
+      <img class="stage-photo" src="${landmark[1]}" alt="${landmark[0]}" loading="lazy">
+      <span class="stage-shade"></span>
+      <span class="stage-number">${number}</span>
+      <span class="stage-name">${landmark[0]}</span>
+      <span class="stage-status">${completed ? "✓" : (available ? "▶" : "🔒")}</span>
+    `;
 
-    if(number<=unlockedStage){
+    if(number===selectedStage){
+      btn.classList.add("current");
+    }
 
-      btn.textContent=number;
-
-      if(number===selectedStage){
-
-        btn.classList.add("current");
-
-      }
-
-      btn.onclick=()=>{
-
-        /*
-          امنیت دوباره:
-          اگر مرحله قفل بود، هیچ کاری نکن
-        */
-
-        if(number>unlockedStage){
-
-          showLockedMessage();
-
-          return;
-
-        }
-
-        selectedStage=number;
-
-        save();
-
-        updateHome();
-
-        renderStages();
-
-      };
-
-    }else{
-
-      /*
-        مرحله قفل
-      */
-
+    if(!available){
       btn.classList.add("locked");
-
-      btn.textContent="🔒";
-
       btn.onclick=()=>{
-
         showLockedMessage();
-
       };
-
+    }else{
+      btn.onclick=()=>{
+        selectedStage=number;
+        save();
+        updateHome();
+        renderStages();
+      };
     }
 
     stageGrid.appendChild(btn);
-
   }
 
-
   stageInfo.textContent=
-    `${unlockedStage} از ${stages.length} مرحله باز است`;
-
+    `${unlockedStage} از ${stages.length} مرحله باز است • گنجینه‌های آذربایجان ایران`;
 }
 
 
