@@ -300,6 +300,7 @@ button{
   transform:scale(.96);
 }
 .stage-btn.unlock-pop{animation:stageUnlockPop .9s ease both;border-color:#ffd978;}
+.treasure-card{margin-top:14px;overflow:hidden;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(239,189,88,.28);text-align:right;}.treasure-card img{display:block;width:100%;height:145px;object-fit:cover;}.treasure-body{padding:12px 13px 13px;}.treasure-kicker{font-size:11px;color:#efbd58;font-weight:900;margin-bottom:4px;}.treasure-title{font-size:18px;font-weight:900;margin-bottom:6px;}.treasure-text{font-size:13px;line-height:1.8;opacity:.82;}.treasure-stars{margin-top:8px;font-size:20px;letter-spacing:2px;}
 @keyframes stageUnlockPop{0%{transform:scale(.82);opacity:.35;}55%{transform:scale(1.06);opacity:1;}100%{transform:scale(1);opacity:1;}}
 .stage-stars{position:absolute;right:5px;left:5px;bottom:38px;z-index:3;font-size:12px;letter-spacing:1px;text-shadow:0 2px 8px rgba(0,0,0,.8);}
 @media(max-width:360px){
@@ -1441,6 +1442,7 @@ function updateHome(){
 }
 
 
+const stageTreasureFacts=["مسجد کبود از مشهورترین بناهای تاریخی تبریز و از یادگارهای دوره قراقویونلو است.","ائل‌گلی از شناخته‌شده‌ترین تفرجگاه‌های تبریز و یکی از نمادهای شهری این شهر است.","بازار تاریخی تبریز یکی از بزرگ‌ترین مجموعه‌های بازار سرپوشیده تاریخی ایران است.","کندوان به خانه‌های صخره‌ای مخروطی‌شکل و بافت روستایی کم‌نظیرش شهرت دارد.","ارگ تبریز از بناهای شاخص تاریخی شهر و یادگاری ارزشمند از معماری دوره ایلخانی و پس از آن است.","پل قاری از پل‌های قدیمی تبریز و از عناصر تاریخی بافت شهر است.","مقبره‌الشعرا آرامگاه شماری از شاعران و ادیبان نامدار آذربایجان در تبریز است.","خانه مشروطه تبریز با تاریخ جنبش مشروطه و چهره‌های اثرگذار آن پیوند دارد.","موزه آذربایجان یکی از مهم‌ترین موزه‌های باستان‌شناسی و تاریخی شمال‌غرب ایران است.","مسجد جامع تبریز از بناهای مذهبی تاریخی مهم شهر با معماری و کتیبه‌های ارزشمند است.","مسجد صاحب‌الامر از بناهای تاریخی تبریز و از یادگارهای ارزشمند بافت کهن شهر است.","برج ساعت تبریز از نمادهای شناخته‌شده شهر و بخشی از مجموعه تاریخی شهرداری است.","اشتِبین روستایی تاریخی و پلکانی در آذربایجان شرقی با طبیعت و معماری بومی چشمگیر است.","قلعه بابک بر فراز کوهستان‌های کلیبر قرار دارد و یکی از نمادهای تاریخی منطقه است.","کلیسای سنت استپانوس از بناهای تاریخی ارامنه در آذربایجان و یکی از آثار مهم منطقه است.","رصدخانه مراغه از مراکز علمی برجسته جهان اسلام در سده هفتم هجری بود.","گنبد سلطانیه شاهکاری از معماری ایلخانی و یکی از بناهای شاخص تاریخی ایران است.","موزه مراغه بخشی از میراث تاریخی و فرهنگی شهر مراغه را معرفی می‌کند.","پل دختر میانه از آثار تاریخی ارزشمند منطقه میانه و نمونه‌ای از پل‌سازی تاریخی ایران است.","آبشار آسیاب‌خرابه از جاذبه‌های طبیعی مشهور آذربایجان شرقی در نزدیکی جلفا است."];function treasureCardHTML(stageNumber,stars){const idx=(stageNumber-1)%stageLandmarks.length,landmark=stageLandmarks[idx],fact=stageTreasureFacts[idx]||"یکی از گنجینه‌های تاریخی و طبیعی آذربایجان ایران.";return "<div class=\"treasure-card\"><img src=\""+landmark[1]+"\" alt=\""+landmark[0]+"\"><div class=\"treasure-body\"><div class=\"treasure-kicker\">🏛️ گنجینه آذربایجان</div><div class=\"treasure-title\">"+landmark[0]+"</div><div class=\"treasure-text\">"+fact+"</div><div class=\"treasure-stars\">"+("⭐".repeat(stars))+" <span style=\"font-size:11px;opacity:.65;\">"+stars+" از ۳</span></div></div></div>";}
 const stageLandmarks=[
   ["مسجد کبود","https://commons.wikimedia.org/wiki/Special:Redirect/file/Blue_Mosque.JPG"],
   ["شاهگلی / ائل‌گلی","https://commons.wikimedia.org/wiki/Special:Redirect/file/El-Goli.jpg"],
@@ -2310,7 +2312,8 @@ function finishStage(){
 
       `مرحله ${selectedStage} کامل شد.<br>
        ۵ سکه دریافت کردید.<br>
-       🔓 مرحله ${selectedStage+1} باز شد.`,
+       ⭐ امتیاز این مرحله: ${"⭐".repeat(Number(stageStars[selectedStage] || earnedStars))}<br>
+       🔓 مرحله ${selectedStage+1} باز شد.` + treasureCardHTML(selectedStage,Number(stageStars[selectedStage] || earnedStars)),
 
       "مرحله بعد",
 
@@ -2325,7 +2328,8 @@ function finishStage(){
       "تبریک! 🎉",
 
       `همه ${stages.length} مرحله را کامل کردید.<br>
-       🏆 بازی را کامل کردید!`,
+       🏆 بازی را کامل کردید!<br>
+       ⭐ مجموع بهترین ستاره‌ها: ${Object.values(stageStars).reduce((a,b)=>a+Number(b||0),0)} از ${stages.length*3}` + treasureCardHTML(selectedStage,Number(stageStars[selectedStage] || earnedStars)),
 
       "مرحله ${stages.length}",
 
