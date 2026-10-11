@@ -151,6 +151,28 @@ jobs:
           path.write_text(text)
           PY
 
+      - name: Increment Android version code
+        env:
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, re
+
+          path = Path("android/app/build.gradle")
+          text = path.read_text()
+          version_code = 1000 + int(os.environ["GITHUB_RUN_NUMBER"])
+          updated, count = re.subn(
+              r"(?m)^(\\s*versionCode\\s+)\\d+\\s*$",
+              lambda match: match.group(1) + str(version_code),
+              text,
+              count=1,
+          )
+          if count != 1:
+              raise SystemExit("ERROR: could not find Android versionCode in build.gradle")
+          path.write_text(updated)
+          print(f"Set Android versionCode to {version_code}")
+
       - name: Sync Capacitor
         run: npx cap sync android
 
