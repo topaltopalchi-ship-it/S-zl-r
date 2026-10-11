@@ -162,16 +162,19 @@ jobs:
           path = Path("android/app/build.gradle")
           text = path.read_text()
           version_code = 1000 + int(os.environ["GITHUB_RUN_NUMBER"])
+          pattern = r"(?m)^(\\s*versionCode\\s*(?:=\\s*)?)\\d+\\s*$"
           updated, count = re.subn(
-              r"(?m)^(\\s*versionCode\\s+)\\d+\\s*$",
+              pattern,
               lambda match: match.group(1) + str(version_code),
               text,
               count=1,
           )
           if count != 1:
+              print("\\n".join(line for line in text.splitlines() if "versionCode" in line))
               raise SystemExit("ERROR: could not find Android versionCode in build.gradle")
           path.write_text(updated)
           print(f"Set Android versionCode to {version_code}")
+          PY
 
       - name: Sync Capacitor
         run: npx cap sync android
