@@ -1053,7 +1053,7 @@ arabicAnswers:["کیتاب","تاب"]
 
 {
 latinLetters:["m","ə","k","t","ə","b"],
-arabicLetters:["م","ک","ت","ب"],
+arabicLetters:["م","ک","ت","ب","ا"],
 latinAnswers:["məktəb","ək"],
 arabicAnswers:["مکتب","اک"]
 },
@@ -1067,7 +1067,7 @@ arabicAnswers:["شهر","شر"]
 
 {
 latinLetters:["k","ü","ç","ə"],
-arabicLetters:["ک","و","چ","ه"],
+arabicLetters:["ک","و","چ","ه","ا"],
 latinAnswers:["küçə","üç"],
 arabicAnswers:["کوچه","اوچ"]
 },
@@ -1082,22 +1082,22 @@ arabicAnswers:["دنیز","دیز"]
 {
 latinLetters:["g","ə","m","i"],
 arabicLetters:["گ","ه","م","ی"],
-latinAnswers:["gəmi","əm"],
-arabicAnswers:["گمی","ام"]
+latinAnswers:["gəmi"],
+arabicAnswers:["گمی"]
 },
 
 {
 latinLetters:["u","ş","a","q"],
 arabicLetters:["او","ش","ا","ق"],
-latinAnswers:["uşaq","uş"],
-arabicAnswers:["اوشاق","اوش"]
+latinAnswers:["uşaq"],
+arabicAnswers:["اوشاق"]
 },
 
 {
 latinLetters:["q","ı","z"],
 arabicLetters:["ق","ی","ز"],
-latinAnswers:["qız","qı"],
-arabicAnswers:["قیز","قی"]
+latinAnswers:["qız"],
+arabicAnswers:["قیز"]
 },
 
 {
@@ -1110,13 +1110,13 @@ arabicAnswers:["اوغلان","اولان"]
 {
 latinLetters:["q","a","d","ı","n"],
 arabicLetters:["ق","ا","د","ی","ن"],
-latinAnswers:["qadın","qın"],
-arabicAnswers:["قادین","قین"]
+latinAnswers:["qadın"],
+arabicAnswers:["قادین"]
 },
 
 {
 latinLetters:["k","i","ş","i"],
-arabicLetters:["ک","ی","ش","ی"],
+arabicLetters:["ک","ی","ش","ی","ا"],
 latinAnswers:["kişi","iş"],
 arabicAnswers:["کیشی","ایش"]
 },
@@ -1131,20 +1131,20 @@ arabicAnswers:["بالیک","بال"]
 {
 latinLetters:["q","u","ş"],
 arabicLetters:["ق","و","ش"],
-latinAnswers:["quş","uş"],
-arabicAnswers:["قوش","اوش"]
+latinAnswers:["quş"],
+arabicAnswers:["قوش"]
 },
 
 {
 latinLetters:["a","t","ı"],
-arabicLetters:["ا","ت","ی"],
+arabicLetters:["آ","ت","ی"],
 latinAnswers:["atı","at"],
 arabicAnswers:["آتی","آت"]
 },
 
 {
 latinLetters:["e","v"],
-arabicLetters:["ا","و"],
+arabicLetters:["ا","ئ","و"],
 latinAnswers:["ev"],
 arabicAnswers:["ائو"]
 },
@@ -1152,8 +1152,8 @@ arabicAnswers:["ائو"]
 {
 latinLetters:["s","ə","m","a"],
 arabicLetters:["س","ه","م","ا"],
-latinAnswers:["səma","səm"],
-arabicAnswers:["سما","سم"]
+latinAnswers:["səma"],
+arabicAnswers:["سما"]
 },
 
 {
@@ -1180,8 +1180,8 @@ arabicAnswers:["بهار","بار"]
 {
 latinLetters:["q","ı","ş"],
 arabicLetters:["ق","ی","ش"],
-latinAnswers:["qış","ış"],
-arabicAnswers:["قیش","ایش"]
+latinAnswers:["qış"],
+arabicAnswers:["قیش"]
 }
 
 ];
@@ -1908,6 +1908,34 @@ function renderMeanings(){
 
 
 /* =========================================================
+   تقسیم پاسخ بر اساس حروف قابل انتخاب
+========================================================= */
+
+function splitAnswerIntoTiles(answer){
+  const tiles=[...new Set(currentLetters)].sort((a,b)=>b.length-a.length);
+  const memo=new Map();
+
+  function splitFrom(position){
+    if(position===answer.length) return [];
+    if(memo.has(position)) return memo.get(position);
+    for(const tile of tiles){
+      if(answer.startsWith(tile,position)){
+        const rest=splitFrom(position+tile.length);
+        if(rest!==null){
+          const result=[tile,...rest];
+          memo.set(position,result);
+          return result;
+        }
+      }
+    }
+    memo.set(position,null);
+    return null;
+  }
+
+  return splitFrom(0) || [...answer];
+}
+
+/* =========================================================
    جای خالی کلمات
 ========================================================= */
 
@@ -1933,7 +1961,7 @@ function renderSlots(){
     }
 
 
-    [...answer].forEach(letter=>{
+    splitAnswerIntoTiles(answer).forEach(letter=>{
 
       const slot=
         document.createElement("div");
