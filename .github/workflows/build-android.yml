@@ -192,6 +192,32 @@ jobs:
           cd android
           ./gradlew bundleRelease
 
+      - name: Generate Cafe Bazaar BIN
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          curl -fL --retry 3 \
+            https://github.com/cafebazaar/bundle-signer/releases/download/v0.1.13/bundlesigner-0.1.13.jar \
+            -o bundlesigner-0.1.13.jar
+          mkdir -p cafebazaar-bin
+          java -jar bundlesigner-0.1.13.jar genbin -v \
+            --v2-signing-enabled true \
+            --v3-signing-enabled false \
+            --bundle android/app/build/outputs/bundle/release/app-release.aab \
+            --bin cafebazaar-bin/ \
+            --ks release-key.jks \
+            --ks-pass "pass:$KEYSTORE_PASSWORD" \
+            --ks-key-alias heydarbaba \
+            --key-pass "pass:$KEY_PASSWORD"
+          test -n "$(find cafebazaar-bin -maxdepth 1 -type f -name '*.bin' -print -quit)"
+
+      - name: Upload Cafe Bazaar BIN
+        uses: actions/upload-artifact@v4
+        with:
+          name: Heydarbaba-Release-BIN
+          path: cafebazaar-bin/*.bin
+
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
