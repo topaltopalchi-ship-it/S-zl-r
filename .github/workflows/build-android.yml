@@ -192,6 +192,12 @@ jobs:
           cd android
           ./gradlew bundleRelease
 
+      - name: Verify signed bundle before BIN generation
+        run: |
+          test -s android/app/build/outputs/bundle/release/app-release.aab
+          jarsigner -verify -verbose -certs android/app/build/outputs/bundle/release/app-release.aab >/tmp/aab-signature-check.txt
+          tail -n 5 /tmp/aab-signature-check.txt
+
       - name: Generate Cafe Bazaar BIN
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
