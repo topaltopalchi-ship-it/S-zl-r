@@ -1610,28 +1610,34 @@ function updateHome(){
 }
 
 
-const stageTreasureFacts=["مسجد کبود از مشهورترین بناهای تاریخی تبریز و از یادگارهای دوره قراقویونلو است.","ائل‌گلی از شناخته‌شده‌ترین تفرجگاه‌های تبریز و یکی از نمادهای شهری این شهر است.","بازار تاریخی تبریز یکی از بزرگ‌ترین مجموعه‌های بازار سرپوشیده تاریخی ایران است.","کندوان به خانه‌های صخره‌ای مخروطی‌شکل و بافت روستایی کم‌نظیرش شهرت دارد.","ارگ تبریز از بناهای شاخص تاریخی شهر و یادگاری ارزشمند از معماری دوره ایلخانی و پس از آن است.","پل قاری از پل‌های قدیمی تبریز و از عناصر تاریخی بافت شهر است.","مقبره‌الشعرا آرامگاه شماری از شاعران و ادیبان نامدار آذربایجان در تبریز است.","خانه مشروطه تبریز با تاریخ جنبش مشروطه و چهره‌های اثرگذار آن پیوند دارد.","موزه آذربایجان یکی از مهم‌ترین موزه‌های باستان‌شناسی و تاریخی شمال‌غرب ایران است.","مسجد جامع تبریز از بناهای مذهبی تاریخی مهم شهر با معماری و کتیبه‌های ارزشمند است.","مسجد صاحب‌الامر از بناهای تاریخی تبریز و از یادگارهای ارزشمند بافت کهن شهر است.","برج ساعت تبریز از نمادهای شناخته‌شده شهر و بخشی از مجموعه تاریخی شهرداری است.","اشتِبین روستایی تاریخی و پلکانی در آذربایجان شرقی با طبیعت و معماری بومی چشمگیر است.","قلعه بابک بر فراز کوهستان‌های کلیبر قرار دارد و یکی از نمادهای تاریخی منطقه است.","کلیسای سنت استپانوس از بناهای تاریخی ارامنه در آذربایجان و یکی از آثار مهم منطقه است.","رصدخانه مراغه از مراکز علمی برجسته جهان اسلام در سده هفتم هجری بود.","گنبد سلطانیه شاهکاری از معماری ایلخانی و یکی از بناهای شاخص تاریخی ایران است.","موزه مراغه بخشی از میراث تاریخی و فرهنگی شهر مراغه را معرفی می‌کند.","پل دختر میانه از آثار تاریخی ارزشمند منطقه میانه و نمونه‌ای از پل‌سازی تاریخی ایران است.","آبشار آسیاب‌خرابه از جاذبه‌های طبیعی مشهور آذربایجان شرقی در نزدیکی جلفا است."];function treasureCardHTML(stageNumber,stars){const idx=(stageNumber-1)%stageLandmarks.length,landmark=stageLandmarks[idx],fact=stageTreasureFacts[idx]||"یکی از گنجینه‌های تاریخی و طبیعی آذربایجان ایران.";return "<div class=\"treasure-card\"><img src=\""+landmark[1]+"\" alt=\""+landmark[0]+"\"><div class=\"treasure-body\"><div class=\"treasure-kicker\">🏛️ گنجینه آذربایجان</div><div class=\"treasure-title\">"+landmark[0]+"</div><div class=\"treasure-text\">"+fact+"</div><div class=\"treasure-stars\">"+("⭐".repeat(stars))+" <span style=\"font-size:11px;opacity:.65;\">"+stars+" از ۳</span></div></div></div>";}
+const stageTreasureFacts=["مسجد کبود از مشهورترین بناهای تاریخی تبریز و از یادگارهای دوره قراقویونلو است.","ائل‌گلی از شناخته‌شده‌ترین تفرجگاه‌های تبریز و یکی از نمادهای شهری این شهر است.","بازار تاریخی تبریز یکی از بزرگ‌ترین مجموعه‌های بازار سرپوشیده تاریخی ایران است.","کندوان به خانه‌های صخره‌ای مخروطی‌شکل و بافت روستایی کم‌نظیرش شهرت دارد.","ارگ تبریز از بناهای شاخص تاریخی شهر و یادگاری ارزشمند از معماری دوره ایلخانی و پس از آن است.","پل قاری از پل‌های قدیمی تبریز و از عناصر تاریخی بافت شهر است.","مقبره‌الشعرا آرامگاه شماری از شاعران و ادیبان نامدار آذربایجان در تبریز است.","خانه مشروطه تبریز با تاریخ جنبش مشروطه و چهره‌های اثرگذار آن پیوند دارد.","موزه آذربایجان یکی از مهم‌ترین موزه‌های باستان‌شناسی و تاریخی شمال‌غرب ایران است.","مسجد جامع تبریز از بناهای مذهبی تاریخی مهم شهر با معماری و کتیبه‌های ارزشمند است.","مسجد صاحب‌الامر از بناهای تاریخی تبریز و از یادگارهای ارزشمند بافت کهن شهر است.","برج ساعت تبریز از نمادهای شناخته‌شده شهر و بخشی از مجموعه تاریخی شهرداری است.","اشتِبین روستایی تاریخی و پلکانی در آذربایجان شرقی با طبیعت و معماری بومی چشمگیر است.","قلعه بابک بر فراز کوهستان‌های کلیبر قرار دارد و یکی از نمادهای تاریخی منطقه است.","کلیسای سنت استپانوس از بناهای تاریخی ارامنه در آذربایجان و یکی از آثار مهم منطقه است.","رصدخانه مراغه از مراکز علمی برجسته جهان اسلام در سده هفتم هجری بود.","گنبد سلطانیه شاهکاری از معماری ایلخانی و یکی از بناهای شاخص تاریخی ایران است.","موزه مراغه بخشی از میراث تاریخی و فرهنگی شهر مراغه را معرفی می‌کند.","پل دختر میانه از آثار تاریخی ارزشمند منطقه میانه و نمونه‌ای از پل‌سازی تاریخی ایران است.","آبشار آسیاب‌خرابه از جاذبه‌های طبیعی مشهور آذربایجان شرقی در نزدیکی جلفا است."];function treasureImageFallback(img){
+  img.onerror=null;
+  const label=(img.alt||"گنجینه آذربایجان").replace(/[&<>"]/g,"");
+  const svg='<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#18334b"/><stop offset="1" stop-color="#a66d23"/></linearGradient></defs><rect width="640" height="360" fill="url(#g)"/><circle cx="320" cy="120" r="58" fill="#efbd58" opacity=".9"/><path d="M0 290 L150 175 L260 265 L390 145 L640 290 V360 H0Z" fill="#07111f" opacity=".75"/><text x="320" y="320" fill="white" font-size="28" font-family="Arial,sans-serif" text-anchor="middle">'+label+'</text><text x="320" y="60" fill="#fff" font-size="24" font-family="Arial,sans-serif" text-anchor="middle">گنجینه آذربایجان</text></svg>';
+  img.src="data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);
+}
+function treasureCardHTML(stageNumber,stars){const idx=(stageNumber-1)%stageLandmarks.length,landmark=stageLandmarks[idx],fact=stageTreasureFacts[idx]||"یکی از گنجینه‌های تاریخی و طبیعی آذربایجان ایران.";return "<div class=\"treasure-card\"><img src=\""+landmark[1]+"\" alt=\""+landmark[0]+"\" onerror=\"treasureImageFallback(this)\"><div class=\"treasure-body\"><div class=\"treasure-kicker\">🏛️ گنجینه آذربایجان</div><div class=\"treasure-title\">"+landmark[0]+"</div><div class=\"treasure-text\">"+fact+"</div><div class=\"treasure-stars\">"+("⭐".repeat(stars))+" <span style=\"font-size:11px;opacity:.65;\">"+stars+" از ۳</span></div></div></div>";}
 const stageLandmarks=[
-  ["مسجد کبود","https://commons.wikimedia.org/wiki/Special:Redirect/file/Blue_Mosque.JPG"],
-  ["شاهگلی / ائل‌گلی","https://commons.wikimedia.org/wiki/Special:Redirect/file/El-Goli.jpg"],
-  ["بازار تاریخی تبریز","https://commons.wikimedia.org/wiki/Special:Redirect/file/Bazaar_-Tabriz.jpg"],
-  ["کندوان","https://commons.wikimedia.org/wiki/Special:Redirect/file/Kandovan_Iran.jpg"],
-  ["ارگ تبریز","https://commons.wikimedia.org/wiki/Special:Redirect/file/Arg_of_tabriz.jpg"],
-  ["پل قاری","https://commons.wikimedia.org/wiki/Special:Redirect/file/Qari_Bridge.jpg"],
-  ["مقبره‌الشعرا","https://commons.wikimedia.org/wiki/Special:Redirect/file/Maqbaratoshoara2.jpg"],
-  ["خانه مشروطه تبریز","https://commons.wikimedia.org/wiki/Special:Redirect/file/Constitution_House_of_Tabriz.jpg"],
-  ["موزه آذربایجان","https://commons.wikimedia.org/wiki/Special:Redirect/file/Azerbaijan_Museum_Tabriz.jpg"],
-  ["مسجد جامع تبریز","https://commons.wikimedia.org/wiki/Special:Redirect/file/Jameh_Mosque_of_Tabriz.jpg"],
-  ["مسجد صاحب‌الامر","https://commons.wikimedia.org/wiki/Special:Redirect/file/Sahib_ol_Amr_Mosque_Tabriz.jpg"],
-  ["برج ساعت تبریز","https://commons.wikimedia.org/wiki/Special:Redirect/file/Tabriz_Municipality.jpg"],
-  ["روستای اشتبین","https://commons.wikimedia.org/wiki/Special:Redirect/file/Ashtbin.jpg"],
-  ["قلعه بابک","https://commons.wikimedia.org/wiki/Special:Redirect/file/Babak_Castle.jpg"],
-  ["کلیسای سنت استپانوس","https://commons.wikimedia.org/wiki/Special:Redirect/file/St_Stepanos_Monastery.jpg"],
-  ["رصدخانه مراغه","https://commons.wikimedia.org/wiki/Special:Redirect/file/Maragheh_observatory.jpg"],
-  ["گنبد سلطانیه","https://commons.wikimedia.org/wiki/Special:Redirect/file/Soltaniyeh_Dome.jpg"],
-  ["کاخ موزه مراغه","https://commons.wikimedia.org/wiki/Special:Redirect/file/Maragheh_Museum.jpg"],
-  ["پل دختر میانه","https://commons.wikimedia.org/wiki/Special:Redirect/file/Miyaneh_Dokhtar_Bridge.jpg"],
-  ["آبشار آسیاب‌خرابه","https://commons.wikimedia.org/wiki/Special:Redirect/file/Asiab_Kharabeh.jpg"]
+  ["مسجد کبود","https://commons.wikimedia.org/wiki/Special:FilePath/Blue_Mosque.JPG"],
+  ["شاهگلی / ائل‌گلی","https://commons.wikimedia.org/wiki/Special:FilePath/El-Goli.jpg"],
+  ["بازار تاریخی تبریز","https://commons.wikimedia.org/wiki/Special:FilePath/Bazaar_-Tabriz.jpg"],
+  ["کندوان","https://commons.wikimedia.org/wiki/Special:FilePath/Kandovan_Iran.jpg"],
+  ["ارگ تبریز","https://commons.wikimedia.org/wiki/Special:FilePath/Arg_of_tabriz.jpg"],
+  ["پل قاری","https://commons.wikimedia.org/wiki/Special:FilePath/Qari_Bridge.jpg"],
+  ["مقبره‌الشعرا","https://commons.wikimedia.org/wiki/Special:FilePath/Maqbaratoshoara2.jpg"],
+  ["خانه مشروطه تبریز","https://commons.wikimedia.org/wiki/Special:FilePath/Constitution_House_of_Tabriz.jpg"],
+  ["موزه آذربایجان","https://commons.wikimedia.org/wiki/Special:FilePath/Azerbaijan_Museum_Tabriz.jpg"],
+  ["مسجد جامع تبریز","https://commons.wikimedia.org/wiki/Special:FilePath/Jameh_Mosque_of_Tabriz.jpg"],
+  ["مسجد صاحب‌الامر","https://commons.wikimedia.org/wiki/Special:FilePath/Sahib_ol_Amr_Mosque_Tabriz.jpg"],
+  ["برج ساعت تبریز","https://commons.wikimedia.org/wiki/Special:FilePath/Tabriz_Municipality.jpg"],
+  ["روستای اشتبین","https://commons.wikimedia.org/wiki/Special:FilePath/Ashtbin.jpg"],
+  ["قلعه بابک","https://commons.wikimedia.org/wiki/Special:FilePath/Babak_Castle.jpg"],
+  ["کلیسای سنت استپانوس","https://commons.wikimedia.org/wiki/Special:FilePath/St_Stepanos_Monastery.jpg"],
+  ["رصدخانه مراغه","https://commons.wikimedia.org/wiki/Special:FilePath/Maragheh_observatory.jpg"],
+  ["گنبد سلطانیه","https://commons.wikimedia.org/wiki/Special:FilePath/Soltaniyeh_Dome.jpg"],
+  ["کاخ موزه مراغه","https://commons.wikimedia.org/wiki/Special:FilePath/Maragheh_Museum.jpg"],
+  ["پل دختر میانه","https://commons.wikimedia.org/wiki/Special:FilePath/Miyaneh_Dokhtar_Bridge.jpg"],
+  ["آبشار آسیاب‌خرابه","https://commons.wikimedia.org/wiki/Special:FilePath/Asiab_Kharabeh.jpg"]
 ];
 
 /* =========================================================
@@ -1680,7 +1686,7 @@ function renderAlbum(){
     if(unlocked) discovered++;
     const item=document.createElement("div");
     item.className="album-item"+(unlocked ? "" : " locked");
-    item.innerHTML='<img src="'+landmark[1]+'" alt="'+landmark[0]+'" loading="lazy"><div class="album-lock">🔒</div><div class="album-caption">'+landmark[0]+'<span class="album-stars">'+(stars ? "⭐".repeat(stars) : "هنوز کشف نشده")+'</span></div>';
+    item.innerHTML='<img src="'+landmark[1]+'" alt="'+landmark[0]+'" loading="lazy" onerror="treasureImageFallback(this)"><div class="album-lock">🔒</div><div class="album-caption">'+landmark[0]+'<span class="album-stars">'+(stars ? "⭐".repeat(stars) : "هنوز کشف نشده")+'</span></div>';
     albumGrid.appendChild(item);
   }
   albumProgress.textContent="🏛️ "+discovered+" از "+stageLandmarks.length+" گنجینه کشف شده";
@@ -1706,7 +1712,7 @@ function renderStages(){
     const stars=Number(stageStars[number] || 0);
 
     btn.innerHTML=`
-      <img class="stage-photo" src="${landmark[1]}" alt="${landmark[0]}" loading="lazy">
+      <img class="stage-photo" src="${landmark[1]}" alt="${landmark[0]}" loading="lazy" onerror="treasureImageFallback(this)">
       <span class="stage-shade"></span>
       <span class="stage-number">${number}</span>
       <span class="stage-name">${landmark[0]}</span>
@@ -2668,7 +2674,7 @@ function showRoundTwoIntro(){
      <div class="round2-gallery">
        <figure>
          <img
-           src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Gobustan.jpg"
+           src="https://commons.wikimedia.org/wiki/Special:FilePath/Gobustan.jpg"
            alt="گوبوستان، آذربایجان"
            loading="lazy"
          >
@@ -2677,7 +2683,7 @@ function showRoundTwoIntro(){
 
        <figure>
          <img
-           src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Maiden_Tower_of_Baku.jpg"
+           src="https://commons.wikimedia.org/wiki/Special:FilePath/Maiden_Tower_of_Baku.jpg"
            alt="قلعه دختر در باکو"
            loading="lazy"
          >
@@ -2686,7 +2692,7 @@ function showRoundTwoIntro(){
 
        <figure>
          <img
-           src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Palace_of_Shirvanshahs.JPG"
+           src="https://commons.wikimedia.org/wiki/Special:FilePath/Palace_of_Shirvanshahs.JPG"
            alt="کاخ شیروانشاهان در باکو"
            loading="lazy"
          >
