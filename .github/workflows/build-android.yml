@@ -153,7 +153,7 @@ jobs:
 
       - name: Increment Android version code
         env:
-          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          GITHUB_RUN_NUMBER: \${{ github.run_number }}
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -162,7 +162,7 @@ jobs:
           path = Path("android/app/build.gradle")
           text = path.read_text()
           version_code = 1000 + int(os.environ["GITHUB_RUN_NUMBER"])
-          pattern = r"(?m)^(\\s*versionCode\\s*(?:=\\s*)?)\\d+\\s*$"
+          pattern = r"(?m)^(\s*versionCode\s*(?:=\s*)?)\d+\s*$"
           updated, count = re.subn(
               pattern,
               lambda match: match.group(1) + str(version_code),
@@ -170,7 +170,7 @@ jobs:
               count=1,
           )
           if count != 1:
-              print("\\n".join(line for line in text.splitlines() if "versionCode" in line))
+              print("\n".join(line for line in text.splitlines() if "versionCode" in line))
               raise SystemExit("ERROR: could not find Android versionCode in build.gradle")
           path.write_text(updated)
           print(f"Set Android versionCode to {version_code}")
